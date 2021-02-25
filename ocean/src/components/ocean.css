@@ -1,0 +1,27 @@
+
+.ocean {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.oceanContent {
+  flex: 1 1 auto;
+  z-index: 1;
+  background-color: rgb(51, 61, 204);
+}
+
+.sessionBox {
+  position: absolute;
+  right: 5vw;
+  top: 30vh;
+
+  width: 10vw;
+  height: 30vh;
+  z-index: 2;
+
+  background: white;
+
+  text-align: center;
+  border: solid 1px black;
+}

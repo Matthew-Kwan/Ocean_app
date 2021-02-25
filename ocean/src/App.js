@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 // import components
 import Ocean from './components/Ocean'
@@ -9,19 +9,30 @@ import Tank from './components/Tank'
 import { Route, Switch, Link, BrowserRouter } from 'react-router-dom'
 
 function App() {
+
+  const [user, setUser] = useState({})
+  const [loggedIn, setLoggedIn] = useState(false)
+
+  useEffect(() => {
+    if(user) {
+      setLoggedIn(true)
+    }
+  },[user])
+
   return (
 
     <BrowserRouter>
       <div>
-        <Link to="/">home</Link>
-        <Link to="/ocean">ocean</Link>
-        <Link to="/tank">tank</Link>
+        <Link className="link" to="/">home</Link>
+        <Link className="link" to="/ocean">ocean</Link>
+        <Link className="link" to="/tank">tank</Link>
       </div>
 
       <Switch>
         <Route path="/ocean" render={() => {
+          // will need this to redirect to login page if the user is not logged in
           return (
-            <Ocean/>
+            <Ocean user={user} setUser={setUser}/>
           )
         }}/>
 
@@ -30,7 +41,7 @@ function App() {
           return (
             <Tank/>
           )
-        }}/>    
+        }}/>
 
         <Route path="/" render={() => {
           return (
