@@ -1,0 +1,33 @@
+.profCard{
+    border-radius: 15px;
+    padding:15px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    width:300px;
+    border:1px solid green;
+}
+
+.profHeader{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profImg{
+    width:40px;
+    height:40px;
+    border-radius: 50%;
+    margin-right: 20px;
+    background-color: aquamarine;
+}
+
+.profButtons{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.profButtons Button{
+    margin-bottom: 10px;
+}

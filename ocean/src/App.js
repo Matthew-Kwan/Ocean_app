@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react'
 // import components
 import Ocean from './components/Ocean'
 import Tank from './components/Tank'
+import Profile from './components/Profile'
+
 
 // import React Router
 import { Route, Switch, Link, BrowserRouter } from 'react-router-dom'
@@ -26,6 +28,8 @@ function App() {
         <Link className="link" to="/">home</Link>
         <Link className="link" to="/ocean">ocean</Link>
         <Link className="link" to="/tank">tank</Link>
+        <Link className="link" to="/profile">profile</Link>
+
       </div>
 
       <Switch>
@@ -33,6 +37,13 @@ function App() {
           // will need this to redirect to login page if the user is not logged in
           return (
             <Ocean user={user} setUser={setUser}/>
+          )
+        }}/>
+
+        <Route path="/profile" render={() => {
+
+          return(
+            <Profile user={user}/>
           )
         }}/>
 
