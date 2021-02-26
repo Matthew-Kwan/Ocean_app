@@ -1,0 +1,20 @@
+.tank {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+  
+.tankContent {
+    flex: 1 1 auto;
+    background-color: rgb(155, 233, 245);
+}
+
+.tankBottom {
+    height: 100px;
+    background: rgb(203, 183, 129);
+}
+
+.tankTop {
+    height: 40px;
+    background: white;
+}
