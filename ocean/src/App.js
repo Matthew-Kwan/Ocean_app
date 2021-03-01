@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react'
 import Ocean from './components/Ocean'
 import Tank from './components/Tank'
 import Profile from './components/Profile'
+import YourProfile from './components/YourProfile'
 
 
 // import React Router
@@ -29,6 +30,8 @@ function App() {
         <Link className="link" to="/ocean">ocean</Link>
         <Link className="link" to="/tank">tank</Link>
         <Link className="link" to="/profile">profile</Link>
+        <Link className="link" to="/yourprofile">ur profile</Link>
+
 
       </div>
 
@@ -46,6 +49,14 @@ function App() {
             <Profile user={user}/>
           )
         }}/>
+
+        <Route path="/yourprofile" render={() => {
+
+        return(
+          <YourProfile user={user}/>
+        )
+        }}/>
+
 
 
         <Route path="/tank" render={() => {
