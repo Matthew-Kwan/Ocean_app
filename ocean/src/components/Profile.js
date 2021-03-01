@@ -10,14 +10,14 @@ const Profile = ({user}) => {
             <div className='profHeader'>
                 <div className="profImg"></div>
                 <h2>user.name</h2>
-                
+
             </div>
             <div className = 'profButtons'>
-                    <Link className="link" to="/">
+                    <Link className="link" to="/tank">
                         <Button variant="contained" color="primary">View Tank</Button>
-                        
+
                     </Link>
-                    
+
                 <Button variant="contained" color="primary">
                     Add Friend
                     </Button>
