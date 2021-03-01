@@ -28,6 +28,12 @@
     justify-content: space-between;
 }
 
-.profButtons Button{
+.profButtons button{
     margin-bottom: 10px;
+}
+
+.friend{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }

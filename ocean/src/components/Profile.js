@@ -2,8 +2,6 @@ import React from 'react'
 import { Button } from '@material-ui/core';
 import './profile.css'
 
-import { Route, Switch, Link, BrowserRouter } from 'react-router-dom'
-
 const Profile = ({user}) => {
     return (
         <div className="profCard">
@@ -13,10 +11,8 @@ const Profile = ({user}) => {
 
             </div>
             <div className = 'profButtons'>
-                    <Link className="link" to="/tank">
-                        <Button variant="contained" color="primary">View Tank</Button>
+                <Button variant="contained" color="primary">View Tank</Button>
 
-                    </Link>
 
                 <Button variant="contained" color="primary">
                     Add Friend
