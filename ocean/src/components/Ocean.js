@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import './ocean.css'
+
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
+
+const goals = [
+  {
+    id: 1,
+    title: 'Software'
+  }, {
+    id: 2,
+    title: 'School'
+  }
+]
 
 
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +36,7 @@ const SessionBox = () => {
     - goal
     - user (maybe not since goal is already linked)
   */
-  const classes = useStyles()
+
   const [session, setSession] = useState({})
   const [goal, setGoal] = useState({})
 
@@ -42,29 +52,60 @@ const SessionBox = () => {
     setGoal(event.target.value);
   };
 
+
   return (
-    <div>
+    <Container>
       <h1> Session </h1>
-      <FormControl className={classes.formControl}>
-        {/*Need to add value and onChange to this*/}
-        <InputLabel id="goal-select-label">Goal</InputLabel>
-        <Select
-          labelId="goal-select-label"
-          id="goal-select"
+      <TextField
+          className="session-form-input"
+          label="Title"
+          helperText="Please enter a title for your session"
+        >
+          {goals.map((option) => (
+            <MenuItem key={option.id} value={option.title}>
+              {option.title}
+            </MenuItem>
+          ))}
+        </TextField>
+
+      <TextField
+          className="session-form-input"
+          select
+          label="Goal"
           value={goal}
           onChange={handleChange}
+          helperText="Please select a goal"
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-      </FormControl>
-    </div>
+          {goals.map((option) => (
+            <MenuItem key={option.id} value={option.title}>
+              {option.title}
+            </MenuItem>
+          ))}
+        </TextField>
+
+      <Button variant="outlined" color="primary">
+        Start Session
+      </Button>
+
+
+    </Container>
+  )
+}
+
+// Create some sort of mapping of session data onto fishes that just swim around the ocean
+
+const Fish = (session) => {
+  return (
+    <h1>Fish</h1>
   )
 }
 
 const Ocean = ({user, setUser}) => {
 
+  /* states that will need to be here / passed in
+  user -> goals, friends
+  sessions -> currently ongoing sessions
+  */
   return (
     <div className="ocean">
       <div>
@@ -75,6 +116,7 @@ const Ocean = ({user, setUser}) => {
         {/*other fish*/}
         <div className="currentSessionBox">
           <h1>Current Sessions</h1>
+          <Fish/>
         </div>
         {/*absolute position for session box*/}
         <div className="sessionBox">
