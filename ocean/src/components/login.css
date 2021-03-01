@@ -1,0 +1,29 @@
+#loginbody{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+
+    height: 100%;
+    width: 100%;
+    /* border:1px solid black; */
+    background: rgb(49,42,167);
+background: linear-gradient(29deg, rgba(49,42,167,1) 0%, rgba(49,49,185,1) 38%, rgba(0,212,255,1) 100%);    
+
+}
+
+#loginModule{
+    /* border:1px solid black; */
+    margin: auto;
+
+}
+
+.illustration{
+    height:500px;
+    width:400px;
+    margin: auto;
+
+}
+
+.hi, .input{
+    margin-bottom: 15px;
+}
