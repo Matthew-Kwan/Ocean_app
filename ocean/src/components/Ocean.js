@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './ocean.css'
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -28,7 +28,46 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SessionBox = () => {
+const InSessionBox = ({session, setInSession}) => {
+
+  const [timer, setTimer] = useState(0)
+  const increment = useRef(null)
+
+  useEffect(() => {
+    increment.current = setInterval(() => {
+      setTimer((timer) => timer + 1)
+    }, 1000)
+  }, [])
+
+  const formatTime = () => {
+    const getSeconds = `0${(timer % 60)}`.slice(-2)
+    const minutes = `${Math.floor(timer / 60)}`
+    const getMinutes = `0${minutes % 60}`.slice(-2)
+    const getHours = `0${Math.floor(timer / 3600)}`.slice(-2)
+
+    return `${getHours} : ${getMinutes} : ${getSeconds}`
+  }
+
+  const handleEndSession = () => {
+    clearInterval(increment.current)
+    setTimer(0)
+    setInSession(false)
+  }
+
+  return (
+    <Container>
+      <h1> Session In Progress </h1>
+      <h1> Title: {session.title} </h1>
+      <h3> Goal: {session.goal} </h3>
+      <p>{ formatTime(timer) }</p>
+      <Button type="submit" onClick={handleEndSession} variant="outlined" color="red">
+          End Session
+        </Button>
+    </Container>
+  )
+}
+
+const SessionBox = ({ session, setSession, setInSession }) => {
 
   /* session: object with
     - title
@@ -37,56 +76,67 @@ const SessionBox = () => {
     - user (maybe not since goal is already linked)
   */
 
-  const [session, setSession] = useState({})
-  const [goal, setGoal] = useState({})
+  const classes = useStyles();
 
   // on mount refresh the session state
-  useEffect(() => {
-    setSession({})
-    setGoal({})
-  }, [])
+  // useEffect(() => {
+  //   this.setSession({
+  //     title: '',
+  //     goal: '',
+  //   })
+  // }, [])
 
 
   // placeholder, this will probably be put into a custom hook (ref FSO 7.2)
-  const handleChange = (event) => {
-    setGoal(event.target.value);
+  const handleChange = (e) => {
+    e.preventDefault()
+    const value = e.target.value
+    setSession({
+      ...session,
+      [e.target.name]: value
+    })
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setInSession(true)
+  }
 
 
   return (
     <Container>
       <h1> Session </h1>
-      <TextField
-          className="session-form-input"
-          label="Title"
-          helperText="Please enter a title for your session"
-        >
-          {goals.map((option) => (
-            <MenuItem key={option.id} value={option.title}>
-              {option.title}
-            </MenuItem>
-          ))}
+      <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
+        <TextField
+            className="session-form-input"
+            label="Title"
+            name="title"
+            helperText="Please enter a title for your session"
+            value={session.title}
+            onChange={handleChange}
+          >
+          </TextField>
+
+        <TextField
+            className="session-form-input"
+            select
+            label="Goal"
+            name="goal"
+            value={session.goal}
+            onChange={handleChange}
+            helperText="Please select a goal"
+          >
+            {goals.map((option) => (
+              <MenuItem key={option.id} value={option.title}>
+                {option.title}
+              </MenuItem>
+            ))}
         </TextField>
 
-      <TextField
-          className="session-form-input"
-          select
-          label="Goal"
-          value={goal}
-          onChange={handleChange}
-          helperText="Please select a goal"
-        >
-          {goals.map((option) => (
-            <MenuItem key={option.id} value={option.title}>
-              {option.title}
-            </MenuItem>
-          ))}
-        </TextField>
-
-      <Button variant="outlined" color="primary">
-        Start Session
-      </Button>
-
+        <Button type="submit" variant="outlined" color="primary">
+          Start Session
+        </Button>
+      </form>
 
     </Container>
   )
@@ -106,6 +156,13 @@ const Ocean = ({user, setUser}) => {
   user -> goals, friends
   sessions -> currently ongoing sessions
   */
+
+  const [inSession, setInSession] = useState(false)
+  const [session, setSession] = useState({
+    title: '',
+    goal: '',
+  })
+
   return (
     <div className="ocean">
       <div>
@@ -120,7 +177,7 @@ const Ocean = ({user, setUser}) => {
         </div>
         {/*absolute position for session box*/}
         <div className="sessionBox">
-          <SessionBox/>
+          {inSession ? <InSessionBox session={session} setInSession={setInSession}/> : <SessionBox session={session} setSession={setSession} setInSession={setInSession}/>}
         </div>
       </div>
     </div>
