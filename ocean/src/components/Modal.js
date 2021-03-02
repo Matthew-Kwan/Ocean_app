@@ -17,13 +17,14 @@ export default function SimpleModal(props) {
 
     return (
         <div>
-            <Button onClick={handleOpen}>{`${buttonName}`}</Button>
+            <Button onClick={handleOpen} variant="outlined" color="primary">{`${buttonName}`}</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
 
             >
                 {content}
+                
             </Modal>
         </div>
     );

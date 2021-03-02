@@ -2,7 +2,7 @@ import React from 'react'
 import './tank.css'
 import GoalsDrawer from './GoalsDrawer'
 
-
+console.log("hello")
 
 const Tank= () => {
 
@@ -10,14 +10,11 @@ const Tank= () => {
         
         <div className="tank">
 
-            
-                <div className="tankTop"></div>
-
 
                 <div className="tankContent">
 
 
-                    <GoalsDrawer></GoalsDrawer>
+                    <GoalsDrawer/>
 
                 </div>
                 
@@ -26,9 +23,7 @@ const Tank= () => {
 
 
         </div>
-
-        
-        
+   
     )
 }
 
