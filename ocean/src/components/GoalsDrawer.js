@@ -63,17 +63,21 @@ const addGoalModalContent = (
           >
         </TextField>
 
+        <p></p>
+        
+
         <Button type="submit" variant="outlined" color="primary" onClick={addGoal}>
-          Start Session
+          Add Goal
         </Button>
       </form>
     </div>
   </div>
 );
 
-/*
 
-const seeDetailsModalContent = goal => (
+
+
+const seeDetailsModalContent = (goal) => (
   <div className = 'modalContainer'>
     <div className = 'modalContent'>
     <h1>{`${goal.title}`}</h1>
@@ -90,31 +94,6 @@ const seeDetailsModalContent = goal => (
     </div>
   </div>
 )
-*/
-
-const seeDetailsModalContent =  (
-  <div className = 'modalContainer'>
-    <div className = 'modalContent'>
-    <h1>{`${goals[0].title}`}</h1>
-      <h2>Tasks</h2>
-
-      {goals.map((goal, index) => (
-        <div key={index}>
-
-        {goal.tasks.map((task) => (
-
-          <li>{`${task.task}`}</li>
-
-        ))}
-        <ProgressBar completed={goal.completionPercent}/>
-        </div>
-        
-      ))}
-
-    </div>
-  </div>
-)
-
 
 function createGoalDetailsContent() {
 
@@ -130,13 +109,22 @@ export default function GoalsDrawer() {
   const [state, setState] = React.useState({
     right: false
   });
-
+  
+  //toggleDrawer open
   const toggleDrawer = (anchor, open) => (event) => {
     setState({ ...state, [anchor]: open });
   };
 
-  const refreshDrawer = (anchor, goalId) => (event) => {
+  //refresh drawer on deletee
+  const refreshDrawerDelete = (anchor, goalId) => (event) => {
     deleteGoal(goalId);
+    setState({ ...state, [anchor]: false });
+    setState({ ...state, [anchor]: true });
+  };
+
+  //refresh drawer on add
+  const refreshDrawerAdd = (anchor, goalId) => (event) => {
+    addGoal(goalId);
     setState({ ...state, [anchor]: false });
     setState({ ...state, [anchor]: true });
   };
@@ -165,9 +153,10 @@ export default function GoalsDrawer() {
               <ProgressBar completed={goal.completionPercent}/>
 
               <div className = 'leftButton'>
-                <SimpleModal buttonName ='See Details' content = {seeDetailsModalContent}/>
+                <SimpleModal buttonName ='See Details' content = {seeDetailsModalContent(goal)}/>
               </div>              
-              <Button className = 'rightButton' variant="outlined" color="primary" onClick={refreshDrawer(anchor, goal.id)}>Finished!</Button>
+              <Button className = 'rightButton' variant="outlined" color="primary" onClick={refreshDrawerDelete(anchor, goal.id)}>Finished!</Button>
+              
             </div>
 
           </div>
@@ -216,6 +205,8 @@ function deleteGoal(goalId) {
   
   const index = goals.indexOf(goal);
   goals.splice(index, 1);
+
+  console.log(typeof(seeDetailsModalContent2))
 
 
 }
