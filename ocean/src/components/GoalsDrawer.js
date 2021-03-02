@@ -135,6 +135,11 @@ export default function GoalsDrawer() {
     setState({ ...state, [anchor]: open });
   };
 
+  const refreshDrawer = (anchor, goalId) => (event) => {
+    deleteGoal(goalId);
+    setState({ ...state, [anchor]: false });
+    setState({ ...state, [anchor]: true });
+  };
 
   //drawer contents, iterate through goal list; current goal list will appear on refresh of drawer
   const drawer = (anchor) => (
@@ -162,7 +167,7 @@ export default function GoalsDrawer() {
               <div className = 'leftButton'>
                 <SimpleModal buttonName ='See Details' content = {seeDetailsModalContent}/>
               </div>              
-              <Button className = 'rightButton' variant="outlined" color="primary" onClick={deleteGoal}>Finished!</Button>
+              <Button className = 'rightButton' variant="outlined" color="primary" onClick={refreshDrawer(anchor, goal.id)}>Finished!</Button>
             </div>
 
           </div>
@@ -203,6 +208,14 @@ function addGoal(goal) {
 }
 
 function deleteGoal(goalId) {
-  goals.splice(goalId, 1);
+
+  const goal = goals.find(function(goal, index) {
+    if(goal.id == goalId)
+      return true;
+  });
+  
+  const index = goals.indexOf(goal);
+  goals.splice(index, 1);
+
 
 }
