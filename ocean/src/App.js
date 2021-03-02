@@ -7,6 +7,8 @@ import Tank from './components/Tank'
 import Profile from './components/Profile'
 import YourProfile from './components/YourProfile'
 import Login from './components/Login'
+import AdminDashboard from './components/AdminDashboard'
+
 
 
 // import React Router
@@ -33,6 +35,8 @@ function App() {
         <Link className="link" to="/profile">profile</Link>
         <Link className="link" to="/yourprofile">ur profile</Link>
         <Link className="link" to="/login">login</Link>
+        <Link className="link" to="/admin">admin dashboard</Link>
+
 
 
 
@@ -58,6 +62,13 @@ function App() {
           return(
             <Login/>
           )
+        }}/>
+
+        <Route path="/admin" render={() => {
+
+        return(
+          <AdminDashboard/>
+        )
         }}/>
 
         <Route path="/yourprofile" render={() => {
