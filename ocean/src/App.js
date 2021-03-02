@@ -45,6 +45,36 @@ const useStyles = makeStyles({
   },
 });
 
+const LoginModule = ({loggedIn,handleLogin,classes}) => {
+  if (loggedIn) {
+    return (
+      <div></div>
+    )
+  } else {
+    return(
+      <div id='loginbody'>
+            <Card id='loginModule' className={classes.root}>
+                <CardContent>
+                    <h3>
+                    Dive into Ocean</h3>
+                    <form className={classes.root} noValidate autoComplete="off" onSubmit={handleLogin}>
+                        <div className = 'input' id="username-input">
+                        <TextField required id="outlined-basic" size='small' label="Username" variant="outlined" /></div>
+                        <div className= 'input' id="password-input">
+                        <TextField required name="" id="outlined-basic" size='small' label="Password" type="password" variant="outlined" /></div>
+                        <Button type='submit' variant="contained" color="primary">
+                            Login
+                        </Button>
+                    </form>
+
+                </CardContent>
+
+                </Card>
+            <img className="illustration"></img>
+      </div> )
+    
+  }
+}
 const NavBar = ({loggedIn, handleLogout}) => {
   if (loggedIn) {
     return (
@@ -192,26 +222,7 @@ function App() {
 
       </Switch>
 
-      <div id='loginbody'>
-            <Card id='loginModule' className={classes.root}>
-                <CardContent>
-                    <h3>
-                    Dive into Ocean</h3>
-                    <form className={classes.root} noValidate autoComplete="off" onSubmit={handleLogin}>
-                        <div className = 'input' id="username-input">
-                        <TextField required id="outlined-basic" size='small' label="Username" variant="outlined" /></div>
-                        <div className= 'input' id="password-input">
-                        <TextField required name="" id="outlined-basic" size='small' label="Password" type="password" variant="outlined" /></div>
-                        <Button type='submit' variant="contained" color="primary">
-                            Login
-                        </Button>
-                    </form>
-
-                </CardContent>
-
-                </Card>
-            <img className="illustration"></img>
-        </div>
+      <LoginModule loggedIn={loggedIn} handleLogin={handleLogin} classes = {classes}></LoginModule>
 
     </BrowserRouter>
   );
