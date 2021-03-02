@@ -85,7 +85,9 @@ const seeDetailsModalContent = (goal) => (
 
       {goal.tasks.map((task) => (
         <div>
-          <li>{`${task.task}`}</li>
+          <input type="checkbox" id={task.id} name={task.task} value={task.task} checked={task.completed}/>
+          <label for={task.task}>{`${task.task}`}</label>
+
         </div>       
       ))}
       <p></p>
@@ -205,8 +207,4 @@ function deleteGoal(goalId) {
   
   const index = goals.indexOf(goal);
   goals.splice(index, 1);
-
-  console.log(typeof(seeDetailsModalContent2))
-
-
 }
