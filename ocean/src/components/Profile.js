@@ -7,7 +7,7 @@ const Profile = ({user}) => {
         <div className="profCard">
             <div className='profHeader'>
                 <div className="profImg"></div>
-                <h2>user.name</h2>
+                <h2>{user.name}</h2>
 
             </div>
             <div className = 'profButtons'>

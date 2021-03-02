@@ -96,6 +96,61 @@ const NavBar = ({loggedIn, handleLogout}) => {
 }
 
 function App() {
+  const goals1 = [
+    {
+      id: 1,
+      title: 'Software',
+      totalTasksNum: 2,
+      completedTasksNum: 1,
+      completionPercent: 50,
+      tasks: [
+        {id: 1, task: 'Research React', completed: true},
+        {id: 2, task: 'Make demo app', completed: false}
+      ]
+    }, 
+    {
+      id: 2,
+      title: 'School',
+      totalTasksNum: 5,
+      completedTasksNum: 3,
+      completionPercent: 60,
+      tasks: [
+        {id: 1, task: 'study for CSC309', completed: true},
+        {id: 2, task: 'study for CSC384', completed: true},
+        {id: 3, task: 'drop MIE424', completed: true},
+        {id: 4, task: 'submit AI minor form request', completed: false},
+        {id: 5, task: 'submit extra form request', completed: false}
+      ]
+    }
+  ]
+  
+  const goals2 = [
+    {
+      id: 1,
+      title: 'Admin Stuff',
+      totalTasksNum: 2,
+      completedTasksNum: 1,
+      completionPercent: 50,
+      tasks: [
+        {id: 1, task: 'Research React', completed: true},
+        {id: 2, task: 'Make demo app', completed: false}
+      ]
+    }, 
+    {
+      id: 2,
+      title: 'More Admin stuff',
+      totalTasksNum: 5,
+      completedTasksNum: 3,
+      completionPercent: 60,
+      tasks: [
+        {id: 1, task: 'study for CSC309', completed: true},
+        {id: 2, task: 'study for CSC384', completed: true},
+        {id: 3, task: 'drop MIE424', completed: true},
+        {id: 4, task: 'submit AI minor form request', completed: false},
+        {id: 5, task: 'submit extra form request', completed: false}
+      ]
+    }
+  ]
 
   const usersList = [
     {
@@ -103,12 +158,16 @@ function App() {
       username: 'test',
       password: 'test',
       adminFlag: false,
+      name: 'Pom',
+      goals: goals1
     },
     {
       id: 2,
       username: 'admin',
       password: 'admin',
       adminFlag: true,
+      name: 'AdminJim',
+      goals: goals2
     }
   ]
 
