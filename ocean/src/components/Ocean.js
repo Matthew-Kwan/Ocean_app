@@ -166,7 +166,7 @@ const Ocean = ({user, setUser}) => {
   return (
     <div className="ocean">
       <div>
-        <h1>Ocean</h1>
+        <h1>Ocean: {user.username} </h1>
       </div>
 
       <div className="oceanContent">
