@@ -5,7 +5,6 @@ import Button from '@material-ui/core/Button';
 export default function SimpleModal(props) {
 
     const { buttonName, content} = props;
-    // getModalStyle is not a pure function, we roll the style only on the first render
     const [open, setOpen] = React.useState(false);
 
     const handleOpen = () => {

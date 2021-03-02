@@ -2,7 +2,7 @@ import React from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 
-import './goalsdrawer.css'
+import './GoalsDrawer.css'
 import './modal.css'
 
 import ProgressBar from './ProgressBar'
