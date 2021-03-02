@@ -1,32 +1,35 @@
 import React from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
-import Modal from '@material-ui/core/Modal';
 
 import './goalsdrawer.css'
+import './modal.css'
 
 import ProgressBar from './ProgressBar'
+import SimpleModal from './Modal'
 
 export default function GoalsDrawer() {
 
   //drawer state
   const [state, setState] = React.useState({
-    right: false,
+    right: false
   });
-
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const toggleDrawer = (anchor, open) => (event) => {
     setState({ ...state, [anchor]: open });
   };
+
+  const addGoalModalContent = (
+    <div className = 'modalContainer'>
+      <div className = 'modalContent'>
+        <h2 >Add a Goal!</h2>
+        <p>
+        Content
+        </p>
+      </div>
+    </div>
+);
+
 
   //drawer contents
   const drawer = (anchor) => (
@@ -34,9 +37,7 @@ export default function GoalsDrawer() {
       <div className='drawerContent'>
 
         <h1>Your Goals</h1>
-        
-        <Button className = 'button' onClick={handleOpen}>Add Goal</Button>
-
+        <SimpleModal buttonName ='Add Goal' content = {addGoalModalContent} />
 
         {/*some harcoded goals */}
         <div className='goalIndividualContainer'>
@@ -65,21 +66,6 @@ export default function GoalsDrawer() {
 
     </div>
   );
-
-
-  //new goal modal
-  <Modal
-    open={open}
-    onClose={handleClose}
-    aria-labelledby="simple-modal-title"
-    aria-describedby="simple-modal-description"
-  >
-  </Modal>
-
-
-
-
-
 
   //open side drawer
   return (

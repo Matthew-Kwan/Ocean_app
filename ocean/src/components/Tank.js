@@ -1,6 +1,6 @@
 import React from 'react'
 import './tank.css'
-import GoalsDrawer from './GoalsDrawer.js'
+import GoalsDrawer from './GoalsDrawer'
 
 
 
