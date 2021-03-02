@@ -3,7 +3,9 @@ import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 
-import './GoalsDrawer.css'
+import './goalsdrawer.css'
+
+import ProgressBar from './ProgressBar'
 
 export default function GoalsDrawer() {
 
@@ -35,18 +37,23 @@ export default function GoalsDrawer() {
         
         <Button className = 'button' onClick={handleOpen}>Add Goal</Button>
 
+
+        {/*some harcoded goals */}
         <div className='goalIndividualContainer'>
           <div className = 'goalIndividualContents'>
             <p className = 'bold'> Study for CSC309</p>
+            <ProgressBar bgcolor = '#6a1b9a' completed='60'/>
             <Button className = 'button' >See Details</Button>
             <div class="divider"/>
             <Button className = 'button' >Complete</Button>
           </div>
 
         </div>
+
         <div className='goalIndividualContainer'>
           <div className = 'goalIndividualContents'>
-            <p className = 'bold'> Study for CSC309</p>
+            <p className = 'bold'> Finish Capstone Project</p>
+            <ProgressBar bgcolor = '#6a1b9a' completed='20'/>
             <Button className = 'button' >See Details</Button>
             <div class="divider"/>
             <Button className = 'button' >Complete</Button>
