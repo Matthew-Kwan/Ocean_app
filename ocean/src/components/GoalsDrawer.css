@@ -1,46 +1,65 @@
-/* goalsDrawer div will expand as content is added*/
+/* whole drawer*/
 .goalsDrawer {
     width: 350px;
 }
 
-/* goalsDrawer div will expand as content is added*/
-.goalsDiv {
+/* div returned with GoalsDrawer call*/
+.goalsButtonDiv {
     display: inline-block;
     margin: 5px;
     margin-right: 50px;
     float: right;
 }
 
+/* generic button css*/
 .button {
     background-color:  rgb(255, 255, 255) !important;
     border-radius: 10px;
 }
 
-.divider{
-    width:30px;
-    height: auto;
-    display:inline-block;
-}
-
-/* goalsContent div will expand as content is added*/
+/* drawerContent: title, goals, etc.*/
 .drawerContent {
     margin: 10px;
     margin-left: 30px;
     margin-right: 30px;
 }
 
-.goalIndividualContainer {
-    background-color:  rgb(200, 248, 255) !important;
-    border-radius: 10px;
-    border: 1px solid rgb(123, 225, 243);
-    margin-top: 30px;
-
+/* div for drawer title*/
+.drawerTitleDiv {
+    display: inline-block;
+    margin-right:19px;
 }
 
+/* div for see details button*/
+.leftButton{
+    display: inline-block;
+}
+
+/* div for finished button/add goal button*/
+.rightButton{
+    display: inline-block;
+    float: right;
+    margin-top: 24px;
+}
+
+/* div for list of goal containers*/
+.goalsList {
+}
+
+/* div for individual goal containers*/
+.goalIndividualContainer {
+    background-color:  rgb(190, 232, 238) !important;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    overflow: auto;
+}
+
+/* contents of individual goals*/
 .goalIndividualContents {
     margin: 20px;
 }
 
+/* text formatting, should move into a general css file*/
 .bold {
     font-weight: bold;
 }

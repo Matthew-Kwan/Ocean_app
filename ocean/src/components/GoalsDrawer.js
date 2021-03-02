@@ -28,39 +28,58 @@ export default function GoalsDrawer() {
         </p>
       </div>
     </div>
-);
+  );
+
+  const seeDetailsModalContent = (
+    <div className = 'modalContainer'>
+      <div className = 'modalContent'>
+      <h1>Goal Title</h1>
+        <p>
+        Content
+        </p>
+      </div>
+    </div>
+
+  );
 
 
   //drawer contents
   const drawer = (anchor) => (
     <div className='goalsDrawer'>
       <div className='drawerContent'>
+        <div className='drawerTitleDiv'><h1>Your Goals</h1></div>
 
-        <h1>Your Goals</h1>
-        <SimpleModal buttonName ='Add Goal' content = {addGoalModalContent} />
+        <div className='rightButton'><SimpleModal buttonName ='Add Goal' content = {addGoalModalContent} /></div>
 
         {/*some harcoded goals */}
-        <div className='goalIndividualContainer'>
-          <div className = 'goalIndividualContents'>
-            <p className = 'bold'> Study for CSC309</p>
-            <ProgressBar bgcolor = '#6a1b9a' completed='60'/>
-            <Button className = 'button' >See Details</Button>
-            <div class="divider"/>
-            <Button className = 'button' >Complete</Button>
+        <div className='goalsList'>
+          <div className='goalIndividualContainer'>
+            <div className = 'goalIndividualContents'>
+              <p className = 'bold'> Study for CSC309</p>
+              
+              <ProgressBar bgcolor = '#6a1b9a' completed='60'/>
+
+              <div className = 'leftButton'>
+                <SimpleModal buttonName ='See Details' content = {seeDetailsModalContent} />
+              </div>              
+              <Button className = 'rightButton' >Finished!</Button>
+            </div>
+
           </div>
 
-        </div>
+          <div className='goalIndividualContainer'>
+            <div className = 'goalIndividualContents'>
+              <p className = 'bold'> Finish Capstone Project</p>
+              <ProgressBar bgcolor = '#6a1b9a' completed='20'/>
+              <div className = 'leftButton'>
+                <SimpleModal buttonName ='See Details' content = {seeDetailsModalContent} />
+              </div>              
+              <Button className = 'rightButton' >Finished!</Button>
+            </div>
 
-        <div className='goalIndividualContainer'>
-          <div className = 'goalIndividualContents'>
-            <p className = 'bold'> Finish Capstone Project</p>
-            <ProgressBar bgcolor = '#6a1b9a' completed='20'/>
-            <Button className = 'button' >See Details</Button>
-            <div class="divider"/>
-            <Button className = 'button' >Complete</Button>
           </div>
-
         </div>
+        {/*end harcoded goals */}
 
       </div>
 
@@ -69,7 +88,7 @@ export default function GoalsDrawer() {
 
   //open side drawer
   return (
-    <div className = 'goalsDiv'>
+    <div className = 'goalsButtonDiv'>
       {['See Your Goals'].map((anchor) => (
         <React.Fragment key={anchor}>
           <Button className = 'button' onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
