@@ -2,8 +2,6 @@ import React from 'react'
 import './tank.css'
 import GoalsDrawer from './GoalsDrawer'
 
-console.log("hello")
-
 const Tank= () => {
 
     return (
