@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import './ocean.css'
 import InSessionBox from './InSessionBox'
 import SessionBox from './SessionBox'
@@ -6,7 +6,7 @@ import Fish from './Fish'
 
 
 // Create some sort of mapping of session data onto fishes that just swim around the ocean
-const Ocean = ({user}) => {
+const Ocean = ({user, sessions}) => {
 
   /* states that will need to be here / passed in
   user -> goals, friends
@@ -18,6 +18,12 @@ const Ocean = ({user}) => {
     title: '',
     goal: '',
   })
+  const [currentSessions, setCurrentSessions] = useState([])
+
+  useEffect(() => {
+    const tmpCurrentSessions = sessions.filter((s) => s.endTime === null)
+    setCurrentSessions(tmpCurrentSessions)
+  }, [])
 
   return (
     <div className="ocean">
@@ -29,7 +35,7 @@ const Ocean = ({user}) => {
         {/*other fish*/}
         <div className="currentSessionBox">
           <h1>Current Sessions</h1>
-          <Fish/>
+          {currentSessions.map(session => <Fish session={session}/>)}
         </div>
         {/*absolute position for session box*/}
         <div className="sessionBox">
