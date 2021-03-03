@@ -76,7 +76,7 @@ const LoginModule = ({loggedIn,handleLogin,classes}) => {
                 </Card>
             <img className="illustration"></img>
       </div> )
-    
+
   }
 }
 const NavBar = ({loggedIn, handleLogout, user}) => {
@@ -89,7 +89,7 @@ const NavBar = ({loggedIn, handleLogout, user}) => {
         <Link className="link" to="/profile">profile</Link>
         <SimpleModal buttonName ='Ur Profile' content = {YourProfile({user})} />
         <Link className="link" to="/admin">admin dashboard</Link>
-        { loggedIn ? <Link to="/" onClick={handleLogout}> Log Out </Link> : null }
+        { loggedIn ? <Link to="/" onClick={handleLogout}> logout </Link> : null }
     </div>
     )
   } else {
@@ -111,8 +111,7 @@ function App() {
         {id: 1, task: 'Research React', completed: true},
         {id: 2, task: 'Make demo app', completed: false}
       ]
-   
-    }, 
+    },
     {
       id: 2,
       title: 'School',
@@ -128,7 +127,7 @@ function App() {
       ]
     }
   ]
-  
+
   const goals2 = [
     {
       id: 1,
@@ -140,7 +139,7 @@ function App() {
         {id: 1, task: 'Research React', completed: true},
         {id: 2, task: 'Make demo app', completed: false}
       ]
-    }, 
+    },
     {
       id: 2,
       title: 'More Admin stuff',
@@ -202,6 +201,33 @@ function App() {
     }
   ]
 
+  const sessionsList = [
+    {
+      sessionId: 1,
+      userId: 1,
+      goalId: 2,
+      title: "Work on ocean component",
+      startTime: new Date(2021,2,1,8,0,0),
+      endTime: new Date(2021,2,1,12,0,0),
+    },
+    {
+      sessionId: 2,
+      userId: 1,
+      goalId: 1,
+      title: "Learn more about React",
+      startTime: new Date(2021,2,2,8,0,0),
+      endTime: new Date(2021,2,2,12,0,0),
+    },
+    {
+      sessionId: 3,
+      userId: 3,
+      goalId: 2,
+      title: "Report some peeps",
+      startTime: new Date(2021,2,3,8,0,0),
+      endTime: null,
+    },
+  ]
+
   // React states
 
   const [users, setUsers] = useState(usersList)
@@ -216,6 +242,8 @@ function App() {
     username: '',
     password: '',
   })
+
+  const [sessions, setSessions] = useState(sessionsList)
 
   const [loggedIn, setLoggedIn] = useState(false)
 
@@ -274,7 +302,7 @@ function App() {
         <Route path="/ocean" render={() => {
           // will need this to redirect to login page if the user is not logged in
           return (
-            <Ocean user={user} setUser={setUser}/>
+            <Ocean user={user} sessions={sessions}/>
           )
         }}/>
 
