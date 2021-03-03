@@ -5,7 +5,7 @@
     display: flex;
     flex-direction: column;
     width:300px;
-    border:1px solid green;
+    /* border:1px solid green; */
 }
 
 .profHeader{

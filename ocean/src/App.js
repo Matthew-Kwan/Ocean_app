@@ -19,6 +19,10 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
+import './components/modal.css'
+import './components/profile.css'
+import ProgressBar from './components/ProgressBar'
+import SimpleModal from './components/Modal'
 
 // import React Router
 import { Route, Switch, Link, Redirect, BrowserRouter } from 'react-router-dom'
@@ -75,7 +79,7 @@ const LoginModule = ({loggedIn,handleLogin,classes}) => {
     
   }
 }
-const NavBar = ({loggedIn, handleLogout}) => {
+const NavBar = ({loggedIn, handleLogout, user}) => {
   if (loggedIn) {
     return (
       <div>
@@ -83,7 +87,7 @@ const NavBar = ({loggedIn, handleLogout}) => {
         <Link className="link" to="/ocean">ocean</Link>
         <Link className="link" to="/tank">tank</Link>
         <Link className="link" to="/profile">profile</Link>
-        <Link className="link" to="/yourprofile">ur profile</Link>
+        <SimpleModal buttonName ='Ur Profile' content = {YourProfile({user})} />
         <Link className="link" to="/admin">admin dashboard</Link>
         { loggedIn ? <Link to="/" onClick={handleLogout}> Log Out </Link> : null }
     </div>
@@ -187,7 +191,7 @@ function App() {
       ]
     },
     {
-      id: 2,
+      id: 4,
       username: 'b',
       password: 'b',
       adminFlag: true,
@@ -257,7 +261,7 @@ function App() {
 
     <BrowserRouter>
       <div>
-        <NavBar loggedIn={loggedIn} handleLogout={handleLogout}/>
+        <NavBar loggedIn={loggedIn} handleLogout={handleLogout} user = {user}/>
         {/* <Link className="link" to="/">home</Link>
         <Link className="link" to="/ocean">ocean</Link>
         <Link className="link" to="/tank">tank</Link>
