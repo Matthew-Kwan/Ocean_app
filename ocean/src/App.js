@@ -79,7 +79,7 @@ const NavBar = ({loggedIn, handleLogout}) => {
   if (loggedIn) {
     return (
       <div>
-        <Link className="link" to="/">home</Link>
+        {/* <Link className="link" to="/">home</Link> */}
         <Link className="link" to="/ocean">ocean</Link>
         <Link className="link" to="/tank">tank</Link>
         <Link className="link" to="/profile">profile</Link>
