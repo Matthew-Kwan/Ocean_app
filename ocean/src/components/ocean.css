@@ -33,3 +33,7 @@
 .session-form-input {
   margin-bottom: 3vh !important;
 }
+
+.currentSessionBox {
+  width: auto;
+}
