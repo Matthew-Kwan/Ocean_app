@@ -72,7 +72,7 @@ const LoginModule = ({loggedIn,handleLogin,classes}) => {
                 </Card>
             <img className="illustration"></img>
       </div> )
-    
+
   }
 }
 const NavBar = ({loggedIn, handleLogout}) => {
@@ -85,7 +85,7 @@ const NavBar = ({loggedIn, handleLogout}) => {
         <Link className="link" to="/profile">profile</Link>
         <Link className="link" to="/yourprofile">ur profile</Link>
         <Link className="link" to="/admin">admin dashboard</Link>
-        { loggedIn ? <Link to="/" onClick={handleLogout}> Log Out </Link> : null }
+        { loggedIn ? <Link to="/" onClick={handleLogout}> logout </Link> : null }
     </div>
     )
   } else {
@@ -107,7 +107,7 @@ function App() {
         {id: 1, task: 'Research React', completed: true},
         {id: 2, task: 'Make demo app', completed: false}
       ]
-    }, 
+    },
     {
       id: 2,
       title: 'School',
@@ -123,7 +123,7 @@ function App() {
       ]
     }
   ]
-  
+
   const goals2 = [
     {
       id: 1,
@@ -135,7 +135,7 @@ function App() {
         {id: 1, task: 'Research React', completed: true},
         {id: 2, task: 'Make demo app', completed: false}
       ]
-    }, 
+    },
     {
       id: 2,
       title: 'More Admin stuff',
@@ -168,7 +168,23 @@ function App() {
       adminFlag: true,
       name: 'AdminJim',
       goals: goals2
-    }
+    },
+    {
+      id: 3,
+      username: 'test',
+      password: 'test',
+      adminFlag: false,
+      name: 'Pom',
+      goals: goals1
+    },
+    {
+      id: 3,
+      username: 'test',
+      password: 'test',
+      adminFlag: false,
+      name: 'Pom',
+      goals: goals1
+    },
   ]
 
   // React states

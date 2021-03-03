@@ -7,17 +7,6 @@ import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 
-const goals = [
-  {
-    id: 1,
-    title: 'Software'
-  }, {
-    id: 2,
-    title: 'School'
-  }
-]
-
-
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -67,7 +56,7 @@ const InSessionBox = ({session, setInSession}) => {
   )
 }
 
-const SessionBox = ({ session, setSession, setInSession }) => {
+const SessionBox = ({ user, session, setSession, setInSession }) => {
 
   /* session: object with
     - title
@@ -126,7 +115,7 @@ const SessionBox = ({ session, setSession, setInSession }) => {
             onChange={handleChange}
             helperText="Please select a goal"
           >
-            {goals.map((option) => (
+            {user.goals.map((option) => (
               <MenuItem key={option.id} value={option.title}>
                 {option.title}
               </MenuItem>
@@ -150,7 +139,7 @@ const Fish = (session) => {
   )
 }
 
-const Ocean = ({user, setUser}) => {
+const Ocean = ({user}) => {
 
   /* states that will need to be here / passed in
   user -> goals, friends
@@ -177,7 +166,7 @@ const Ocean = ({user, setUser}) => {
         </div>
         {/*absolute position for session box*/}
         <div className="sessionBox">
-          {inSession ? <InSessionBox session={session} setInSession={setInSession}/> : <SessionBox session={session} setSession={setSession} setInSession={setInSession}/>}
+          {inSession ? <InSessionBox session={session} setInSession={setInSession}/> : <SessionBox user={user} session={session} setSession={setSession} setInSession={setInSession}/>}
         </div>
       </div>
     </div>
