@@ -186,7 +186,7 @@ function App() {
       ]
     },
     {
-      id: 2,
+      id: 4,
       username: 'b',
       password: 'b',
       adminFlag: true,
@@ -195,6 +195,33 @@ function App() {
       friends: [
       ]
     }
+  ]
+
+  const sessionsList = [
+    {
+      sessionId: 1,
+      userId: 1,
+      goalId: 2,
+      title: "Work on ocean component",
+      startTime: new Date(2021,3,1,8,0,0),
+      endTime: new Date(2021,3,1,12,0,0),
+    },
+    {
+      sessionId: 2,
+      userId: 1,
+      goalId: 1,
+      title: "Learn more about React",
+      startTime: new Date(2021,3,2,8,0,0),
+      endTime: new Date(2021,3,2,12,0,0),
+    },
+    {
+      sessionId: 3,
+      userId: 3,
+      goalId: 2,
+      title: "Report some peeps",
+      startTime: new Date(2021,3,5,8,0,0),
+      endTime: null,
+    },
   ]
 
   // React states
@@ -211,6 +238,8 @@ function App() {
     username: '',
     password: '',
   })
+
+  const [sessions, setSessions] = useState(sessionsList)
 
   const [loggedIn, setLoggedIn] = useState(false)
 
@@ -269,7 +298,7 @@ function App() {
         <Route path="/ocean" render={() => {
           // will need this to redirect to login page if the user is not logged in
           return (
-            <Ocean user={user} setUser={setUser}/>
+            <Ocean user={user} sessions={sessions}/>
           )
         }}/>
 
