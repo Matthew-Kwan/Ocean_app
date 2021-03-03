@@ -168,23 +168,7 @@ function App() {
       adminFlag: true,
       name: 'AdminJim',
       goals: goals2
-    },
-    {
-      id: 3,
-      username: 'test',
-      password: 'test',
-      adminFlag: false,
-      name: 'Pom',
-      goals: goals1
-    },
-    {
-      id: 3,
-      username: 'test',
-      password: 'test',
-      adminFlag: false,
-      name: 'Pom',
-      goals: goals1
-    },
+    }
   ]
 
   // React states
