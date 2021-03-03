@@ -159,7 +159,10 @@ function App() {
       password: 'test',
       adminFlag: false,
       name: 'Pom',
-      goals: goals1
+      goals: goals1,
+      friends: [
+        {id:3, name: 'GrassyMans'},
+      ]
     },
     {
       id: 2,
@@ -167,7 +170,30 @@ function App() {
       password: 'admin',
       adminFlag: true,
       name: 'AdminJim',
-      goals: goals2
+      goals: goals2,
+      friends: [
+        {id:4, name: 'Billy'},
+      ]
+    },
+    {
+      id: 3,
+      username: 'a',
+      password: 'a',
+      adminFlag: true,
+      name: 'GrassyMans',
+      goals: goals2,
+      friends: [
+      ]
+    },
+    {
+      id: 2,
+      username: 'b',
+      password: 'b',
+      adminFlag: true,
+      name: 'PotatoChip',
+      goals: goals2,
+      friends: [
+      ]
     }
   ]
 

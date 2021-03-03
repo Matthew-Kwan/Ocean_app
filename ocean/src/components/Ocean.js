@@ -2,16 +2,10 @@ import React, { useState} from 'react'
 import './ocean.css'
 import InSessionBox from './InSessionBox'
 import SessionBox from './SessionBox'
+import Fish from './Fish'
 
 
 // Create some sort of mapping of session data onto fishes that just swim around the ocean
-
-const Fish = (session) => {
-  return (
-    <h1>Fish</h1>
-  )
-}
-
 const Ocean = ({user}) => {
 
   /* states that will need to be here / passed in
