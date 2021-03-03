@@ -12,6 +12,22 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#profText * {
+    padding: 0;
+    margin: 0;
+}
+
+#profText{
+    display:flex;
+
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    height: auto;
 }
 
 .profImg{

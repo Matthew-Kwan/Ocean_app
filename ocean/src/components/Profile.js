@@ -7,7 +7,10 @@ const Profile = ({user}) => {
         <div className="profCard">
             <div className='profHeader'>
                 <div className="profImg"></div>
-                <h2>{user.name}</h2>
+                <div id='profText'>
+                    <h2>{user.name}</h2>
+                    <p>24, 🇨🇦</p>
+                </div>
 
             </div>
             <div className = 'profButtons'>
@@ -23,7 +26,24 @@ const Profile = ({user}) => {
             </div>
 
             <div>
+                <h3>Friends</h3>
+                <div id='friends'>
+                    {
+                        (user.friends).map(friend => (
+                        <div class='friend'>
+                            <img class='profImg'></img>
+                            <p>{friend.name}</p>
+                        </div>)) 
+                    }
+                  
+                </div>
                 <h3>Recently Completed Goals</h3>
+                <ol>
+                    <li>Read Book</li>
+                    <li>Finish CSC309 Project</li>
+                </ol>
+
+                <h3>Recently Completed Sessions</h3>
                 <ol>
                     <li>Read Book</li>
                     <li>Finish CSC309 Project</li>
