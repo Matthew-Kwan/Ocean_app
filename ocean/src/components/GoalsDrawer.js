@@ -4,6 +4,9 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
+import ClearIcon from '@material-ui/icons/Clear';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import './GoalsDrawer.css'
 import './modal.css'
@@ -225,13 +228,18 @@ export default function GoalsDrawer() {
               >      
 
             </TextField>
-            
-            <div className='tasksTitleDiv'>
-              <h2 >Add Tasks!</h2>
-            </div>
-  
-            <div className='addAnotherTaskButtonDiv'>
-              <Button variant="outlined" color="primary" className='taskButton' onClick={addTask}>Add Task</Button>
+            <div className ='taskTitleAndButton'>
+              <div className='tasksTitleDiv'>
+                <h2 >Add Tasks!</h2>
+              </div>
+    
+              <div className='addAnotherTaskButtonDiv'>
+                <IconButton color="primary" onClick={addTask} className='taskButton'>
+                  <AddIcon />
+                </IconButton>
+              
+
+              </div>
             </div>
   
 
@@ -247,18 +255,19 @@ export default function GoalsDrawer() {
                   onChange = {(e)=>handleFormTaskEntry(e, index)}
                   >
                 </TextField>
-                <IconButton aria-label="delete" onClick={handleFormTaskDelete} className='rightButton'>
-                  <DeleteIcon />
+                <IconButton color="default" onClick={handleFormTaskDelete} className='rightButton'>
+                  <ClearIcon />
                 </IconButton>
                 
               </div>
             ))}
-            
+
+            <p></p>
             <Button type="submit"
                     variant="outlined"
                     color="primary"
                     onClick={handleFormSubmit}
-                    className='rightButton'
+                    className='formSubmitButton'
                     disabled={!newGoal.title}>
               Create Goal
             </Button>

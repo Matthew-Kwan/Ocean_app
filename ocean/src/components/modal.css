@@ -1,7 +1,7 @@
 .modalContainer {
     background-color: white;
     width: 400px;
-    max-height: 800px;
+    max-height: 600px;
     border-radius: 20px;
     position: fixed;
     top: 50%;
@@ -13,6 +13,6 @@
 }
 
 .modalContent {
-    margin: 20px;
+    margin: 30px;
     overflow: auto; 
 }
