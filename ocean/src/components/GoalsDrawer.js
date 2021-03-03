@@ -17,33 +17,33 @@ import { ContactsOutlined } from '@material-ui/icons';
 
 
 //hardcoded goals for now
-const goals = [
-  {
-    id: 20000,
-    title: 'Software',
-    totalTasksNum: 2,
-    completedTasksNum: 1,
-    completionPercent: 50,
-    tasks: [
-      {id: 1, task: 'Research React', completed: true},
-      {id: 2, task: 'Make demo app', completed: false}
-    ]
-  }, 
-  {
-    id: 30000,
-    title: 'School',
-    totalTasksNum: 5,
-    completedTasksNum: 3,
-    completionPercent: 60,
-    tasks: [
-      {id: 1, task: 'study for CSC309', completed: true},
-      {id: 2, task: 'study for CSC384', completed: true},
-      {id: 3, task: 'drop MIE424', completed: true},
-      {id: 4, task: 'submit AI minor form request', completed: false},
-      {id: 5, task: 'submit extra form request', completed: false}
-    ]
-  }
-]
+// const goals = [
+//   {
+//     id: 20000,
+//     title: 'Software',
+//     totalTasksNum: 2,
+//     completedTasksNum: 1,
+//     completionPercent: 50,
+//     tasks: [
+//       {id: 1, task: 'Research React', completed: true},
+//       {id: 2, task: 'Make demo app', completed: false}
+//     ]
+//   }, 
+//   {
+//     id: 30000,
+//     title: 'School',
+//     totalTasksNum: 5,
+//     completedTasksNum: 3,
+//     completionPercent: 60,
+//     tasks: [
+//       {id: 1, task: 'study for CSC309', completed: true},
+//       {id: 2, task: 'study for CSC384', completed: true},
+//       {id: 3, task: 'drop MIE424', completed: true},
+//       {id: 4, task: 'submit AI minor form request', completed: false},
+//       {id: 5, task: 'submit extra form request', completed: false}
+//     ]
+//   }
+// ]
 //end hardcoded goals for now
 
 
@@ -52,7 +52,9 @@ GoalsDrawer, returns a button that expands a side drawer from the left that cont
 *
 *
 */
-export default function GoalsDrawer() {
+export default function GoalsDrawer(props) {
+
+  const { goals } = props;
 
   //incrementing unique goalIds
   const [goalId, setGoalId] = React.useState(0);
@@ -278,6 +280,56 @@ export default function GoalsDrawer() {
       </div>
   )
 
+  /*
+  const for "see details button"
+  *
+  *
+  */
+  const seeDetailsModalContent = (goal) => (
+    <div className = 'modalContainer'>
+      <div className = 'modalContent'>
+      <h1>{`${goal.title}`}</h1>
+        <h2>Tasks</h2>
+
+        {goal.tasks.map((task) => (
+          <div>
+            <input type="checkbox" id={task.id} name={task.task} value={task.task} defaultChecked={task.completed}/>
+            <label for={task.task}>{`${task.task}`}</label>
+
+          </div>       
+        ))}
+        <p></p>
+        <ProgressBar completed={goal.completionPercent}/>
+
+      </div>
+    </div>
+  )
+
+  /*
+  addGoal to array of goals
+  *
+  *
+  */
+  function addGoal(goal) {
+    goals.push(goal)
+  }
+
+
+  /*
+  deleteGoal from array of goals
+  *
+  *
+  */
+  function deleteGoal(goalId) {
+
+    const goal = goals.find(function(goal, index) {
+      if(goal.id == goalId)
+        return true;
+    });
+    
+    const index = goals.indexOf(goal);
+    goals.splice(index, 1);
+  }
 
   //return button and sideDrawer
   return (
@@ -292,55 +344,4 @@ export default function GoalsDrawer() {
       ))}
     </div>
   );
-}
-
-/*
-const for "see details button"
-*
-*
-*/
-const seeDetailsModalContent = (goal) => (
-  <div className = 'modalContainer'>
-    <div className = 'modalContent'>
-    <h1>{`${goal.title}`}</h1>
-      <h2>Tasks</h2>
-
-      {goal.tasks.map((task) => (
-        <div>
-          <input type="checkbox" id={task.id} name={task.task} value={task.task} defaultChecked={task.completed}/>
-          <label for={task.task}>{`${task.task}`}</label>
-
-        </div>       
-      ))}
-      <p></p>
-      <ProgressBar completed={goal.completionPercent}/>
-
-    </div>
-  </div>
-)
-
-/*
-addGoal to array of goals
-*
-*
-*/
-function addGoal(goal) {
-  goals.push(goal)
-}
-
-
-/*
-deleteGoal from array of goals
-*
-*
-*/
-function deleteGoal(goalId) {
-
-  const goal = goals.find(function(goal, index) {
-    if(goal.id == goalId)
-      return true;
-  });
-  
-  const index = goals.indexOf(goal);
-  goals.splice(index, 1);
 }

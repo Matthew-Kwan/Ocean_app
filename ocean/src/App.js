@@ -329,7 +329,7 @@ function App() {
 
         <Route path="/tank" render={() => {
           return (
-            <Tank/>
+            <Tank user = {user}/>
           )
         }}/>
 

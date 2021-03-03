@@ -2,7 +2,7 @@ import React from 'react'
 import './tank.css'
 import GoalsDrawer from './GoalsDrawer'
 
-const Tank= () => {
+const Tank= ({user}) => {
 
     return (
         
@@ -12,7 +12,7 @@ const Tank= () => {
                 <div className="tankContent">
 
 
-                    <GoalsDrawer/>
+                    <GoalsDrawer goals={user.goals}/>
 
                 </div>
                 
