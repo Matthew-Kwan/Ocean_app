@@ -8,12 +8,13 @@ import './modal.css'
 
 import ProgressBar from './ProgressBar'
 import SimpleModal from './Modal'
+import { ContactsOutlined } from '@material-ui/icons';
 
 
 //hardcoded goals for now
 const goals = [
   {
-    id: 1,
+    id: 20000,
     title: 'Software',
     totalTasksNum: 2,
     completedTasksNum: 1,
@@ -24,7 +25,7 @@ const goals = [
     ]
   }, 
   {
-    id: 2,
+    id: 30000,
     title: 'School',
     totalTasksNum: 5,
     completedTasksNum: 3,
@@ -38,79 +39,42 @@ const goals = [
     ]
   }
 ]
+//end hardcoded goals for now
 
-//hardcoded goals for now
-
-const addGoalModalContent = (
-  <div className = 'modalContainer'>
-    <div className = 'modalContent'>
-      <h2 >Add a Goal!</h2>
-      <form className='addGoalForm'>
-
-        
-        <TextField className='formTextField'
-          label="Enter a Goal"
-          name="Enter a Goal"
-          helperText="Please enter a name for your goal"
-          >      
-
-        </TextField>
-
-        <TextField className='formTextField'
-          label="Add a Task"
-          name="Add a Task"
-          helperText="Please enter a name for your task"
-          >
-        </TextField>
-
-        <p></p>
-        
-
-        <Button type="submit" variant="outlined" color="primary" onClick={addGoal}>
-          Add Goal
-        </Button>
-      </form>
-    </div>
-  </div>
-);
-
-
-
-
-const seeDetailsModalContent = (goal) => (
-  <div className = 'modalContainer'>
-    <div className = 'modalContent'>
-    <h1>{`${goal.title}`}</h1>
-      <h2>Tasks</h2>
-
-      {goal.tasks.map((task) => (
-        <div>
-          <input type="checkbox" id={task.id} name={task.task} value={task.task} checked={task.completed}/>
-          <label for={task.task}>{`${task.task}`}</label>
-
-        </div>       
-      ))}
-      <p></p>
-      <ProgressBar completed={goal.completionPercent}/>
-
-    </div>
-  </div>
-)
-
-function createGoalDetailsContent() {
-
-}
 
 /*
 GoalsDrawer, returns a button that expands a side drawer from the left that contains goal information
-
+*
+*
 */
 export default function GoalsDrawer() {
+
+  let goalId = 0
+  let numTasksPerGoal = 0;
 
   //drawer state
   const [state, setState] = React.useState({
     right: false
   });
+
+  const [addTask, setAddTask] = React.useState(false);
+
+  //new goal state
+  const [newGoal, setNewGoal] = React.useState({
+    id: goalId,
+    title: '',
+    tasks: [],
+    totalTasksNum: 0,
+    completedTasksNum: 0,
+    completionPercent: 0
+  });
+  
+  //new task state
+  const [newTask, setNewTask] = React.useState({
+    id: numTasksPerGoal,
+    task: '',
+    completed: false
+  })
   
   //toggleDrawer open
   const toggleDrawer = (anchor, open) => (event) => {
@@ -125,11 +89,87 @@ export default function GoalsDrawer() {
   };
 
   //refresh drawer on add
-  const refreshDrawerAdd = (anchor, goalId) => (event) => {
-    addGoal(goalId);
+  const refreshDrawerAdd = (anchor, goal) => {
+    addGoal(goal);
     setState({ ...state, [anchor]: false });
     setState({ ...state, [anchor]: true });
   };
+
+  //reset Goal for next goal
+  const resetGoal = () => {
+    setNewGoal({
+      ...newGoal,
+      id: goalId,
+      title: '',
+      tasks: [],
+      totalTasksNum: 0,
+      completedTasksNum: 0,
+      completionPercent: 0
+    });
+  }
+
+  //reset tasks for next goal 
+  const resetTask = () => {
+    setNewTask({
+      ...newTask,
+      id: 0,
+      task: '',
+      completed: false
+    });
+  }
+
+  //handle goal title form entry
+  const handleFormGoalEntry = (e) => {
+    e.preventDefault()
+    const value = e.target.value
+    setNewGoal({
+      ...newGoal,
+      [e.target.name]: value
+    });
+  };
+
+  //handle individual task entry
+  const handleFormTaskEntry = (e) => {
+    e.preventDefault()
+    const value = e.target.value
+    setNewTask({
+      ...newTask,
+      [e.target.name]: value,
+      id: numTasksPerGoal
+    });
+  };
+
+  //handle form submit
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    // taskList.forEach(function(task) {
+    //   newGoal.tasks.push(task)
+    // });
+
+    //add task to goal tasklist
+    newGoal.tasks.push(newTask)
+    newGoal.totalTasksNum++;
+
+    //refreshDrawer and add new goal to drawer
+    refreshDrawerAdd('right', newGoal);
+
+    //reset goal and tasks, increase goalId
+    goalId++;
+    numTasksPerGoal = 0;
+    resetGoal();
+    resetTask();
+  };
+
+  const addAnotherTask = () => {
+
+    setAddTask(true);
+    numTasksPerGoal++;
+    console.log(numTasksPerGoal)
+  };
+
+
+
 
   //drawer contents, iterate through goal list; current goal list will appear on refresh of drawer
   const drawer = (anchor) => (
@@ -141,7 +181,7 @@ export default function GoalsDrawer() {
         </div>
 
         <div className='addGoalButtonDiv'>
-          <SimpleModal buttonName ='Add Goal' content = {addGoalModalContent} />
+          <SimpleModal buttonName ='Add Goal' content = {addGoalModalContent(newGoal)} />
         </div>
 
         <div className='goalsList'>
@@ -169,6 +209,66 @@ export default function GoalsDrawer() {
     </div>
   );
 
+  //for regenerating tasks
+  const Task = (task) => { 
+    return (
+      <div>
+          <TextField className='formTextFieldTask'
+            id={numTasksPerGoal}
+            label="Add a Task"
+            name="task"
+            helperText="Please enter a name for your task"
+            value={task.task}
+            onChange = {handleFormTaskEntry}
+            >
+          </TextField>
+        
+      </div>
+  )}
+
+  //addGoal to Goals
+  const addGoalModalContent = (goal) => (
+      <div className = 'modalContainer'>
+        <div className = 'modalContent'>
+          <h2 >Add a Goal!</h2>
+          <form className='addGoalForm'>
+
+            
+            <TextField className='formTextFieldGoal'
+              label="Enter a Goal"
+              name="title"
+              helperText="Please enter a name for your goal"
+              value={goal.title}
+              onChange = {handleFormGoalEntry}
+              >      
+
+            </TextField>
+            
+            <div className='tasksTitleDiv'>
+              <h2 >Add Tasks!</h2>
+            </div>
+  
+            <div className='addAnotherTaskButtonDiv'>
+              <Button variant="outlined" color="primary" classNsame='taskButton' onClick={addAnotherTask}>Add Another Task</Button>
+            </div>
+  
+            {Task(newTask)}
+
+            {
+              addTask ? <div>{Task(newTask)}</div> : <div></div>
+            }
+            
+            <Button type="submit" variant="outlined" color="primary" onClick={handleFormSubmit} className='rightButton'>
+              Create Goal
+            </Button>
+            <p></p>
+
+          </form>
+        </div>
+      </div>
+  )
+
+
   //return button and sideDrawer
   return (
     <div className = 'goalsButtonDiv'>
@@ -184,20 +284,48 @@ export default function GoalsDrawer() {
   );
 }
 
+/*
+const for "see details button"
+*
+*
+*/
+const seeDetailsModalContent = (goal) => (
+  <div className = 'modalContainer'>
+    <div className = 'modalContent'>
+    <h1>{`${goal.title}`}</h1>
+      <h2>Tasks</h2>
+
+      {goal.tasks.map((task) => (
+        <div>
+          <input type="checkbox" id={task.id} name={task.task} value={task.task} defaultChecked={task.completed}/>
+          <label for={task.task}>{`${task.task}`}</label>
+
+        </div>       
+      ))}
+      <p></p>
+      <ProgressBar completed={goal.completionPercent}/>
+
+    </div>
+  </div>
+)
+
+/*
+addGoal to array of goals
+*
+*
+*/
 function addGoal(goal) {
-  goals.push(
-    {
-      id: 3,
-      title: 'Mela',
-      totalTasksNum: 10,
-      completedTasksNum: 7,
-      completionPercent: 70,
-      tasks: {
-  
-      }
-    })
+  goals.push(goal)
+
+  console.log(goals)
 }
 
+
+/*
+deleteGoal from array of goals
+*
+*
+*/
 function deleteGoal(goalId) {
 
   const goal = goals.find(function(goal, index) {

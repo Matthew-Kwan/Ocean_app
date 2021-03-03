@@ -62,9 +62,29 @@
 .addGoalForm {
 }
 
-.formTextField {
+.tasksTitleDiv {
+    display: inline-block;
+    margin-right:19px;
+}
+
+.addAnotherTaskButtonDiv {
+    display: inline-block;
+    float: right;
+    margin-top: 18px;
+}
+
+.taskButton {
+}
+
+.formTextFieldGoal {
     width: 90%;
 }
+
+.formTextFieldTask {
+    width: 80%;
+}
+
+
 
 /* text formatting, should move into a general css file*/
 .bold {
