@@ -2,6 +2,8 @@ import React from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import './GoalsDrawer.css'
 import './modal.css'
@@ -49,15 +51,13 @@ GoalsDrawer, returns a button that expands a side drawer from the left that cont
 */
 export default function GoalsDrawer() {
 
-  let goalId = 0
-  let numTasksPerGoal = 0;
+  //incrementing unique goalIds
+  const [goalId, setGoalId] = React.useState(0);
 
   //drawer state
   const [state, setState] = React.useState({
     right: false
   });
-
-  const [addTask, setAddTask] = React.useState(false);
 
   //new goal state
   const [newGoal, setNewGoal] = React.useState({
@@ -68,20 +68,13 @@ export default function GoalsDrawer() {
     completedTasksNum: 0,
     completionPercent: 0
   });
-  
-  //new task state
-  const [newTask, setNewTask] = React.useState({
-    id: numTasksPerGoal,
-    task: '',
-    completed: false
-  })
-  
+ 
   //toggleDrawer open
   const toggleDrawer = (anchor, open) => (event) => {
     setState({ ...state, [anchor]: open });
   };
 
-  //refresh drawer on deletee
+  //refresh drawer on delete
   const refreshDrawerDelete = (anchor, goalId) => (event) => {
     deleteGoal(goalId);
     setState({ ...state, [anchor]: false });
@@ -95,8 +88,52 @@ export default function GoalsDrawer() {
     setState({ ...state, [anchor]: true });
   };
 
-  //reset Goal for next goal
-  const resetGoal = () => {
+  //handle goal title form entry
+  const handleFormGoalEntry = (e) => {
+    e.preventDefault()
+    const value = e.target.value
+    setNewGoal({
+      ...newGoal,
+      [e.target.name]: value,
+      id: goalId
+    });
+  };
+
+  //handle individual task entry
+  const handleFormTaskEntry = (e, taskId) => {
+    e.preventDefault()
+    const value = e.target.value;
+
+    newGoal.tasks[taskId] = {id: taskId, task: value, completed: false};
+    setNewGoal({
+      ...newGoal,
+      tasks: newGoal.tasks
+    })
+  };
+
+  //handle task deletion in form
+  const handleFormTaskDelete = (taskId) =>  {
+    newGoal.tasks.splice(taskId, 1);
+
+    setNewGoal({
+      ...newGoal,
+      tasks: newGoal.tasks
+    })
+  }
+
+  //handle form submit
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    //set total number of tasks
+    newGoal.totalTasksNum = newGoal.tasks.length;
+
+    //refreshDrawer and add new goal to drawer
+    refreshDrawerAdd('right', newGoal);
+
+    //reset goal and tasks, increase goalId
+    setGoalId(goalId+1);
+
     setNewGoal({
       ...newGoal,
       id: goalId,
@@ -106,67 +143,29 @@ export default function GoalsDrawer() {
       completedTasksNum: 0,
       completionPercent: 0
     });
-  }
 
-  //reset tasks for next goal 
-  const resetTask = () => {
-    setNewTask({
-      ...newTask,
-      id: 0,
-      task: '',
-      completed: false
-    });
-  }
+  };
 
-  //handle goal title form entry
-  const handleFormGoalEntry = (e) => {
-    e.preventDefault()
-    const value = e.target.value
+  //add task
+  const addTask = () => {
     setNewGoal({
       ...newGoal,
-      [e.target.name]: value
-    });
+      tasks: [...newGoal.tasks, '']
+    })
   };
 
-  //handle individual task entry
-  const handleFormTaskEntry = (e) => {
-    e.preventDefault()
-    const value = e.target.value
-    setNewTask({
-      ...newTask,
-      [e.target.name]: value,
-      id: numTasksPerGoal
-    });
-  };
+  function hasEmptyTaskTitle () {
 
-  //handle form submit
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
+    
+    for (var i=0 ; i < newGoal.tasks.length; i++) {
+      if (newGoal.tasks[i].title == '') {
+        return true;
+      }
+    }
+    return false;
 
-    // taskList.forEach(function(task) {
-    //   newGoal.tasks.push(task)
-    // });
 
-    //add task to goal tasklist
-    newGoal.tasks.push(newTask)
-    newGoal.totalTasksNum++;
-
-    //refreshDrawer and add new goal to drawer
-    refreshDrawerAdd('right', newGoal);
-
-    //reset goal and tasks, increase goalId
-    goalId++;
-    numTasksPerGoal = 0;
-    resetGoal();
-    resetTask();
-  };
-
-  const addAnotherTask = () => {
-
-    setAddTask(true);
-    numTasksPerGoal++;
-    console.log(numTasksPerGoal)
-  };
+  }
 
 
 
@@ -209,23 +208,6 @@ export default function GoalsDrawer() {
     </div>
   );
 
-  //for regenerating tasks
-  const Task = (task) => { 
-    return (
-      <div>
-          <TextField className='formTextFieldTask'
-            id={numTasksPerGoal}
-            label="Add a Task"
-            name="task"
-            helperText="Please enter a name for your task"
-            value={task.task}
-            onChange = {handleFormTaskEntry}
-            >
-          </TextField>
-        
-      </div>
-  )}
-
   //addGoal to Goals
   const addGoalModalContent = (goal) => (
       <div className = 'modalContainer'>
@@ -249,16 +231,35 @@ export default function GoalsDrawer() {
             </div>
   
             <div className='addAnotherTaskButtonDiv'>
-              <Button variant="outlined" color="primary" classNsame='taskButton' onClick={addAnotherTask}>Add Another Task</Button>
+              <Button variant="outlined" color="primary" className='taskButton' onClick={addTask}>Add Task</Button>
             </div>
   
-            {Task(newTask)}
 
-            {
-              addTask ? <div>{Task(newTask)}</div> : <div></div>
-            }
+
+            {newGoal.tasks.map((task, index) => (
+              <div key = {index}>
+                <TextField className='formTextFieldTask'
+                  id={index}
+                  label="Add a Task"
+                  name="task"
+                  helperText="Please enter a name for your task"
+                  value={task.task}
+                  onChange = {(e)=>handleFormTaskEntry(e, index)}
+                  >
+                </TextField>
+                <IconButton aria-label="delete" onClick={handleFormTaskDelete} className='rightButton'>
+                  <DeleteIcon />
+                </IconButton>
+                
+              </div>
+            ))}
             
-            <Button type="submit" variant="outlined" color="primary" onClick={handleFormSubmit} className='rightButton'>
+            <Button type="submit"
+                    variant="outlined"
+                    color="primary"
+                    onClick={handleFormSubmit}
+                    className='rightButton'
+                    disabled={!newGoal.title}>
               Create Goal
             </Button>
             <p></p>
@@ -316,8 +317,6 @@ addGoal to array of goals
 */
 function addGoal(goal) {
   goals.push(goal)
-
-  console.log(goals)
 }
 
 
