@@ -288,7 +288,7 @@ function App() {
         <Route path="/admin" render={() => {
 
         return(
-          <AdminDashboard/>
+          <AdminDashboard users = {usersList}/>
         )
         }}/>
 

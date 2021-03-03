@@ -8,53 +8,41 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-
+// import usersList from '../App.js'
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 650,
+    minWidth: 450,
   },
 });
 
 
-const reports = [
-  {id:1,title:'inappropriate session name',user:'3', reportedBy:'5', resolved:false},
-  {id:2,title:'hateful speech',user:'7', reportedBy:'2', resolved:false},
 
-  {id:3,title:'they were not very nice to me',user:'2', reportedBy:'10', resolved:false},
-
-  {id:4,title:'i dont like their username',user:'3', reportedBy:'5', resolved:false},
-];
-
-export default function AdminReportsTable() {
+export default function AdminUsersTable({users}) {
   const classes = useStyles();
 
   return (
     <TableContainer component={Paper}>
         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          Active Reports
+          All Users
         </Typography>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Report Title</TableCell>
-            <TableCell align="right">Report ID</TableCell>
-            <TableCell align="right">Reported By User</TableCell>
-            <TableCell align="right">User</TableCell>
-            <TableCell align="right">Resolved</TableCell>
+            <TableCell>Username</TableCell>
+            <TableCell align="right">Email</TableCell>
+            <TableCell align="right">User ID</TableCell>
 
           </TableRow>
         </TableHead>
         <TableBody>
-          {reports.map((row) => (
+          {users.map((row) => (
             <TableRow key={row.title}>
               <TableCell component="th" scope="row">
-                {row.title}
+                {row.name}
               </TableCell>
+              <TableCell align="right">{row.username}</TableCell>
               <TableCell align="right">{row.id}</TableCell>
-              <TableCell align="right">{row.reportedBy}</TableCell>
-              <TableCell align="right">{row.user}</TableCell>
-              <TableCell align="right">{row.resolved ? "Yes" : "No"}</TableCell>
 
             </TableRow>
           ))}
