@@ -177,7 +177,11 @@ export default function GoalsDrawer(props) {
     goalToEdit.tasks = editGoal.tasks;
     goalToEdit.totalTasksNum = editGoal.tasks.length;
     goalToEdit.completedTasksNum = editGoal.completedTasksNum;
-    goalToEdit.completionPercent = (editGoal.completedTasksNum/editGoal.totalTasksNum)*100;
+    
+    if (goalToEdit.totalTasksNum == 0 || goalToEdit.completedTasksNum == 0)
+      goalToEdit.completionPercent = 0;
+    else
+      goalToEdit.completionPercent = Math.round((editGoal.completedTasksNum/goalToEdit.totalTasksNum)*100);
 
     handleEditModalClose();
   };
