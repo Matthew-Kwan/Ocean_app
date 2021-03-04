@@ -293,6 +293,8 @@ export default function GoalsDrawer(props) {
 
         <div className='goalsList' >
 
+        {goals.length == 0 ? <p>You currently have no goals. Add a goal to keep track of your work!</p>: null}
+
         {goals.map((goal) => (
 
           <div className='goalIndividualContainer'>
