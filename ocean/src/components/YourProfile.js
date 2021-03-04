@@ -4,7 +4,7 @@ import './profile.css'
 
 import './modal.css'
 import ProgressBar from './ProgressBar'
-import SimpleModal from './Modal'
+import ButtonModal from './ButtonModal'
 
 const friends = []
 

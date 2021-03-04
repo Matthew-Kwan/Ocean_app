@@ -1,51 +1,22 @@
 import React from 'react';
+import { useRef, useEffect } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import ClearIcon from '@material-ui/icons/Clear';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import './GoalsDrawer.css'
 import './modal.css'
 
 import ProgressBar from './ProgressBar'
-import SimpleModal from './Modal'
+import ButtonModal from './ButtonModal'
 import { ContactsOutlined } from '@material-ui/icons';
-
-
-//hardcoded goals for now
-// const goals = [
-//   {
-//     id: 20000,
-//     title: 'Software',
-//     totalTasksNum: 2,
-//     completedTasksNum: 1,
-//     completionPercent: 50,
-//     tasks: [
-//       {id: 1, task: 'Research React', completed: true},
-//       {id: 2, task: 'Make demo app', completed: false}
-//     ]
-//   }, 
-//   {
-//     id: 30000,
-//     title: 'School',
-//     totalTasksNum: 5,
-//     completedTasksNum: 3,
-//     completionPercent: 60,
-//     tasks: [
-//       {id: 1, task: 'study for CSC309', completed: true},
-//       {id: 2, task: 'study for CSC384', completed: true},
-//       {id: 3, task: 'drop MIE424', completed: true},
-//       {id: 4, task: 'submit AI minor form request', completed: false},
-//       {id: 5, task: 'submit extra form request', completed: false}
-//     ]
-//   }
-// ]
-//end hardcoded goals for now
-
 
 /*
 GoalsDrawer, returns a button that expands a side drawer from the left that contains goal information
@@ -54,18 +25,35 @@ GoalsDrawer, returns a button that expands a side drawer from the left that cont
 */
 export default function GoalsDrawer(props) {
 
+  //user goal list
   const { goals } = props;
 
-  //incrementing unique goalIds
-  const [goalId, setGoalId] = React.useState(0);
+  //*STATES
+
+  //modal states
+  const [openGoalModal, setOpenGoalModal] = React.useState(false);  //goal modal
+  const [openDetailsModal, setOpenDetailsModal] = React.useState(false); //details modal
+  const [openEditModal, setOpenEditModal] = React.useState(false); //edit modal
+
+  const [detailsModalContent, setDetailsModalContent] = React.useState({
+    content: null
+  })
+
+  const [editModalContent, setEditModalContent] = React.useState({
+    content: null
+  })
+
 
   //drawer state
-  const [state, setState] = React.useState({
+  const [state, setState] = React.useState({ 
     right: false
   });
 
-  //new goal state
-  const [newGoal, setNewGoal] = React.useState({
+
+  //goal states
+  const [goalId, setGoalId] = React.useState(0); //incrementing unique goalIds
+
+  const [newGoal, setNewGoal] = React.useState({  //new goal state
     id: goalId,
     title: '',
     tasks: [],
@@ -73,28 +61,30 @@ export default function GoalsDrawer(props) {
     completedTasksNum: 0,
     completionPercent: 0
   });
- 
-  //toggleDrawer open
-  const toggleDrawer = (anchor, open) => (event) => {
+
+
+  //*HANDLERS
+
+  //drawer handlers
+  const toggleDrawer = (anchor, open) => (event) => { //toggleDrawer open
     setState({ ...state, [anchor]: open });
   };
 
-  //refresh drawer on delete
-  const refreshDrawerDelete = (anchor, goalId) => (event) => {
+  const refreshDrawerDelete = (anchor, goalId) => (event) => { //refresh drawer on delete
     deleteGoal(goalId);
     setState({ ...state, [anchor]: false });
     setState({ ...state, [anchor]: true });
   };
 
-  //refresh drawer on add
-  const refreshDrawerAdd = (anchor, goal) => {
+  const refreshDrawerAdd = (anchor, goal) => { //refresh drawer on add
     addGoal(goal);
     setState({ ...state, [anchor]: false });
     setState({ ...state, [anchor]: true });
   };
 
-  //handle goal title form entry
-  const handleFormGoalEntry = (e) => {
+
+  //goal form handlers
+  const handleFormGoalEntry = (e) => { //handle goal title form entry
     e.preventDefault()
     const value = e.target.value
     setNewGoal({
@@ -104,8 +94,7 @@ export default function GoalsDrawer(props) {
     });
   };
 
-  //handle individual task entry
-  const handleFormTaskEntry = (e, taskId) => {
+  const handleFormTaskEntry = (e, taskId) => { //handle individual task entry
     e.preventDefault()
     const value = e.target.value;
 
@@ -116,8 +105,7 @@ export default function GoalsDrawer(props) {
     })
   };
 
-  //handle task deletion in form
-  const handleFormTaskDelete = (taskId) =>  {
+  const handleFormTaskDelete = (taskId) =>  { //handle task deletion in form
     newGoal.tasks.splice(taskId, 1);
 
     setNewGoal({
@@ -126,18 +114,14 @@ export default function GoalsDrawer(props) {
     })
   }
 
-  //handle form submit
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = (e) => { //handle form submit
     e.preventDefault();
 
-    //set total number of tasks
-    newGoal.totalTasksNum = newGoal.tasks.length;
+    newGoal.totalTasksNum = newGoal.tasks.length; //set total number of tasks
 
-    //refreshDrawer and add new goal to drawer
-    refreshDrawerAdd('right', newGoal);
+    refreshDrawerAdd('right', newGoal); //refreshDrawer and add new goal to drawer
 
-    //reset goal and tasks, increase goalId
-    setGoalId(goalId+1);
+    setGoalId(goalId+1); //reset goal and tasks, increase goalId
 
     setNewGoal({
       ...newGoal,
@@ -149,7 +133,40 @@ export default function GoalsDrawer(props) {
       completionPercent: 0
     });
 
+    handleGoalModalClose();
+
   };
+
+  //modal handlers
+  const handleGoalModalOpen = () => { //open goal modal
+    setOpenGoalModal(true);
+  };
+
+  const handleGoalModalClose = () => { //close goal modal
+    setOpenGoalModal(false);
+  };
+
+  const handleDetailsModalOpen = (goal) => { //open correct details modal
+    setDetailsModalContent({content:seeDetailsModalContent(goal)});
+    setOpenDetailsModal(true);
+  };
+
+  const handleDetailsModalClose = () => { //close details modal
+    setOpenDetailsModal(false);
+  };
+
+  const handleEditModalOpen = (goal) => {
+    console.log(goal)
+    setEditModalContent({content:editGoalModalContent(goal)});
+    setOpenEditModal(true);
+  }
+
+  const handleEditModalClose = () => {
+    setOpenEditModal(false);
+  }
+
+
+
 
   //add task
   const addTask = () => {
@@ -159,6 +176,7 @@ export default function GoalsDrawer(props) {
     })
   };
 
+  //check for empty tasks
   function hasEmptyTaskTitle () {
 
     
@@ -173,47 +191,72 @@ export default function GoalsDrawer(props) {
   }
 
 
-
-
-  //drawer contents, iterate through goal list; current goal list will appear on refresh of drawer
+  /*
+  /drawer contents, iterate through goal list; current goal list will appear on refresh of drawer
+  *
+  *
+  */
   const drawer = (anchor) => (
-    <div className='goalsDrawer'>
+    <div className='goalsDrawer' >
       <div className='drawerContent'>
 
-        <div className='drawerTitleDiv'>
+        <div className='drawerTitleDiv' >
           <h1>Your Goals</h1>
         </div>
 
-        <div className='addGoalButtonDiv'>
-          <SimpleModal buttonName ='Add Goal' content = {addGoalModalContent(newGoal)} />
+        <div className='addGoalButtonDiv' >
+          <Button onClick={handleGoalModalOpen} variant="outlined" color="primary">Add Goal</Button>
+          <Modal open={openGoalModal} onClose={handleGoalModalClose} >
+            {addGoalModalContent(newGoal)}
+          </Modal>
         </div>
 
-        <div className='goalsList'>
+        <div className='goalsList' >
 
         {goals.map((goal) => (
 
           <div className='goalIndividualContainer'>
             <div className = 'goalIndividualContents'>
-              <p className = 'bold'> {`${goal.title}`}</p>
-              
-              <ProgressBar completed={goal.completionPercent}/>
+              <div className = 'goalTitleDiv'>
+                <p className = 'bold' > {`${goal.title}`}</p>
+              </div>
+              <div className = 'rightButton'>
+                <IconButton color="primary" onClick={() => handleEditModalOpen(goal)} >
+                  <EditOutlinedIcon />
+                </IconButton>
 
-              <div className = 'leftButton'>
-                <SimpleModal buttonName ='See Details' content = {seeDetailsModalContent(goal)}/>
-              </div>              
-              <Button className = 'rightButton' variant="outlined" color="primary" onClick={refreshDrawerDelete(anchor, goal.id)}>Finished!</Button>
+              </div>
               
+              <ProgressBar completed={goal.completionPercent} />
+
+              <div className = 'leftButton'>     
+                <Button onClick={() => handleDetailsModalOpen(goal)} variant="outlined" color="primary">See Details</Button>
+              </div>              
+              <Button className = 'rightButton' variant="outlined" color="primary" onClick={refreshDrawerDelete(anchor, goal.id) }>Finished!</Button>
+                    
             </div>
 
           </div>
         ))}
+        <Modal open={openDetailsModal} onClose={handleDetailsModalClose} >
+          {detailsModalContent.content}
+        </Modal>
+
+        <Modal open={openEditModal} onClose={handleEditModalClose} >
+          {editModalContent.content}
+        </Modal>
 
         </div>
       </div>
     </div>
   );
 
-  //addGoal to Goals
+
+  /*
+  /addGoal to Goals
+  *
+  *
+  */
   const addGoalModalContent = (goal) => (
       <div className = 'modalContainer'>
         <div className = 'modalContent'>
@@ -236,15 +279,11 @@ export default function GoalsDrawer(props) {
               </div>
     
               <div className='addAnotherTaskButtonDiv'>
-                <IconButton color="primary" onClick={addTask} className='taskButton'>
+                <IconButton color="primary" onClick={addTask}>
                   <AddIcon />
                 </IconButton>
-              
-
               </div>
             </div>
-  
-
 
             {newGoal.tasks.map((task, index) => (
               <div key = {index}>
@@ -280,6 +319,7 @@ export default function GoalsDrawer(props) {
       </div>
   )
 
+
   /*
   const for "see details button"
   *
@@ -288,9 +328,10 @@ export default function GoalsDrawer(props) {
   const seeDetailsModalContent = (goal) => (
     <div className = 'modalContainer'>
       <div className = 'modalContent'>
-      <h1>{`${goal.title}`}</h1>
+        <div className = 'seeDetailsGoalTitle'>
+          <h1>{`${goal.title}`}</h1>
+        </div>
         <h2>Tasks</h2>
-
         {goal.tasks.map((task) => (
           <div>
             <input type="checkbox" id={task.id} name={task.task} value={task.task} defaultChecked={task.completed}/>
@@ -304,6 +345,67 @@ export default function GoalsDrawer(props) {
       </div>
     </div>
   )
+
+
+  const editGoalModalContent = (goal) => (
+    <div className = 'modalContainer'>
+      <div className = 'modalContent'>
+        <h2 >Goal Title: </h2>
+
+        <form className='addGoalForm'>
+          <TextField className='formTextFieldGoal'
+            label="Enter a Goal"
+            name="title"
+            helperText="Please enter a name for your goal"
+            value={goal.title}
+            onChange = {handleFormGoalEntry}
+            >      
+          </TextField>
+          <div className ='taskTitleAndButton'>
+            <div className='tasksTitleDiv'>
+              <h2 >Current Tasks: </h2>
+            </div>
+  
+            <div className='addAnotherTaskButtonDiv'>
+              <IconButton color="primary" onClick={addTask}>
+                <AddIcon />
+              </IconButton>
+            </div>
+          </div>
+
+          {goal.tasks.map((task, index) => (
+            <div key = {index}>
+              <TextField className='formTextFieldTask'
+                id={index}
+                label="Add a Task"
+                name="task"
+                helperText="Please enter a name for your task"
+                value={task.task}
+                onChange = {(e)=>handleFormTaskEntry(e, index)}
+                >
+              </TextField>
+              <IconButton color="default" onClick={handleFormTaskDelete} className='rightButton'>
+                <ClearIcon />
+              </IconButton>  
+            </div>
+          ))}
+
+          <p></p>
+          <Button type="submit"
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleFormSubmit}
+                  className='formSubmitButton'
+                  disabled={!goal.title}>
+            Edit Goal
+          </Button>
+          <p></p>
+
+        </form>
+      </div>
+    </div>
+  )
+
 
   /*
   addGoal to array of goals
@@ -331,13 +433,18 @@ export default function GoalsDrawer(props) {
     goals.splice(index, 1);
   }
 
-  //return button and sideDrawer
+
+  /*
+  /return button and sideDrawer
+  *
+  *
+  */
   return (
     <div className = 'goalsButtonDiv'>
       {['See Your Goals'].map((anchor) => (
         <React.Fragment key={anchor}>
           <Button onClick={toggleDrawer(anchor, true)} variant="outlined" color="primary">{anchor}</Button>
-          <Drawer anchor={'right'} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+          <Drawer anchor={'right'} open={state[anchor]} onClose={toggleDrawer(anchor, false)} >
             {drawer(anchor)}
           </Drawer>
         </React.Fragment>

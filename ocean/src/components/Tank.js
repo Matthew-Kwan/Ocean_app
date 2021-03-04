@@ -1,6 +1,7 @@
 import React from 'react'
 import './tank.css'
 import GoalsDrawer from './GoalsDrawer'
+import Fish from './Fish'
 
 const Tank= ({user}) => {
 

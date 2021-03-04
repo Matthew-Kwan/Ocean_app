@@ -22,7 +22,7 @@ import TextField from '@material-ui/core/TextField';
 import './components/modal.css'
 import './components/profile.css'
 import ProgressBar from './components/ProgressBar'
-import SimpleModal from './components/Modal'
+import ButtonModal from './components/ButtonModal'
 
 // import React Router
 import { Route, Switch, Link, Redirect, BrowserRouter } from 'react-router-dom'
@@ -31,6 +31,15 @@ import { Route, Switch, Link, Redirect, BrowserRouter } from 'react-router-dom'
 
 
 // helper functions
+
+function handleModalOpen(state) {
+  state = true;
+};
+
+function handleModalClose(state) {
+  state = false;
+};
+
 
 const useStyles = makeStyles({
   root: {
@@ -87,7 +96,7 @@ const NavBar = ({loggedIn, handleLogout, user}) => {
         <Link className="link" to="/ocean">ocean</Link>
         <Link className="link" to="/tank">tank</Link>
         <Link className="link" to="/profile">profile</Link>
-        <SimpleModal buttonName ='Ur Profile' content = {YourProfile({user})} />
+        <ButtonModal buttonName ='Ur Profile' content = {YourProfile({user})} />
         <Link className="link" to="/admin">admin dashboard</Link>
         { loggedIn ? <Link to="/" onClick={handleLogout}> logout </Link> : null }
     </div>
@@ -102,7 +111,7 @@ const NavBar = ({loggedIn, handleLogout, user}) => {
 function App() {
   const goals1 = [
     {
-      id: 1,
+      id: 30000,
       title: 'Software',
       totalTasksNum: 2,
       completedTasksNum: 1,
@@ -130,7 +139,7 @@ function App() {
 
   const goals2 = [
     {
-      id: 1,
+      id: 20000,
       title: 'Admin Stuff',
       totalTasksNum: 2,
       completedTasksNum: 1,
