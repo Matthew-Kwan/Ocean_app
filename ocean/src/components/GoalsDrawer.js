@@ -15,7 +15,6 @@ import './GoalsDrawer.css'
 import './modal.css'
 
 import ProgressBar from './ProgressBar'
-import ButtonModal from './ButtonModal'
 import { ContactsOutlined } from '@material-ui/icons';
 
 /*
@@ -28,27 +27,28 @@ export default function GoalsDrawer(props) {
   //user goal list
   const { goals } = props;
 
-  //*STATES
+
+  //  STATES
+
+  const firstUpdate = useRef(true); //state for first render
 
   //modal states
   const [openGoalModal, setOpenGoalModal] = React.useState(false);  //goal modal
   const [openDetailsModal, setOpenDetailsModal] = React.useState(false); //details modal
   const [openEditModal, setOpenEditModal] = React.useState(false); //edit modal
 
-  const [detailsModalContent, setDetailsModalContent] = React.useState({
+  const [detailsModalContent, setDetailsModalContent] = React.useState({ //modal content for see details
     content: null
   })
 
-  const [editModalContent, setEditModalContent] = React.useState({
+  const [editModalContent, setEditModalContent] = React.useState({ //modal content for editing goals
     content: null
   })
-
 
   //drawer state
   const [state, setState] = React.useState({ 
     right: false
   });
-
 
   //goal states
   const [goalId, setGoalId] = React.useState(0); //incrementing unique goalIds
@@ -62,8 +62,28 @@ export default function GoalsDrawer(props) {
     completionPercent: 0
   });
 
+  const [editGoal, setEditGoal] = React.useState({ //edit goal state
+    id: null,
+    title: '',
+    tasks: [],
+    totalTasksNum: 0,
+    completedTasksNum: 0,
+    completionPercent: 0
+  });
 
-  //*HANDLERS
+  //useEffect for edit modal
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+    } else {
+     // do things after first render
+      console.log(editGoal);
+      setEditContent();
+    }
+  }, [editGoal])
+
+
+  //  HANDLERS
 
   //drawer handlers
   const toggleDrawer = (anchor, open) => (event) => { //toggleDrawer open
@@ -82,11 +102,11 @@ export default function GoalsDrawer(props) {
     setState({ ...state, [anchor]: true });
   };
 
-
   //goal form handlers
   const handleFormGoalEntry = (e) => { //handle goal title form entry
-    e.preventDefault()
-    const value = e.target.value
+    e.preventDefault();
+    const value = e.target.value;
+
     setNewGoal({
       ...newGoal,
       [e.target.name]: value,
@@ -97,30 +117,18 @@ export default function GoalsDrawer(props) {
   const handleFormTaskEntry = (e, taskId) => { //handle individual task entry
     e.preventDefault()
     const value = e.target.value;
-
     newGoal.tasks[taskId] = {id: taskId, task: value, completed: false};
+
     setNewGoal({
       ...newGoal,
       tasks: newGoal.tasks
     })
   };
 
-  const handleFormTaskDelete = (taskId) =>  { //handle task deletion in form
-    newGoal.tasks.splice(taskId, 1);
-
-    setNewGoal({
-      ...newGoal,
-      tasks: newGoal.tasks
-    })
-  }
-
   const handleFormSubmit = (e) => { //handle form submit
     e.preventDefault();
-
     newGoal.totalTasksNum = newGoal.tasks.length; //set total number of tasks
-
     refreshDrawerAdd('right', newGoal); //refreshDrawer and add new goal to drawer
-
     setGoalId(goalId+1); //reset goal and tasks, increase goalId
 
     setNewGoal({
@@ -134,8 +142,81 @@ export default function GoalsDrawer(props) {
     });
 
     handleGoalModalClose();
-
   };
+
+  //edit form handlers
+  const handleFormGoalEdit = (e) => { //handle goal title form edit
+    e.preventDefault()
+    const value = e.target.value
+    setEditGoal({
+      ...editGoal,
+      [e.target.name]: value,
+    });
+  };
+
+  const handleFormTaskEdit = (e, taskId) => { //handle individual task edit
+    e.preventDefault()
+    const value = e.target.value;
+
+    editGoal.tasks[taskId] = {id: taskId, task: value, completed: false};
+    setEditGoal({
+      ...editGoal,
+      tasks: editGoal.tasks
+    })
+  };
+
+  const handleFormEditSubmit = (e) => { //handle edit form submit
+    e.preventDefault();
+
+    const goalToEdit = goals.find(function(goal, index) {
+      if(goal.id == editGoal.id)
+        return true;
+    });
+    
+    goalToEdit.title = editGoal.title;
+    goalToEdit.tasks = editGoal.tasks;
+    goalToEdit.totalTasksNum = editGoal.tasks.length;
+    goalToEdit.completedTasksNum = editGoal.completedTasksNum;
+    goalToEdit.completionPercent = (editGoal.completedTasksNum/editGoal.totalTasksNum)*100;
+
+    handleEditModalClose();
+  };
+
+  //form add task
+  const addTask = (formType) => {
+    if (formType == "create") {
+      setNewGoal({
+        ...newGoal,
+        tasks: [...newGoal.tasks, '']
+      })
+    }
+    if (formType == "edit") {
+      setEditGoal({
+        ...editGoal,
+        tasks: [...editGoal.tasks, '']
+      })
+    }
+  };
+
+  //form delete task
+  const handleFormTaskDelete = (taskId, formType) =>  { //handle task deletion in form
+    if (formType == "create") {
+      newGoal.tasks.splice(taskId, 1);
+
+      setNewGoal({
+        ...newGoal,
+        tasks: newGoal.tasks
+      })
+    }
+    if (formType == "edit") {
+      editGoal.tasks.splice(taskId, 1);
+
+      setEditGoal({
+        ...editGoal,
+        tasks: editGoal.tasks
+      })
+    }
+  }
 
   //modal handlers
   const handleGoalModalOpen = () => { //open goal modal
@@ -155,26 +236,25 @@ export default function GoalsDrawer(props) {
     setOpenDetailsModal(false);
   };
 
-  const handleEditModalOpen = (goal) => {
-    console.log(goal)
-    setEditModalContent({content:editGoalModalContent(goal)});
+  const handleEditModalOpen = (goal) => { //set current edit goal
+    setEditGoal({
+      id: goal.id,
+      title: goal.title,
+      tasks: goal.tasks,
+      totalTasksNum: goal.totalTasksNum,
+      completedTasksNum: goal.completedTasksNum,
+      completionPercent: goal.completionPercent
+    }); 
+  }
+
+  const setEditContent = () => { //set edit content, called by edit modal open handler
+    setEditModalContent({content:editGoalModalContent(editGoal)})
     setOpenEditModal(true);
   }
 
-  const handleEditModalClose = () => {
+  const handleEditModalClose = () => { //close edit modal
     setOpenEditModal(false);
   }
-
-
-
-
-  //add task
-  const addTask = () => {
-    setNewGoal({
-      ...newGoal,
-      tasks: [...newGoal.tasks, '']
-    })
-  };
 
   //check for empty tasks
   function hasEmptyTaskTitle () {
@@ -191,10 +271,10 @@ export default function GoalsDrawer(props) {
   }
 
 
+  //  CONTENTS OF DRAWER AND MODALS
+
   /*
-  /drawer contents, iterate through goal list; current goal list will appear on refresh of drawer
-  *
-  *
+  * Drawer contents
   */
   const drawer = (anchor) => (
     <div className='goalsDrawer' >
@@ -253,9 +333,7 @@ export default function GoalsDrawer(props) {
 
 
   /*
-  /addGoal to Goals
-  *
-  *
+  / Add Goal Content
   */
   const addGoalModalContent = (goal) => (
       <div className = 'modalContainer'>
@@ -279,7 +357,7 @@ export default function GoalsDrawer(props) {
               </div>
     
               <div className='addAnotherTaskButtonDiv'>
-                <IconButton color="primary" onClick={addTask}>
+                <IconButton color="primary" onClick={() => addTask("create")}>
                   <AddIcon />
                 </IconButton>
               </div>
@@ -296,7 +374,7 @@ export default function GoalsDrawer(props) {
                   onChange = {(e)=>handleFormTaskEntry(e, index)}
                   >
                 </TextField>
-                <IconButton color="default" onClick={handleFormTaskDelete} className='rightButton'>
+                <IconButton color="default" onClick={() => handleFormTaskDelete(index, "create")} className='rightButton'>
                   <ClearIcon />
                 </IconButton>
                 
@@ -321,9 +399,7 @@ export default function GoalsDrawer(props) {
 
 
   /*
-  const for "see details button"
-  *
-  *
+  * See Details Content
   */
   const seeDetailsModalContent = (goal) => (
     <div className = 'modalContainer'>
@@ -347,6 +423,9 @@ export default function GoalsDrawer(props) {
   )
 
 
+  /**
+   * Edit goal content
+   */
   const editGoalModalContent = (goal) => (
     <div className = 'modalContainer'>
       <div className = 'modalContent'>
@@ -358,7 +437,7 @@ export default function GoalsDrawer(props) {
             name="title"
             helperText="Please enter a name for your goal"
             value={goal.title}
-            onChange = {handleFormGoalEntry}
+            onChange = {handleFormGoalEdit}
             >      
           </TextField>
           <div className ='taskTitleAndButton'>
@@ -367,7 +446,7 @@ export default function GoalsDrawer(props) {
             </div>
   
             <div className='addAnotherTaskButtonDiv'>
-              <IconButton color="primary" onClick={addTask}>
+              <IconButton color="primary" onClick={() => addTask("edit")}>
                 <AddIcon />
               </IconButton>
             </div>
@@ -381,10 +460,10 @@ export default function GoalsDrawer(props) {
                 name="task"
                 helperText="Please enter a name for your task"
                 value={task.task}
-                onChange = {(e)=>handleFormTaskEntry(e, index)}
+                onChange = {(e)=>handleFormTaskEdit(e, index)}
                 >
               </TextField>
-              <IconButton color="default" onClick={handleFormTaskDelete} className='rightButton'>
+              <IconButton color="default" onClick={() => handleFormTaskDelete(index, "edit")} className='rightButton'>
                 <ClearIcon />
               </IconButton>  
             </div>
@@ -394,7 +473,7 @@ export default function GoalsDrawer(props) {
           <Button type="submit"
                   variant="outlined"
                   color="primary"
-                  onClick={handleFormSubmit}
+                  onClick={handleFormEditSubmit}
                   className='formSubmitButton'
                   disabled={!goal.title}>
             Edit Goal
@@ -407,20 +486,17 @@ export default function GoalsDrawer(props) {
   )
 
 
+  //  HELPER FUNCTIONS
+
   /*
-  addGoal to array of goals
-  *
-  *
+  * addGoal to mem goal array
   */
   function addGoal(goal) {
     goals.push(goal)
   }
 
-
   /*
-  deleteGoal from array of goals
-  *
-  *
+  * deleteGoal from mem goal array
   */
   function deleteGoal(goalId) {
 
@@ -434,10 +510,10 @@ export default function GoalsDrawer(props) {
   }
 
 
+  //  RETURN
+
   /*
   /return button and sideDrawer
-  *
-  *
   */
   return (
     <div className = 'goalsButtonDiv'>
@@ -451,4 +527,15 @@ export default function GoalsDrawer(props) {
       ))}
     </div>
   );
+}
+
+
+function useAsyncState(initialValue) {
+  const [value, setValue] = React.useState(initialValue);
+  const setter = x =>
+    new Promise(resolve => {
+      setValue(x);
+      resolve(x);
+    });
+  return [value, setter];
 }
