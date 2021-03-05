@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './fish.css'
+import smallFish from './smallFish.png'
 
 const Fish = ({session}) => {
   const d = new Date()
@@ -24,8 +25,11 @@ const Fish = ({session}) => {
 
   return (
     <div className='fish'>
-      <h1>{session.title}</h1>
-      <p>{ formatTime(timer) }</p>
+      <div className="fishImage">
+        <img src={smallFish} alt="session"/>
+        <p className='fishTitle'>{session.title}</p>
+        <p className='fishTimer'>{ formatTime(timer) }</p>
+      </div>
     </div>
   )
 }
