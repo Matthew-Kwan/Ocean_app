@@ -117,8 +117,8 @@ function App() {
       completedTasksNum: 1,
       completionPercent: 50,
       tasks: [
-        {id: 1, task: 'Research React', completed: true},
-        {id: 2, task: 'Make demo app', completed: false}
+        {id: 0, task: 'Research React', completed: true},
+        {id: 1, task: 'Make demo app', completed: false}
       ]
     },
     {
@@ -128,11 +128,11 @@ function App() {
       completedTasksNum: 3,
       completionPercent: 60,
       tasks: [
-        {id: 1, task: 'study for CSC309', completed: true},
-        {id: 2, task: 'study for CSC384', completed: true},
-        {id: 3, task: 'drop MIE424', completed: true},
-        {id: 4, task: 'submit AI minor form request', completed: false},
-        {id: 5, task: 'submit extra form request', completed: false}
+        {id: 0, task: 'study for CSC309', completed: true},
+        {id: 1, task: 'study for CSC384', completed: true},
+        {id: 2, task: 'drop MIE424', completed: true},
+        {id: 3, task: 'submit AI minor form request', completed: false},
+        {id: 4, task: 'submit extra form request', completed: false}
       ]
     }
   ]
@@ -145,8 +145,8 @@ function App() {
       completedTasksNum: 1,
       completionPercent: 50,
       tasks: [
-        {id: 1, task: 'Research React', completed: true},
-        {id: 2, task: 'Make demo app', completed: false}
+        {id: 0, task: 'Research React', completed: true},
+        {id: 1, task: 'Make demo app', completed: false}
       ]
     },
     {
@@ -156,11 +156,11 @@ function App() {
       completedTasksNum: 3,
       completionPercent: 60,
       tasks: [
-        {id: 1, task: 'study for CSC309', completed: true},
-        {id: 2, task: 'study for CSC384', completed: true},
-        {id: 3, task: 'drop MIE424', completed: true},
-        {id: 4, task: 'submit AI minor form request', completed: false},
-        {id: 5, task: 'submit extra form request', completed: false}
+        {id: 0, task: 'study for CSC309', completed: true},
+        {id: 1, task: 'study for CSC384', completed: true},
+        {id: 2, task: 'drop MIE424', completed: true},
+        {id: 3, task: 'submit AI minor form request', completed: false},
+        {id: 4, task: 'submit extra form request', completed: false}
       ]
     }
   ]

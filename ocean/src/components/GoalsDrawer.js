@@ -51,6 +51,7 @@ export default function GoalsDrawer(props) {
 
   //goal states
   const [goalId, setGoalId] = React.useState(0); //incrementing unique goalIds
+  const [taskId, setTaskId] = React.useState(0);
 
   const [newGoal, setNewGoal] = React.useState({  //new goal state
     id: goalId,
@@ -176,7 +177,18 @@ export default function GoalsDrawer(props) {
     e.preventDefault()
     const value = e.target.value;
 
-    editGoal.tasks[taskId] = {id: taskId, task: value, completed: false};
+    const existingTaskWithId = editGoal.tasks.find(function(task, index) {
+      if(task.id == taskId)
+        return true;
+    });
+
+    if (existingTaskWithId == null)
+      editGoal.tasks[taskId] = {id: taskId, task: value, completed: false};
+    else {
+      //minus 2 because array starts at 0 and account for currently updating task 
+      editGoal.tasks[taskId] = {id: editGoal.tasks[editGoal.tasks.length-2].id+1, task: value, completed: false}; 
+    }
+    
     setEditGoal({
       ...editGoal,
       tasks: editGoal.tasks
@@ -206,16 +218,17 @@ export default function GoalsDrawer(props) {
 
   //form add task
   const addTask = (formType) => {
+
     if (formType == "create") {
       setNewGoal({
         ...newGoal,
-        tasks: [...newGoal.tasks, '']
+        tasks: [...newGoal.tasks, {id: null, task: '', completed: false}]
       })
     }
     if (formType == "edit") {
       setEditGoal({
         ...editGoal,
-        tasks: [...editGoal.tasks, '']
+        tasks: [...editGoal.tasks, {id: null, task: '', completed: false}],
       })
     }
   };
@@ -231,12 +244,16 @@ export default function GoalsDrawer(props) {
       })
     }
     if (formType == "edit") {
+      if (editGoal.tasks[taskId].completed) {
+        editGoal.completedTasksNum--;
+      }
       editGoal.tasks.splice(taskId, 1);
 
       setEditGoal({
         ...editGoal,
-        tasks: editGoal.tasks
-      })
+        tasks: editGoal.tasks,
+        totalTasksNum: editGoal.tasks.length
+      });
     }
   }
 
@@ -246,6 +263,15 @@ export default function GoalsDrawer(props) {
   };
 
   const handleGoalModalClose = () => { //close goal modal
+    setNewGoal({  //refresh new goal state for form exit
+      id: goalId,
+      title: '',
+      tasks: [],
+      totalTasksNum: 0,
+      completedTasksNum: 0,
+      completionPercent: 0
+    });
+
     setOpenGoalModal(false);
   };
 
@@ -298,8 +324,6 @@ export default function GoalsDrawer(props) {
         return true;
     });
 
-    console.log(goalToEdit)
-
     const taskToEdit = goalToEdit.tasks.find(function(task, index) {
       if(task.id == taskId)
         return true;
@@ -316,6 +340,10 @@ export default function GoalsDrawer(props) {
     goalToEdit.completionPercent = 0;
       else
     goalToEdit.completionPercent = Math.round((goalToEdit.completedTasksNum/goalToEdit.totalTasksNum)*100);
+
+    //instant refresh modal
+    handleDetailsModalOpen(goalToEdit);
+    handleDetailsModalClose();
 
   }
 
