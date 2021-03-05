@@ -169,6 +169,24 @@ function App() {
     }
   ]
 
+  const sessions_user_1 = [
+    {
+      sessionId: 1,
+      userId: 1,
+      goalId: 2,
+      title: "Work on ocean component",
+      startTime: new Date(2021,2,1,8,0,0),
+      endTime: new Date(2021,2,1,12,0,0)
+    },
+    {
+      sessionId: 2,
+      userId: 1,
+      goalId: 1,
+      title: "Learn more about React",
+      startTime: new Date(2021,2,2,8,0,0),
+      endTime: new Date(2021,2,2,12,0,0)
+  }];
+
   const usersList = [
     {
       id: 1,
@@ -179,7 +197,8 @@ function App() {
       goals: goals1,
       friends: [
         {id:3, name: 'GrassyMans'},
-      ]
+      ],
+      sessions: sessions_user_1
     },
     {
       id: 2,
