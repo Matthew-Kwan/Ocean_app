@@ -59,7 +59,8 @@ export default function GoalsDrawer(props) {
     tasks: [],
     totalTasksNum: 0,
     completedTasksNum: 0,
-    completionPercent: 0
+    completionPercent: 0,
+    completed: false
   });
 
   const [editGoal, setEditGoal] = React.useState({ //edit goal state
@@ -68,7 +69,8 @@ export default function GoalsDrawer(props) {
     tasks: [],
     totalTasksNum: 0,
     completedTasksNum: 0,
-    completionPercent: 0
+    completionPercent: 0,
+    completed: false
   });
 
 
@@ -78,7 +80,8 @@ export default function GoalsDrawer(props) {
     tasks: [],
     totalTasksNum: 0,
     completedTasksNum: 0,
-    completionPercent: 0
+    completionPercent: 0,
+    completed: false
   });
 
   //useEffect for edit modal
@@ -157,7 +160,8 @@ export default function GoalsDrawer(props) {
       tasks: [],
       totalTasksNum: 0,
       completedTasksNum: 0,
-      completionPercent: 0
+      completionPercent: 0,
+      completed: false
     });
 
     handleGoalModalClose();
@@ -269,7 +273,8 @@ export default function GoalsDrawer(props) {
       tasks: [],
       totalTasksNum: 0,
       completedTasksNum: 0,
-      completionPercent: 0
+      completionPercent: 0,
+      completed: false
     });
 
     setOpenGoalModal(false);
@@ -282,7 +287,8 @@ export default function GoalsDrawer(props) {
       tasks: goal.tasks,
       totalTasksNum: goal.totalTasksNum,
       completedTasksNum: goal.completedTasksNum,
-      completionPercent: goal.completionPercent
+      completionPercent: goal.completionPercent,
+      completed: goal.completed
     });
 
     setDetailsContent();
@@ -304,7 +310,8 @@ export default function GoalsDrawer(props) {
       tasks: goal.tasks,
       totalTasksNum: goal.totalTasksNum,
       completedTasksNum: goal.completedTasksNum,
-      completionPercent: goal.completionPercent
+      completionPercent: goal.completionPercent,
+      completed: goal.completed
     }); 
   }
 
@@ -387,29 +394,34 @@ export default function GoalsDrawer(props) {
         {goals.length == 0 ? <p>You currently have no goals. Add a goal to keep track of your work!</p>: null}
 
         {goals.map((goal) => (
+        <div>
+          {!goal.completed ? 
 
-          <div className='goalIndividualContainer'>
-            <div className = 'goalIndividualContents'>
-              <div className = 'goalTitleDiv'>
-                <p className = 'bold' > {`${goal.title}`}</p>
+            <div className='goalIndividualContainer'>
+              <div className = 'goalIndividualContents'>
+                <div className = 'goalTitleDiv'>
+                  <p className = 'bold' > {`${goal.title}`}</p>
+                </div>
+                <div className = 'rightButton'>
+                  <IconButton color="primary" onClick={() => handleEditModalOpen(goal)} >
+                    <EditOutlinedIcon />
+                  </IconButton>
+
+                </div>
+                
+                <ProgressBar completed={goal.completionPercent} />
+
+                <div className = 'leftButton'>     
+                  <Button onClick={() => handleDetailsModalOpen(goal)} variant="outlined" color="primary">See Details</Button>
+                </div>              
+                <Button className = 'rightButton' variant="outlined" color="primary" onClick={refreshDrawerDelete(anchor, goal.id) }>Finished!</Button>
+                      
               </div>
-              <div className = 'rightButton'>
-                <IconButton color="primary" onClick={() => handleEditModalOpen(goal)} >
-                  <EditOutlinedIcon />
-                </IconButton>
 
-              </div>
-              
-              <ProgressBar completed={goal.completionPercent} />
-
-              <div className = 'leftButton'>     
-                <Button onClick={() => handleDetailsModalOpen(goal)} variant="outlined" color="primary">See Details</Button>
-              </div>              
-              <Button className = 'rightButton' variant="outlined" color="primary" onClick={refreshDrawerDelete(anchor, goal.id) }>Finished!</Button>
-                    
             </div>
 
-          </div>
+          : null}
+        </div>  
         ))}
         <Modal open={openDetailsModal} onClose={handleDetailsModalClose} >
           {detailsModalContent.content}
@@ -589,7 +601,7 @@ export default function GoalsDrawer(props) {
   }
 
   /*
-  * deleteGoal from mem goal array
+  * change goal to complete
   */
   function deleteGoal(goalId) {
 
@@ -598,8 +610,9 @@ export default function GoalsDrawer(props) {
         return true;
     });
     
-    const index = goals.indexOf(goal);
-    goals.splice(index, 1);
+    goal.completed = true;
+    //const index = goals.indexOf(goal);
+    //goals.splice(index, 1);
   }
 
 

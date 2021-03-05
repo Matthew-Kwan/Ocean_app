@@ -115,6 +115,7 @@ function App() {
       title: 'Software',
       totalTasksNum: 2,
       completedTasksNum: 1,
+      completed: false,
       completionPercent: 50,
       tasks: [
         {id: 0, task: 'Research React', completed: true},
@@ -126,6 +127,7 @@ function App() {
       title: 'School',
       totalTasksNum: 5,
       completedTasksNum: 3,
+      completed: false,
       completionPercent: 60,
       tasks: [
         {id: 0, task: 'study for CSC309', completed: true},
@@ -143,6 +145,7 @@ function App() {
       title: 'Admin Stuff',
       totalTasksNum: 2,
       completedTasksNum: 1,
+      completed: false,
       completionPercent: 50,
       tasks: [
         {id: 0, task: 'Research React', completed: true},
@@ -154,6 +157,7 @@ function App() {
       title: 'More Admin stuff',
       totalTasksNum: 5,
       completedTasksNum: 3,
+      completed: false,
       completionPercent: 60,
       tasks: [
         {id: 0, task: 'study for CSC309', completed: true},
