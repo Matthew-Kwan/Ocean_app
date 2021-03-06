@@ -5,17 +5,14 @@ import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import ClearIcon from '@material-ui/icons/Clear';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import './GoalsDrawer.css'
 import './modal.css'
 
 import ProgressBar from './ProgressBar'
-import { ContactsOutlined } from '@material-ui/icons';
 
 /*
 GoalsDrawer, returns a button that expands a side drawer from the left that contains goal information
@@ -30,7 +27,9 @@ export default function GoalsDrawer(props) {
 
   //  STATES
 
-  const firstUpdate = useRef(true); //state for first render
+  const firstUpdateEdit = useRef(true); //state for first render
+  const firstUpdateDetails = useRef(true); //state for first render
+
 
   //modal states
   const [openGoalModal, setOpenGoalModal] = React.useState(false);  //goal modal
@@ -52,6 +51,7 @@ export default function GoalsDrawer(props) {
 
   //goal states
   const [goalId, setGoalId] = React.useState(0); //incrementing unique goalIds
+  const [taskId, setTaskId] = React.useState(0);
 
   const [newGoal, setNewGoal] = React.useState({  //new goal state
     id: goalId,
@@ -59,7 +59,8 @@ export default function GoalsDrawer(props) {
     tasks: [],
     totalTasksNum: 0,
     completedTasksNum: 0,
-    completionPercent: 0
+    completionPercent: 0,
+    completed: false
   });
 
   const [editGoal, setEditGoal] = React.useState({ //edit goal state
@@ -68,19 +69,40 @@ export default function GoalsDrawer(props) {
     tasks: [],
     totalTasksNum: 0,
     completedTasksNum: 0,
-    completionPercent: 0
+    completionPercent: 0,
+    completed: false
+  });
+
+
+  const [detailsGoal, setDetailsGoal] = React.useState({ //details goal state
+    id: null,
+    title: '',
+    tasks: [],
+    totalTasksNum: 0,
+    completedTasksNum: 0,
+    completionPercent: 0,
+    completed: false
   });
 
   //useEffect for edit modal
   useEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
+    if (firstUpdateEdit.current) {
+      firstUpdateEdit.current = false;
     } else {
      // do things after first render
-      console.log(editGoal);
       setEditContent();
     }
   }, [editGoal])
+
+    //useEffect for details modal
+    useEffect(() => {
+      if (firstUpdateDetails.current) {
+        firstUpdateDetails.current = false;
+      } else {
+       // do things after first render
+        setDetailsContent();
+      }
+    }, [detailsGoal])
 
 
   //  HANDLERS
@@ -138,7 +160,8 @@ export default function GoalsDrawer(props) {
       tasks: [],
       totalTasksNum: 0,
       completedTasksNum: 0,
-      completionPercent: 0
+      completionPercent: 0,
+      completed: false
     });
 
     handleGoalModalClose();
@@ -158,7 +181,24 @@ export default function GoalsDrawer(props) {
     e.preventDefault()
     const value = e.target.value;
 
-    editGoal.tasks[taskId] = {id: taskId, task: value, completed: false};
+
+    const existingTaskWithId = editGoal.tasks.find(function(task, index) {
+      if(task.id == taskId)
+        return true;
+    });
+
+    //if edit task
+    if (editGoal.tasks[taskId].id != null)
+      editGoal.tasks[taskId] = {id: editGoal.tasks[taskId].id, task: value, completed: false};
+    //if adding a new task when editing, set id to be 1 greater than greatest id
+    else {
+      if (editGoal.tasks.length <= 1)
+        editGoal.tasks[taskId] = {id: 0, task: value, completed: false};
+      //minus 2 because array starts at 0 and account for currently updating task,
+      else
+        editGoal.tasks[taskId] = {id: editGoal.tasks[editGoal.tasks.length-2].id+1, task: value, completed: false}; 
+    }
+    
     setEditGoal({
       ...editGoal,
       tasks: editGoal.tasks
@@ -188,16 +228,17 @@ export default function GoalsDrawer(props) {
 
   //form add task
   const addTask = (formType) => {
+
     if (formType == "create") {
       setNewGoal({
         ...newGoal,
-        tasks: [...newGoal.tasks, '']
+        tasks: [...newGoal.tasks, {id: null, task: '', completed: false}]
       })
     }
     if (formType == "edit") {
       setEditGoal({
         ...editGoal,
-        tasks: [...editGoal.tasks, '']
+        tasks: [...editGoal.tasks, {id: null, task: '', completed: false}],
       })
     }
   };
@@ -213,12 +254,16 @@ export default function GoalsDrawer(props) {
       })
     }
     if (formType == "edit") {
+      if (editGoal.tasks[taskId].completed) {
+        editGoal.completedTasksNum--;
+      }
       editGoal.tasks.splice(taskId, 1);
 
       setEditGoal({
         ...editGoal,
-        tasks: editGoal.tasks
-      })
+        tasks: editGoal.tasks,
+        totalTasksNum: editGoal.tasks.length
+      });
     }
   }
 
@@ -228,13 +273,37 @@ export default function GoalsDrawer(props) {
   };
 
   const handleGoalModalClose = () => { //close goal modal
+    setNewGoal({  //refresh new goal state for form exit
+      id: goalId,
+      title: '',
+      tasks: [],
+      totalTasksNum: 0,
+      completedTasksNum: 0,
+      completionPercent: 0,
+      completed: false
+    });
+
     setOpenGoalModal(false);
   };
 
   const handleDetailsModalOpen = (goal) => { //open correct details modal
-    setDetailsModalContent({content:seeDetailsModalContent(goal)});
-    setOpenDetailsModal(true);
+    setDetailsGoal({
+      id: goal.id,
+      title: goal.title,
+      tasks: goal.tasks,
+      totalTasksNum: goal.totalTasksNum,
+      completedTasksNum: goal.completedTasksNum,
+      completionPercent: goal.completionPercent,
+      completed: goal.completed
+    });
+
+    setDetailsContent();
   };
+
+  const setDetailsContent = () => { //set details content state, called by detail modal open handler
+    setDetailsModalContent({content:seeDetailsModalContent(detailsGoal)});
+    setOpenDetailsModal(true);
+  }
 
   const handleDetailsModalClose = () => { //close details modal
     setOpenDetailsModal(false);
@@ -244,14 +313,15 @@ export default function GoalsDrawer(props) {
     setEditGoal({
       id: goal.id,
       title: goal.title,
-      tasks: goal.tasks,
+      tasks: goal.tasks.slice(0), //make a copy of array to modify
       totalTasksNum: goal.totalTasksNum,
       completedTasksNum: goal.completedTasksNum,
-      completionPercent: goal.completionPercent
+      completionPercent: goal.completionPercent,
+      completed: goal.completed
     }); 
   }
 
-  const setEditContent = () => { //set edit content, called by edit modal open handler
+  const setEditContent = () => { //set edit content state, called by edit modal open handler
     setEditModalContent({content:editGoalModalContent(editGoal)})
     setOpenEditModal(true);
   }
@@ -260,18 +330,45 @@ export default function GoalsDrawer(props) {
     setOpenEditModal(false);
   }
 
-  //check for empty tasks
-  function hasEmptyTaskTitle () {
+  const handleCheckChange = (taskId) => {
 
+    const goalToEdit = goals.find(function(goal, index) {
+      if(goal.id == detailsGoal.id)
+        return true;
+    });
+
+    const taskToEdit = goalToEdit.tasks.find(function(task, index) {
+      if(task.id == taskId)
+        return true;
+    });
+
+    if (taskToEdit.completed) 
+      goalToEdit.completedTasksNum--;
+    else
+      goalToEdit.completedTasksNum++;
+
+      taskToEdit.completed = !taskToEdit.completed;
+
+    if (goalToEdit.completedTasksNum == 0 || goalToEdit.totalTasksNum == 0)
+    goalToEdit.completionPercent = 0;
+      else
+    goalToEdit.completionPercent = Math.round((goalToEdit.completedTasksNum/goalToEdit.totalTasksNum)*100);
+
+    //instant refresh modal
+    handleDetailsModalOpen(goalToEdit);
+    handleDetailsModalClose();
+
+  }
+
+  //check for empty tasks
+  function hasEmptyTaskTitle (goal) {
     
-    for (var i=0 ; i < newGoal.tasks.length; i++) {
-      if (newGoal.tasks[i].title == '') {
+    for (var i=0 ; i < goal.tasks.length; i++) {
+      if (goal.tasks[i].task == '') {
         return true;
       }
     }
     return false;
-
-
   }
 
 
@@ -300,29 +397,34 @@ export default function GoalsDrawer(props) {
         {goals.length == 0 ? <p>You currently have no goals. Add a goal to keep track of your work!</p>: null}
 
         {goals.map((goal) => (
+        <div>
+          {!goal.completed ? 
 
-          <div className='goalIndividualContainer'>
-            <div className = 'goalIndividualContents'>
-              <div className = 'goalTitleDiv'>
-                <p className = 'bold' > {`${goal.title}`}</p>
+            <div className='goalIndividualContainer'>
+              <div className = 'goalIndividualContents'>
+                <div className = 'goalTitleDiv'>
+                  <p className = 'bold' > {`${goal.title}`}</p>
+                </div>
+                <div className = 'rightButton'>
+                  <IconButton color="primary" onClick={() => handleEditModalOpen(goal)} >
+                    <EditOutlinedIcon />
+                  </IconButton>
+
+                </div>
+                
+                <ProgressBar completed={goal.completionPercent} />
+
+                <div className = 'leftButton'>     
+                  <Button onClick={() => handleDetailsModalOpen(goal)} variant="outlined" color="primary">Check Tasks</Button>
+                </div>              
+                <Button className = 'rightButton' variant="outlined" color="primary" onClick={refreshDrawerDelete(anchor, goal.id) }>Finished!</Button>
+                      
               </div>
-              <div className = 'rightButton'>
-                <IconButton color="primary" onClick={() => handleEditModalOpen(goal)} >
-                  <EditOutlinedIcon />
-                </IconButton>
 
-              </div>
-              
-              <ProgressBar completed={goal.completionPercent} />
-
-              <div className = 'leftButton'>     
-                <Button onClick={() => handleDetailsModalOpen(goal)} variant="outlined" color="primary">See Details</Button>
-              </div>              
-              <Button className = 'rightButton' variant="outlined" color="primary" onClick={refreshDrawerDelete(anchor, goal.id) }>Finished!</Button>
-                    
             </div>
 
-          </div>
+          : null}
+        </div>  
         ))}
         <Modal open={openDetailsModal} onClose={handleDetailsModalClose} >
           {detailsModalContent.content}
@@ -393,7 +495,8 @@ export default function GoalsDrawer(props) {
                     color="primary"
                     onClick={handleFormSubmit}
                     className='formSubmitButton'
-                    disabled={!newGoal.title}>
+                    disabled={(hasEmptyTaskTitle(newGoal)) 
+                                || (newGoal.title == "" && newGoal.tasks.length == 0)}>
               Create Goal
             </Button>
             <p></p>
@@ -416,7 +519,7 @@ export default function GoalsDrawer(props) {
         <h2>Tasks</h2>
         {goal.tasks.map((task) => (
           <div>
-            <input type="checkbox" id={task.id} name={task.task} value={task.task} defaultChecked={task.completed}/>
+            <input type="checkbox" id={task.id} name={task.task} value={task.task} defaultChecked={task.completed} onClick = {() => handleCheckChange(task.id)}/>
             <label for={task.task}>{`${task.task}`}</label>
 
           </div>       
@@ -481,7 +584,7 @@ export default function GoalsDrawer(props) {
                   color="primary"
                   onClick={handleFormEditSubmit}
                   className='formSubmitButton'
-                  disabled={!goal.title}>
+                  disabled={hasEmptyTaskTitle(goal) || (!goal.title)}>
             Edit Goal
           </Button>
           <p></p>
@@ -502,7 +605,7 @@ export default function GoalsDrawer(props) {
   }
 
   /*
-  * deleteGoal from mem goal array
+  * change goal to complete
   */
   function deleteGoal(goalId) {
 
@@ -511,8 +614,9 @@ export default function GoalsDrawer(props) {
         return true;
     });
     
-    const index = goals.indexOf(goal);
-    goals.splice(index, 1);
+    goal.completed = true;
+    //const index = goals.indexOf(goal);
+    //goals.splice(index, 1);
   }
 
 
@@ -533,15 +637,4 @@ export default function GoalsDrawer(props) {
       ))}
     </div>
   );
-}
-
-
-function useAsyncState(initialValue) {
-  const [value, setValue] = React.useState(initialValue);
-  const setter = x =>
-    new Promise(resolve => {
-      setValue(x);
-      resolve(x);
-    });
-  return [value, setter];
 }

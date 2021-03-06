@@ -115,10 +115,11 @@ function App() {
       title: 'Software',
       totalTasksNum: 2,
       completedTasksNum: 1,
+      completed: false,
       completionPercent: 50,
       tasks: [
-        {id: 1, task: 'Research React', completed: true},
-        {id: 2, task: 'Make demo app', completed: false}
+        {id: 0, task: 'Research React', completed: true},
+        {id: 1, task: 'Make demo app', completed: false}
       ]
     },
     {
@@ -126,13 +127,14 @@ function App() {
       title: 'School',
       totalTasksNum: 5,
       completedTasksNum: 3,
+      completed: false,
       completionPercent: 60,
       tasks: [
-        {id: 1, task: 'study for CSC309', completed: true},
-        {id: 2, task: 'study for CSC384', completed: true},
-        {id: 3, task: 'drop MIE424', completed: true},
-        {id: 4, task: 'submit AI minor form request', completed: false},
-        {id: 5, task: 'submit extra form request', completed: false}
+        {id: 0, task: 'study for CSC309', completed: true},
+        {id: 1, task: 'study for CSC384', completed: true},
+        {id: 2, task: 'drop MIE424', completed: true},
+        {id: 3, task: 'submit AI minor form request', completed: false},
+        {id: 4, task: 'submit extra form request', completed: false}
       ]
     }
   ]
@@ -143,10 +145,11 @@ function App() {
       title: 'Admin Stuff',
       totalTasksNum: 2,
       completedTasksNum: 1,
+      completed: false,
       completionPercent: 50,
       tasks: [
-        {id: 1, task: 'Research React', completed: true},
-        {id: 2, task: 'Make demo app', completed: false}
+        {id: 0, task: 'Research React', completed: true},
+        {id: 1, task: 'Make demo app', completed: false}
       ]
     },
     {
@@ -154,16 +157,35 @@ function App() {
       title: 'More Admin stuff',
       totalTasksNum: 5,
       completedTasksNum: 3,
+      completed: false,
       completionPercent: 60,
       tasks: [
-        {id: 1, task: 'study for CSC309', completed: true},
-        {id: 2, task: 'study for CSC384', completed: true},
-        {id: 3, task: 'drop MIE424', completed: true},
-        {id: 4, task: 'submit AI minor form request', completed: false},
-        {id: 5, task: 'submit extra form request', completed: false}
+        {id: 0, task: 'study for CSC309', completed: true},
+        {id: 1, task: 'study for CSC384', completed: true},
+        {id: 2, task: 'drop MIE424', completed: true},
+        {id: 3, task: 'submit AI minor form request', completed: false},
+        {id: 4, task: 'submit extra form request', completed: false}
       ]
     }
   ]
+
+  const sessions_user_1 = [
+    {
+      sessionId: 1,
+      userId: 1,
+      goalId: 2,
+      title: "Work on ocean component",
+      startTime: new Date(2021,2,1,8,0,0),
+      endTime: new Date(2021,2,1,12,0,0)
+    },
+    {
+      sessionId: 2,
+      userId: 1,
+      goalId: 1,
+      title: "Learn more about React",
+      startTime: new Date(2021,2,2,8,0,0),
+      endTime: new Date(2021,2,2,12,0,0)
+  }];
 
   const usersList = [
     {
@@ -175,7 +197,8 @@ function App() {
       goals: goals1,
       friends: [
         {id:3, name: 'GrassyMans'},
-      ]
+      ],
+      sessions: sessions_user_1
     },
     {
       id: 2,
