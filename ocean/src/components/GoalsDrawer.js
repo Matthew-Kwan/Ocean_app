@@ -181,16 +181,22 @@ export default function GoalsDrawer(props) {
     e.preventDefault()
     const value = e.target.value;
 
+
     const existingTaskWithId = editGoal.tasks.find(function(task, index) {
       if(task.id == taskId)
         return true;
     });
 
-    if (existingTaskWithId == null)
-      editGoal.tasks[taskId] = {id: taskId, task: value, completed: false};
+    //if edit task
+    if (editGoal.tasks[taskId].id != null)
+      editGoal.tasks[taskId] = {id: editGoal.tasks[taskId].id, task: value, completed: false};
+    //if adding a new task when editing, set id to be 1 greater than greatest id
     else {
-      //minus 2 because array starts at 0 and account for currently updating task 
-      editGoal.tasks[taskId] = {id: editGoal.tasks[editGoal.tasks.length-2].id+1, task: value, completed: false}; 
+      if (editGoal.tasks.length <= 1)
+        editGoal.tasks[taskId] = {id: 0, task: value, completed: false};
+      //minus 2 because array starts at 0 and account for currently updating task,
+      else
+        editGoal.tasks[taskId] = {id: editGoal.tasks[editGoal.tasks.length-2].id+1, task: value, completed: false}; 
     }
     
     setEditGoal({
@@ -307,7 +313,7 @@ export default function GoalsDrawer(props) {
     setEditGoal({
       id: goal.id,
       title: goal.title,
-      tasks: goal.tasks,
+      tasks: goal.tasks.slice(0), //make a copy of array to modify
       totalTasksNum: goal.totalTasksNum,
       completedTasksNum: goal.completedTasksNum,
       completionPercent: goal.completionPercent,
@@ -355,17 +361,14 @@ export default function GoalsDrawer(props) {
   }
 
   //check for empty tasks
-  function hasEmptyTaskTitle () {
-
+  function hasEmptyTaskTitle (goal) {
     
-    for (var i=0 ; i < newGoal.tasks.length; i++) {
-      if (newGoal.tasks[i].title == '') {
+    for (var i=0 ; i < goal.tasks.length; i++) {
+      if (goal.tasks[i].task == '') {
         return true;
       }
     }
     return false;
-
-
   }
 
 
@@ -412,7 +415,7 @@ export default function GoalsDrawer(props) {
                 <ProgressBar completed={goal.completionPercent} />
 
                 <div className = 'leftButton'>     
-                  <Button onClick={() => handleDetailsModalOpen(goal)} variant="outlined" color="primary">See Details</Button>
+                  <Button onClick={() => handleDetailsModalOpen(goal)} variant="outlined" color="primary">Check Tasks</Button>
                 </div>              
                 <Button className = 'rightButton' variant="outlined" color="primary" onClick={refreshDrawerDelete(anchor, goal.id) }>Finished!</Button>
                       
@@ -492,7 +495,8 @@ export default function GoalsDrawer(props) {
                     color="primary"
                     onClick={handleFormSubmit}
                     className='formSubmitButton'
-                    disabled={!newGoal.title}>
+                    disabled={(hasEmptyTaskTitle(newGoal)) 
+                                || (newGoal.title == "" && newGoal.tasks.length == 0)}>
               Create Goal
             </Button>
             <p></p>
@@ -580,7 +584,7 @@ export default function GoalsDrawer(props) {
                   color="primary"
                   onClick={handleFormEditSubmit}
                   className='formSubmitButton'
-                  disabled={!goal.title}>
+                  disabled={hasEmptyTaskTitle(goal) || (!goal.title)}>
             Edit Goal
           </Button>
           <p></p>

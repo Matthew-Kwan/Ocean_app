@@ -25,7 +25,7 @@ const Tank= ({user}) => {
 
                     <GoalsDrawer goals={user.goals}/>
                     <div className="currentSessionBox">
-                        <h1>Current Sessions</h1>
+                        <h1>Tank</h1>
                             {sessions.map(session => 
                                 <Fish session={session}/>)}
                     </div>

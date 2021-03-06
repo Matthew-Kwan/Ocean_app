@@ -3,7 +3,7 @@ import './fish.css'
 
 const Fish = ({session}) => {
   const d = new Date()
-  console.log(Math.abs(d-session.startTime)/(1000))
+  //console.log(Math.abs(d-session.startTime)/(1000))
   const [timer, setTimer] = useState(Math.abs(d - session.startTime)/1000)
   const increment = useRef(null)
 
