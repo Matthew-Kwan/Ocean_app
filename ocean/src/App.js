@@ -88,7 +88,7 @@ const LoginModule = ({loggedIn,handleLogin,classes}) => {
 
   }
 }
-const NavBar = ({loggedIn, handleLogout, user}) => {
+const NavBar = ({loggedIn, handleLogout, user, setUser}) => {
   if (loggedIn) {
     return (
       <div>
@@ -96,7 +96,7 @@ const NavBar = ({loggedIn, handleLogout, user}) => {
         <Link className="link" to="/ocean">ocean</Link>
         <Link className="link" to="/tank">tank</Link>
         <Link className="link" to="/profile">profile</Link>
-        <ButtonModal buttonName ='Ur Profile' content = {YourProfile({user})} />
+        <ButtonModal buttonName ='Ur Profile' content = {YourProfile({user,setUser})} />
         <Link className="link" to="/admin">admin dashboard</Link>
         { loggedIn ? <Link to="/" onClick={handleLogout}> logout </Link> : null }
     </div>
@@ -325,7 +325,7 @@ function App() {
 
     <BrowserRouter>
       <div>
-        <NavBar loggedIn={loggedIn} handleLogout={handleLogout} user = {user}/>
+        <NavBar loggedIn={loggedIn} handleLogout={handleLogout} user = {user} setUser = {setUser}/>
         {/* <Link className="link" to="/">home</Link>
         <Link className="link" to="/ocean">ocean</Link>
         <Link className="link" to="/tank">tank</Link>
@@ -359,7 +359,7 @@ function App() {
         <Route path="/yourprofile" render={() => {
 
         return(
-          <YourProfile user={user}/>
+          <YourProfile user={user} setUser = {setUser}/>
         )
         }}/>
 
