@@ -43,7 +43,7 @@ const Fish = ({users, session}) => {
     <div className={style}>
       <div className="fishImageDiv">
         <img src={smallFish} id={imageStyle.current} alt="session"/>
-        <p className='fishUser'>{sessionUser.username}</p>
+        <p className='fishUser'>{sessionUser.name}</p>
         <p className='fishTitle'>{session.title}</p>
         <p className='fishTimer'>{ formatTime(timer) }</p>
       </div>
