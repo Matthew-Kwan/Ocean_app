@@ -10,10 +10,33 @@
 .headerinput{
     /* color:red; */
     font-size:24px;
+    width:50%;
 }
 
+.profName{
+    /* padding-left:5px; */
+    margin-bottom: 0px;
+}
 .profName:hover{
-    background-color: lightgray;
+    background-color: rgb(237, 242, 245);
+    border-radius: 5px;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.profTagline{
+    margin-top:5px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.profTagline:hover{
+    background-color: rgb(237, 242, 245);
+    border-radius: 5px;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+
+.profName:hover{
+    background-color: rgb(237, 242, 245);
     border-radius: 5px;
     transition: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
@@ -26,8 +49,10 @@
 }
 
 #profText * {
-    padding: 0;
-    margin: 0;
+    /* padding: 0; */
+    padding-left:5px;
+
+    /* margin: 0; */
 }
 
 #profText{
@@ -43,7 +68,7 @@
     width:40px;
     height:40px;
     border-radius: 50%;
-    margin-right: 20px;
+    /* margin-right: 20px; */
     background-color: aquamarine;
 }
 

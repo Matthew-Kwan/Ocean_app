@@ -9,7 +9,7 @@ function input_block(text_type = 'tagline', text, placeholder) {
       {text || placeholder || "Editable content"}
     </h2>;
     }
-    return <span>
+    return <span class = 'profTagline'>
     {text || placeholder || "Editable content"}
   </span>;
   }
