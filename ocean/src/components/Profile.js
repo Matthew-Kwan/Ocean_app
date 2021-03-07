@@ -1,15 +1,17 @@
 import React from 'react'
 import { Button } from '@material-ui/core';
 import './profile.css'
+import EditMe from './editMe'
 
-const Profile = ({user}) => {
+  
+const Profile = ({user,setUser}) => {
     return (
         <div className="profCard">
             <div className='profHeader'>
                 <div className="profImg"></div>
                 <div id='profText'>
-                    <h2>{user.name}</h2>
-                    <p>24, 🇨🇦</p>
+                    {EditMe(user,setUser,"name")}
+                    {EditMe(user,setUser,"tagline")}
                 </div>
 
             </div>
@@ -24,9 +26,8 @@ const Profile = ({user}) => {
                     Report
                     </Button>
             </div>
-
             <div>
-                <h3>Friends</h3>
+                {/* <h3>Friends</h3>
                 <div id='friends'>
                     {
                         (user.friends).map(friend => (
@@ -36,7 +37,7 @@ const Profile = ({user}) => {
                         </div>)) 
                     }
                   
-                </div>
+                </div> */}
                 <h3>Recently Completed Goals</h3>
                 <ol>
                     <li>Read Book</li>

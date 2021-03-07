@@ -88,7 +88,7 @@ const LoginModule = ({loggedIn,handleLogin,classes}) => {
 
   }
 }
-const NavBar = ({loggedIn, handleLogout, user}) => {
+const NavBar = ({loggedIn, handleLogout, user, setUser}) => {
   if (loggedIn) {
     return (
       <div id="navBar">
@@ -96,7 +96,7 @@ const NavBar = ({loggedIn, handleLogout, user}) => {
         <Link className="link" to="/ocean">ocean</Link>
         <Link className="link" to="/tank">tank</Link>
         <Link className="link" to="/profile">profile</Link>
-        <span id="urProfileBtn" ><ButtonModal buttonName ='Ur Profile' content = {YourProfile({user})}/></span>
+        <span id="urProfileBtn" ><ButtonModal buttonName ='Ur Profile' content = {YourProfile({user, setUser})}/></span>
         <Link className="link" to="/admin">admin dashboard</Link>
         { loggedIn ? <Link to="/" onClick={handleLogout}> logout </Link> : null }
     </div>
@@ -194,6 +194,7 @@ function App() {
       password: 'test',
       adminFlag: false,
       name: 'Pom',
+      tagline: '24yyyyy, 🇨🇦',
       goals: goals1,
       friends: [
         {id:3, name: 'GrassyMans'},
@@ -206,6 +207,7 @@ function App() {
       password: 'admin',
       adminFlag: true,
       name: 'AdminJim',
+      tagline: '',
       goals: goals2,
       friends: [
         {id:4, name: 'Billy'},
@@ -217,6 +219,7 @@ function App() {
       password: 'a',
       adminFlag: true,
       name: 'GrassyMans',
+      tagline: '',
       goals: goals2,
       friends: [
       ]
@@ -227,6 +230,7 @@ function App() {
       password: 'b',
       adminFlag: true,
       name: 'PotatoChip',
+      tagline: '',
       goals: goals2,
       friends: [
       ]
@@ -292,7 +296,7 @@ function App() {
 
     <BrowserRouter>
       <div>
-        <NavBar loggedIn={loggedIn} handleLogout={handleLogout} user = {user}/>
+        <NavBar loggedIn={loggedIn} handleLogout={handleLogout} user = {user} setUser = {setUser}/>
         {/* <Link className="link" to="/">home</Link>
         <Link className="link" to="/ocean">ocean</Link>
         <Link className="link" to="/tank">tank</Link>
@@ -312,7 +316,7 @@ function App() {
         <Route path="/profile" render={() => {
 
           return(
-            <Profile user={user}/>
+            <Profile user={user} setUser = {setUser}/>
           )
         }}/>
 
@@ -326,7 +330,7 @@ function App() {
         <Route path="/yourprofile" render={() => {
 
         return(
-          <YourProfile user={user}/>
+          <YourProfile user={user} setUser = {setUser}/>
         )
         }}/>
 
