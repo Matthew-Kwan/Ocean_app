@@ -34,39 +34,97 @@
   from { top: 0; } to { top: 100%; }
 } */
 
-@-webkit-keyframes swim
+@-webkit-keyframes swim_right
 {
-	0% {margin-left: -235px}
-	90% {margin-left: 100%;}
-	100% {margin-left: 100%;}
-}
-
-@keyframes swim
-{
-	0% {margin-left: -235px}
+	0% {margin-left: -25vw}
 	70% {margin-left: 100%;}
 	100% {margin-left: 100%;}
 }
 
-.fish{
-	width: 15vw;
+@keyframes swim_right
+{
+	0% {margin-left: -25vw}
+	70% {margin-left: 100%;}
+	100% {margin-left: 100%;}
+}
+
+@-webkit-keyframes swim_left
+{
+	0% {margin-left: 125vw}
+	70% {margin-left:-25%;}
+	100% {margin-left:-25%;}
+}
+
+@keyframes swim_left
+{
+	0% {margin-left: 125vw}
+	70% {margin-left:-25%;}
+	100% {margin-left:-25%;}
+}
+
+
+.fish4{
+	width: 18vw;
 	height: 15vh;
-	margin-left: 250px;
+  margin-top: 0;
+	margin-left: -25vw;
 	position: absolute;
-	animation: swim 20s;
-	-webkit-animation: swim 20s;
+	animation: swim_right 20s;
+	-webkit-animation: swim_right 20s;
 	animation-iteration-count: infinite;
 	-webkit-animation-iteration-count: infinite;
 	animation-timing-function: linear;
 	-webkit-animation-timing-function: linear;
-  fill: #ffffff;
-  -moz-animation: bounce 2s infinite;
-  -webkit-animation: bounce 2s infinite;
-  animation: bounce 2s infinite;
-  overflow: visible;
-  animation-delay: 0.5s;
-	-webkit-animation-delay: 0.5s;
 }
+
+.fish5{
+	width: 18vw;
+	height: 15vh;
+  margin-top: 0;
+	margin-right: -25vw;
+	position: absolute;
+	animation: swim_left 20s;
+	-webkit-animation: swim_left 20s;
+	animation-iteration-count: infinite;
+	-webkit-animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	-webkit-animation-timing-function: linear;
+  animation-delay: 4s;
+	-webkit-animation-delay: 4s;
+}
+
+
+.fish6{
+	width: 18vw;
+	height: 15vh;
+  margin-top: 0;
+	margin-left: -25vw;
+	position: absolute;
+	animation: swim_right 20s;
+	-webkit-animation: swim_right 20s;
+	animation-iteration-count: infinite;
+	-webkit-animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	-webkit-animation-timing-function: linear;
+  animation-delay: 8s;
+	-webkit-animation-delay: 8s;
+}
+
+.fish7{
+	width: 18vw;
+	height: 15vh;
+  margin-top: 0;
+	margin-right: -25vw;
+	position: absolute;
+	animation: swim_left 20s;
+	-webkit-animation: swim_left 20s;
+	animation-iteration-count: infinite;
+	-webkit-animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	-webkit-animation-timing-function: linear;
+}
+
+
 
 
 /**/
@@ -121,18 +179,42 @@
 
 /*END Fish Animation*/
 
-.fishImage {
-  position: relative;
+.fishImageDiv {
+  -moz-animation: bounce 2s infinite;
+  -webkit-animation: bounce 2s infinite;
+  animation: bounce 2s infinite;
+}
+
+.fishUser {
+  position: absolute;
+  top: 5vh;
+  left: 5vw;
+  width: 10vw;
 }
 
 .fishTitle {
   position: absolute;
-  top: 10vh;
-  left: 10vw;
+  top: 9vh;
+  left: 5vw;
+
+  font-weight: bold;
+  width: 10vw;
 }
 
 .fishTimer {
   position: absolute;
-  top: 15vh;
-  left: 10vw;
+  top: 12vh;
+  left: 5vw;
 }
+
+#fishImageRight {
+  transform: scaleX(-1);
+  width: 100%;
+  height: auto;
+}
+
+#fishImageLeft {
+  width: 100%;
+  height: auto;
+}
+

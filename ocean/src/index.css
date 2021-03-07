@@ -12,6 +12,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
   min-height: 100%;
+  overflow: hidden;
 }
 
 code {

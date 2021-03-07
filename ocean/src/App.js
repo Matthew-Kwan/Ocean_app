@@ -91,12 +91,12 @@ const LoginModule = ({loggedIn,handleLogin,classes}) => {
 const NavBar = ({loggedIn, handleLogout, user}) => {
   if (loggedIn) {
     return (
-      <div>
+      <div id="navBar">
         {/* <Link className="link" to="/">home</Link> */}
         <Link className="link" to="/ocean">ocean</Link>
         <Link className="link" to="/tank">tank</Link>
         <Link className="link" to="/profile">profile</Link>
-        <ButtonModal buttonName ='Ur Profile' content = {YourProfile({user})} />
+        <span id="urProfileBtn" ><ButtonModal buttonName ='Ur Profile' content = {YourProfile({user})}/></span>
         <Link className="link" to="/admin">admin dashboard</Link>
         { loggedIn ? <Link to="/" onClick={handleLogout}> logout </Link> : null }
     </div>
@@ -233,33 +233,6 @@ function App() {
     }
   ]
 
-  const sessionsList = [
-    {
-      sessionId: 1,
-      userId: 1,
-      goalId: 2,
-      title: "Work on ocean component",
-      startTime: new Date(2021,2,1,8,0,0),
-      endTime: new Date(2021,2,1,12,0,0),
-    },
-    {
-      sessionId: 2,
-      userId: 1,
-      goalId: 1,
-      title: "Learn more about React",
-      startTime: new Date(2021,2,2,8,0,0),
-      endTime: new Date(2021,2,2,12,0,0),
-    },
-    {
-      sessionId: 3,
-      userId: 3,
-      goalId: 2,
-      title: "Report some peeps",
-      startTime: new Date(2021,2,3,8,0,0),
-      endTime: null,
-    },
-  ]
-
   // React states
 
   const [users, setUsers] = useState(usersList)
@@ -275,17 +248,15 @@ function App() {
     password: '',
   })
 
-  const [sessions, setSessions] = useState(sessionsList)
+  const [sessions, setSessions] = useState([])
 
   const [loggedIn, setLoggedIn] = useState(false)
 
   const classes = useStyles();
 
-  // useEffect(() => {
-  //   if(user) {
-  //     setLoggedIn(true)
-  //   }
-  // },[user])
+  useEffect(() => {
+    setUsers(usersList)
+  }, []) //
 
 
   // login function
@@ -334,7 +305,7 @@ function App() {
         <Route path="/ocean" render={() => {
           // will need this to redirect to login page if the user is not logged in
           return (
-            <Ocean user={user} sessions={sessions}/>
+            <Ocean user={user} users={users} sessions={sessions} setSessions={setSessions}/>
           )
         }}/>
 
@@ -372,7 +343,7 @@ function App() {
 
       </Switch>
 
-      <LoginModule loggedIn={loggedIn} handleLogin={handleLogin} classes = {classes}></LoginModule>
+      <LoginModule loggedIn={loggedIn} handleLogin={handleLogin} classes={classes}></LoginModule>
 
     </BrowserRouter>
   );
