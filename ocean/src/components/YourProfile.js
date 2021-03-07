@@ -1,4 +1,6 @@
 import React from 'react'
+import ContentEditable from 'react-contenteditable'
+
 import { Button } from '@material-ui/core';
 import './profile.css'
 
@@ -7,6 +9,29 @@ import ProgressBar from './ProgressBar'
 import ButtonModal from './ButtonModal'
 
 const friends = []
+
+
+class MyComponent extends React.Component {
+  constructor() {
+    super()
+    this.contentEditable = React.createRef();
+    this.state = {html: "<b>Hello <i>World</i></b>"};
+  };
+
+  handleChange = evt => {
+    this.setState({html: evt.target.value});
+  };
+
+  render = () => {
+    return <ContentEditable
+              innerRef={this.contentEditable}
+              html={this.state.html} // innerHTML of the editable div
+              disabled={false}       // use true to disable editing
+              onChange={this.handleChange} // handle innerHTML change
+              tagName='article' // Use a custom HTML tag (uses a div by default)
+            />
+  };
+};
 
 const YourProfile = ({user}) => {
     return (
@@ -29,23 +54,21 @@ const YourProfile = ({user}) => {
                             <p>{friend.name}</p>
                         </div>)) 
                     }
-                  
+                    {MyComponent}
                 </div>
             </div>
-
             <div>
                 <h3>Recently Completed Goals</h3>
                 <ol>
                     <li>Read Book</li>
                     <li>Finish CSC309 Project</li>
                 </ol>
-            </div>
-            <h3>Recently Completed Sessions</h3>
+                <h3>Recently Completed Sessions</h3>
                 <ol>
                     <li>Read Book</li>
                     <li>Finish CSC309 Project</li>
                 </ol>
-
+            </div>
         </div>
     )
 }

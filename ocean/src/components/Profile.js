@@ -1,15 +1,43 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button } from '@material-ui/core';
 import './profile.css'
+import Editable from './Editable'
+import EditMe from './editMe'
 
-const Profile = ({user}) => {
+import ContentEditable from 'react-contenteditable'
+
+// class MyComponent extends React.Component {
+//     constructor() {
+//       super()
+//       this.contentEditable = React.createRef();
+//       this.state = {html: "<b>Hello <i>World</i></b>",
+//         editable: true};
+//     };
+  
+//     handleChange = evt => {
+//       this.setState({html: evt.target.value});
+//     };
+  
+//     render = () => {
+//       return <ContentEditable
+//                 innerRef={this.contentEditable}
+//                 html={this.state.html} // innerHTML of the editable div
+//                 disabled={false}       // use true to disable editing
+//                 onChange={this.handleChange} // handle innerHTML change
+//                 tagName='article' // Use a custom HTML tag (uses a div by default)
+//               />
+//     };
+//   };
+const teest = ""
+  
+const Profile = ({user,setUser}) => {
     return (
         <div className="profCard">
             <div className='profHeader'>
                 <div className="profImg"></div>
                 <div id='profText'>
-                    <h2>{user.name}</h2>
-                    <p>24, 🇨🇦</p>
+                    {EditMe(user,setUser,"name")}
+                    {EditMe(user,setUser,"tagline")}
                 </div>
 
             </div>
@@ -24,9 +52,8 @@ const Profile = ({user}) => {
                     Report
                     </Button>
             </div>
-
             <div>
-                <h3>Friends</h3>
+                {/* <h3>Friends</h3>
                 <div id='friends'>
                     {
                         (user.friends).map(friend => (
@@ -36,7 +63,7 @@ const Profile = ({user}) => {
                         </div>)) 
                     }
                   
-                </div>
+                </div> */}
                 <h3>Recently Completed Goals</h3>
                 <ol>
                     <li>Read Book</li>

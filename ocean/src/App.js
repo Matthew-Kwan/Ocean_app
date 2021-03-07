@@ -194,6 +194,7 @@ function App() {
       password: 'test',
       adminFlag: false,
       name: 'Pom',
+      tagline: '24yyyyy, 🇨🇦',
       goals: goals1,
       friends: [
         {id:3, name: 'GrassyMans'},
@@ -206,6 +207,7 @@ function App() {
       password: 'admin',
       adminFlag: true,
       name: 'AdminJim',
+      tagline: '',
       goals: goals2,
       friends: [
         {id:4, name: 'Billy'},
@@ -217,6 +219,7 @@ function App() {
       password: 'a',
       adminFlag: true,
       name: 'GrassyMans',
+      tagline: '',
       goals: goals2,
       friends: [
       ]
@@ -227,6 +230,7 @@ function App() {
       password: 'b',
       adminFlag: true,
       name: 'PotatoChip',
+      tagline: '',
       goals: goals2,
       friends: [
       ]
@@ -341,7 +345,7 @@ function App() {
         <Route path="/profile" render={() => {
 
           return(
-            <Profile user={user}/>
+            <Profile user={user} setUser = {setUser}/>
           )
         }}/>
 
