@@ -24,7 +24,6 @@ export default function GoalsDrawer(props) {
   //user goal list
   const { goals } = props;
 
-
   //  STATES
 
   const firstUpdateEdit = useRef(true); //state for first render
@@ -617,6 +616,8 @@ export default function GoalsDrawer(props) {
     goal.completed = true;
     //const index = goals.indexOf(goal);
     //goals.splice(index, 1);
+
+    props.refreshGoals();
   }
 
 
@@ -629,7 +630,7 @@ export default function GoalsDrawer(props) {
     <div className = 'goalsButtonDiv'>
       {['See Your Goals'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)} variant="outlined" color="primary">{anchor}</Button>
+          <Button className = "seeYourGoalsButton" onClick={toggleDrawer(anchor, true)} variant="outlined" color="primary">{anchor} </Button>
           <Drawer anchor={'right'} open={state[anchor]} onClose={toggleDrawer(anchor, false)} >
             {drawer(anchor)}
           </Drawer>

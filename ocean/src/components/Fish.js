@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import './fish.css'
 import smallFish from './smallFish.png'
 
-const Fish = ({users, session}) => {
+const Fish = ({users, session, fishType}) => {
 
   const [timer, setTimer] = useState(Math.floor(Math.abs(new Date() - session.startTime)/1000))
   const [style, setStyle] = useState(`fish${session.counter}`)
@@ -15,15 +15,20 @@ const Fish = ({users, session}) => {
       setTimer((timer) => timer + 1)
     }, 1000)
 
+    console.log(session.counter)
+
     // WILL NEED TO CHANGE THIS FOR PRODUCTION (functions no longer called twice b/c not strict)
     if (session.counter % 2 === 0) {
       imageStyle.current = 'fishImageRight'
+      console.log("right")
     } else {
       imageStyle.current = 'fishImageLeft'
+      console.log("left")
     }
 
     // get the user for the session
-    setSessionUser(users.filter(user => user.id == session.userId)[0])
+    if (fishType == "ocean")
+      setSessionUser(users.filter(user => user.id == session.userId)[0])
 
     return function cleanup() {
       clearInterval(increment.current)
@@ -43,9 +48,14 @@ const Fish = ({users, session}) => {
     <div className={style}>
       <div className="fishImageDiv">
         <img src={smallFish} id={imageStyle.current} alt="session"/>
-        <p className='fishUser'>{sessionUser.name}</p>
-        <p className='fishTitle'>{session.title}</p>
-        <p className='fishTimer'>{ formatTime(timer) }</p>
+        {fishType == "ocean"?
+          <div>
+            <p className='fishUser'>{sessionUser.username}</p>
+            <p className='fishTitle'>{session.title}</p>
+            <p className='fishTimer'>{ formatTime(timer) }</p>
+          </div>
+        :
+          <div></div>}
       </div>
     </div>
   )
