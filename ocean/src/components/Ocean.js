@@ -80,7 +80,7 @@ const Ocean = ({user, setUser, users, sessions, setSessions}) => {
     session = {...session, counter: counter}
     counter = counter + 1
     return (
-      <li key={session.id} className="fishListItem"><Fish users={users} user={user} session={session} fishType="ocean"/></li>
+      <li key={session.id} className="fishListItem"><Fish users={users} user={user} setUser={setUser} session={session} fishType="ocean"/></li>
     )
   }
 
