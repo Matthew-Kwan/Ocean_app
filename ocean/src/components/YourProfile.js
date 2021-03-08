@@ -25,8 +25,8 @@ const YourProfile = ({user, setUser}) => {
                 <div id='friends'>
                     {
                         (user.friends).map(friend => (
-                        <div class='friend'>
-                            <img class='profImg'></img>
+                        <div className='friend'>
+                            <img className='profImg'></img>
                             <p>{friend.name}</p>
                         </div>)) 
                     }

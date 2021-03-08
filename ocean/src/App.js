@@ -207,7 +207,7 @@ function App() {
       password: 'admin',
       adminFlag: true,
       name: 'AdminJim',
-      tagline: '',
+      tagline: 'your favourite neighborhood admin',
       goals: goals2,
       friends: [
         {id:4, name: 'Billy'},
@@ -345,7 +345,7 @@ function App() {
         <Route path="/profile" render={() => {
 
           return(
-            <Profile user={user} setUser = {setUser}/>
+            <Profile mainUser={user} user={usersList[1]} setUser = {setUser}/>
           )
         }}/>
 

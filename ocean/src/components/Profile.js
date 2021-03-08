@@ -1,10 +1,23 @@
-import React from 'react'
-import { Button } from '@material-ui/core';
+import React, {useState, useEffect} from 'react'
+import { Button, colors } from '@material-ui/core';
 import './profile.css'
 import EditMe from './editMe'
 
+const Profile = ({mainUser, user, setUser}) => {
+
+    function AddFriend(mainUser,user, setUser) {
+        console.log('adding friend')
+        // add user to friends
+        let newFriends = mainUser.friends
+        newFriends.push({id:user.id, name: user.name})
+        setUser({...user, friends: newFriends})    
+    }
+    
+    const isFriend = mainUser.friends.filter(friend => friend.id == user.id).length > 0 ? true: false
+
+    const [reported, setReported] = useState(false)
+
   
-const Profile = ({user,setUser}) => {
     return (
         <div className="profCard">
             <div className='profHeader'>
@@ -17,17 +30,15 @@ const Profile = ({user,setUser}) => {
             </div>
             <div className = 'profButtons'>
                 <Button variant="contained" color="primary">View Tank</Button>
-
-
-                <Button variant="contained" color="primary">
+                {(isFriend) ? <div>Friend has been added</div> : <Button variant="contained" color="primary" onClick = {() => AddFriend(mainUser, user, setUser)}>
                     Add Friend
-                    </Button>
-                <Button color="secondary">
-                    Report
-                    </Button>
+                    </Button>}
+                {(!reported)?  
+                    <Button color="secondary" onClick = {() => {setReported(true)}}> Report </Button> : <Button color="secondary" disabled={true}>Reported</Button>}
+               
             </div>
             <div>
-                {/* <h3>Friends</h3>
+                <h3>Friends</h3>
                 <div id='friends'>
                     {
                         (user.friends).map(friend => (
@@ -37,7 +48,7 @@ const Profile = ({user,setUser}) => {
                         </div>)) 
                     }
                   
-                </div> */}
+                </div>
                 <h3>Recently Completed Goals</h3>
                 <ol>
                     <li>Read Book</li>
