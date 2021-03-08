@@ -15,34 +15,46 @@ const useStyles = makeStyles({
     minWidth: 450,
   },
 });
-
+// sessionId: 1,
+// userId: 1,
+// goalId: 2,
+// title: "Work on ocean component",
+// startTime: new Date(2021,2,1,8,0,0),
+// endTime: new Date(2021,2,1,12,0,0),
 
 
 export default function AdminSessionsTable({sessions}) {
   const classes = useStyles();
-
+  console.log(sessions)
   return (
     <TableContainer component={Paper}>
         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          All Users
+          All Sessions
         </Typography>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Username</TableCell>
-            <TableCell align="right">Email</TableCell>
+            <TableCell>Session Title</TableCell>
+            <TableCell align="right">ID</TableCell>
             <TableCell align="right">User ID</TableCell>
+            <TableCell align="right">Goal ID</TableCell>
+            {/* <TableCell align="right">Start Time</TableCell> */}
 
           </TableRow>
         </TableHead>
         <TableBody>
-          {users.map((row) => (
-            <TableRow key={row.title}>
+          {sessions.map((row) => (
+            <TableRow key={row.sessionId}>
+              
               <TableCell component="th" scope="row">
-                {row.name}
+               {row.title}
               </TableCell>
-              <TableCell align="right">{row.username}</TableCell>
-              <TableCell align="right">{row.id}</TableCell>
+              <TableCell align="right">{row.sessionId}</TableCell>
+              <TableCell align="right">{row.userId}</TableCell>
+              <TableCell align="right">{row.goalId}</TableCell>
+              {/* <TableCell align="right">{row.startTime}</TableCell> */}
+
+
 
             </TableRow>
           ))}
