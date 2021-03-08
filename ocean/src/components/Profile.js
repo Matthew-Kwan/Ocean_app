@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { Button, colors } from '@material-ui/core';
 import './profile.css'
+import './modal.css'
 import EditMe from './editMe'
 
 const Profile = ({mainUser, user, setUser}) => {
@@ -19,7 +20,7 @@ const Profile = ({mainUser, user, setUser}) => {
 
   
     return (
-        <div className="profCard">
+        <div className="profCard modalContainer">
             <div className='profHeader'>
                 <div className="profImg"></div>
                 <div id='profText'>

@@ -9,7 +9,7 @@
 .oceanContent {
   flex: 1 1 auto;
   z-index: 1;
-  background-color: rgb(51, 61, 204);
+  background-color: rgb(76, 131, 233);
 }
 
 .sessionBox {
@@ -36,4 +36,17 @@
 
 .currentSessionBox {
   width: auto;
+  height: 100%;
+}
+
+#fishList {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-start;
+  list-style: none;
+}
+
+.fishListItem {
+  flex: 2;
 }

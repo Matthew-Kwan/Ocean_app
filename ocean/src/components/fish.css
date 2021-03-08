@@ -1,11 +1,11 @@
-.fish {
+/* .fish {
   display: block;
   background-color: #999999;
   position: absolute;
   animation: moveX 8s linear 0s infinite alternate;
-  /* -webkit-animation: moveX 8s linear 0s infinite alternate, moveY 3.4s linear 0s infinite alternate;
+  -webkit-animation: moveX 8s linear 0s infinite alternate, moveY 3.4s linear 0s infinite alternate;
   -moz-animation: moveX 8s linear 0s infinite alternate, moveY 3.4s linear 0s infinite alternate;
-  -o-animation: moveX 8s linear 0s infinite alternate, moveY 3.4s linear 0s infinite alternate; */
+  -o-animation: moveX 8s linear 0s infinite alternate, moveY 3.4s linear 0s infinite alternate;
 }
 
 @-webkit-keyframes moveX {
@@ -32,4 +32,198 @@
 }
 @keyframes moveY {
   from { top: 0; } to { top: 100%; }
+} */
+
+@-webkit-keyframes swim_right
+{
+	0% {margin-left: -25vw}
+	70% {margin-left: 100%;}
+	100% {margin-left: 100%;}
 }
+
+@keyframes swim_right
+{
+	0% {margin-left: -25vw}
+	70% {margin-left: 100%;}
+	100% {margin-left: 100%;}
+}
+
+@-webkit-keyframes swim_left
+{
+	0% {margin-left: 125vw}
+	70% {margin-left:-25%;}
+	100% {margin-left:-25%;}
+}
+
+@keyframes swim_left
+{
+	0% {margin-left: 125vw}
+	70% {margin-left:-25%;}
+	100% {margin-left:-25%;}
+}
+
+
+.fish4{
+	width: 18vw;
+	height: 15vh;
+  margin-top: 0;
+	margin-left: -25vw;
+	position: absolute;
+	animation: swim_right 20s;
+	-webkit-animation: swim_right 20s;
+	animation-iteration-count: infinite;
+	-webkit-animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	-webkit-animation-timing-function: linear;
+}
+
+.fish5{
+	width: 18vw;
+	height: 15vh;
+  margin-top: 0;
+	margin-left: 125vw;
+	position: absolute;
+	animation: swim_left 20s;
+	-webkit-animation: swim_left 20s;
+	animation-iteration-count: infinite;
+	-webkit-animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	-webkit-animation-timing-function: linear;
+  animation-delay: 4s;
+	-webkit-animation-delay: 4s;
+}
+
+
+.fish6{
+	width: 18vw;
+	height: 15vh;
+  margin-top: 0;
+	margin-left: -25vw;
+	position: absolute;
+	animation: swim_right 20s;
+	-webkit-animation: swim_right 20s;
+	animation-iteration-count: infinite;
+	-webkit-animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	-webkit-animation-timing-function: linear;
+  animation-delay: 8s;
+	-webkit-animation-delay: 8s;
+}
+
+.fish7{
+	width: 18vw;
+	height: 15vh;
+  margin-top: 0;
+	margin-right: -25vw;
+	position: absolute;
+	animation: swim_left 20s;
+	-webkit-animation: swim_left 20s;
+	animation-iteration-count: infinite;
+	-webkit-animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	-webkit-animation-timing-function: linear;
+}
+
+
+
+
+/**/
+@-moz-keyframes bounce {
+  0%, 50%, 100% {
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+  25% {
+    -moz-transform: translateY(-5px);
+    transform: translateY(-5px);
+  }
+  75% {
+    -moz-transform: translateY(-3px);
+    transform: translateY(-3px);
+  }
+}
+@-webkit-keyframes bounce {
+  0%, 50%, 100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  25% {
+    -webkit-transform: translateY(-5px);
+    transform: translateY(-5px);
+  }
+  75% {
+    -webkit-transform: translateY(-3px);
+    transform: translateY(-3px);
+  }
+}
+@keyframes bounce {
+  0%, 50%, 100% {
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  25% {
+    -moz-transform: translateY(-5px);
+    -ms-transform: translateY(-5px);
+    -webkit-transform: translateY(-5px);
+    transform: translateY(-5px);
+  }
+  75% {
+    -moz-transform: translateY(-3px);
+    -ms-transform: translateY(-3px);
+    -webkit-transform: translateY(-3px);
+    transform: translateY(-3px);
+  }
+}
+
+/*END Fish Animation*/
+
+.fishImageDiv {
+  -moz-animation: bounce 2s infinite;
+  -webkit-animation: bounce 2s infinite;
+  animation: bounce 2s infinite;
+}
+
+.fishUser {
+  position: absolute;
+  top: 5vh;
+  left: 5vw;
+  width: 10vw;
+
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.fishUser:hover  {
+  font-weight: bold;
+  color: rgb(121, 121, 224);
+}
+
+.fishTitle {
+  position: absolute;
+  top: 9vh;
+  left: 5vw;
+
+  font-weight: bold;
+  width: 10vw;
+}
+
+.fishTimer {
+  position: absolute;
+  top: 12vh;
+  left: 5vw;
+}
+
+#fishImageRight {
+  transform: scaleX(-1);
+  width: 100%;
+  height: auto;
+}
+
+#fishImageLeft {
+  width: 100%;
+  height: auto;
+}
+

@@ -9,3 +9,11 @@
 .link {
   padding:0.5rem;
 }
+
+#navBar {
+  display: flex;
+}
+
+#urProfileBtn {
+
+}

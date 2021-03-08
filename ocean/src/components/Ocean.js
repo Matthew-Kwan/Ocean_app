@@ -5,9 +5,54 @@ import SessionBox from './SessionBox'
 import Fish from './Fish'
 
 
-// Create some sort of mapping of session data onto fishes that just swim around the ocean
-const Ocean = ({user, sessions}) => {
+let counter = 1;
 
+// Create some sort of mapping of session data onto fishes that just swim around the ocean
+const Ocean = ({user, setUser, users, sessions, setSessions}) => {
+
+
+  const sessionsList = [
+    {
+      sessionId: 1,
+      userId: 1,
+      goalId: 2,
+      title: "Work on ocean component",
+      startTime: new Date(2021,2,1,8,0,0),
+      endTime: new Date(2021,2,1,12,0,0),
+    },
+    {
+      sessionId: 2,
+      userId: 1,
+      goalId: 1,
+      title: "Learn more about React",
+      startTime: new Date(2021,2,2,8,0,0),
+      endTime: new Date(2021,2,2,12,0,0),
+    },
+    {
+      sessionId: 3,
+      userId: 3,
+      goalId: 2,
+      title: "Report some peeps",
+      startTime: new Date(2021,2,6,8,0,0),
+      endTime: null,
+    },
+    {
+      sessionId: 4,
+      userId: 4,
+      goalId: 1,
+      title: "Working on a project",
+      startTime: new Date(2021,2,6,8,0,0),
+      endTime: null,
+    },
+    {
+      sessionId: 5,
+      userId: 2,
+      goalId: 1,
+      title: "Creating music",
+      startTime: new Date(2021,2,6,8,0,0),
+      endTime: null,
+    },
+  ]
   /* states that will need to be here / passed in
   user -> goals, friends
   sessions -> currently ongoing sessions
@@ -21,21 +66,34 @@ const Ocean = ({user, sessions}) => {
   const [currentSessions, setCurrentSessions] = useState([])
 
   useEffect(() => {
-    const tmpCurrentSessions = sessions.filter((s) => s.endTime === null)
-    setCurrentSessions(tmpCurrentSessions)
-  }, [])
+    // sets current sessions to the sessions that are currently still in progress
+    counter = 1
+    setSessions(sessionsList)
+    setCurrentSessions(sessionsList.filter((s) => s.endTime === null))
+
+    return function cleanup() {
+      counter = 1
+    }
+  }, []) //
+
+  const handleFish = (session) => {
+    session = {...session, counter: counter}
+    counter = counter + 1
+    return (
+      <li key={session.id} className="fishListItem"><Fish users={users} session={session} fishType="ocean"/></li>
+    )
+  }
 
   return (
     <div className="ocean">
-      <div>
-        <h1>Ocean: {user.username} </h1>
-      </div>
 
       <div className="oceanContent">
         {/*other fish*/}
         <div className="currentSessionBox">
-          <h1>Current Sessions</h1>
-          {currentSessions.map(session => <Fish session={session}/>)}
+          <h1>Ocean</h1>
+          <ul id="fishList">
+            {currentSessions.map(session => handleFish(session))}
+          </ul>
         </div>
         {/*absolute position for session box*/}
         <div className="sessionBox">

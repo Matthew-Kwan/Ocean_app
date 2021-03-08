@@ -5,11 +5,52 @@
 }
 
 .tankContent {
-    flex: 1 1 auto;
+    height: 100%;
     background-color: rgb(155, 233, 245);
+}
+
+.decorRow {
+    margin-left: 200px;
+    display: table-row;
+    border: 1px solid green;padding: 10px;
+    border-spacing: 10px;
+    border-collapse: separate;
+
+}
+
+.decorContent {
+    position: absolute;
+    bottom: 0;
 }
 
 .tankBottom {
     height: 100px;
     background: rgb(219, 187, 98);
+}
+
+.div{
+    display: table-cell;
+}
+
+.decorationSlot {
+    display: table-cell;
+    
+}
+
+.spacer{
+    display: table-cell;
+    width: 200px;
+}
+
+
+#fishListTank {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: flex-start;
+    list-style: none;
+}
+  
+.fishListTankItem {
+    flex: 2;
 }
