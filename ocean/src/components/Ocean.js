@@ -8,7 +8,7 @@ import Fish from './Fish'
 let counter = 1;
 
 // Create some sort of mapping of session data onto fishes that just swim around the ocean
-const Ocean = ({user, users, sessions, setSessions}) => {
+const Ocean = ({user, setUser, users, sessions, setSessions}) => {
 
 
   const sessionsList = [
@@ -80,7 +80,7 @@ const Ocean = ({user, users, sessions, setSessions}) => {
     session = {...session, counter: counter}
     counter = counter + 1
     return (
-      <li key={session.id} className="fishListItem"><Fish users={users} session={session}/></li>
+      <li key={session.id} className="fishListItem"><Fish users={users} user={user} setUser={setUser} session={session}/></li>
     )
   }
 

@@ -190,6 +190,15 @@
   top: 5vh;
   left: 5vw;
   width: 10vw;
+
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.fishUser:hover  {
+  font-weight: bold;
+  color: rgb(121, 121, 224);
 }
 
 .fishTitle {

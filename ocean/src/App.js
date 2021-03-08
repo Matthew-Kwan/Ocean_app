@@ -309,7 +309,7 @@ function App() {
         <Route path="/ocean" render={() => {
           // will need this to redirect to login page if the user is not logged in
           return (
-            <Ocean user={user} users={users} sessions={sessions} setSessions={setSessions}/>
+            <Ocean user={user} setUser={setUser} users={users} sessions={sessions} setSessions={setSessions}/>
           )
         }}/>
 

@@ -2,13 +2,17 @@ import React, { useState, useEffect, useRef } from 'react'
 import './fish.css'
 import smallFish from './smallFish.png'
 
-const Fish = ({users, session}) => {
+import Profile from './Profile'
+import Modal from '@material-ui/core/Modal';
+
+const Fish = ({users, user, setUser, session}) => {
 
   const [timer, setTimer] = useState(Math.floor(Math.abs(new Date() - session.startTime)/1000))
   const [style, setStyle] = useState(`fish${session.counter}`)
   const increment = useRef(null)
   const imageStyle = useRef('')
   const [sessionUser, setSessionUser] = useState({})
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     increment.current = setInterval(() => {
@@ -39,11 +43,20 @@ const Fish = ({users, session}) => {
     return `${getHours} : ${getMinutes} : ${getSeconds}`
   }
 
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div className={style}>
       <div className="fishImageDiv">
         <img src={smallFish} id={imageStyle.current} alt="session"/>
-        <p className='fishUser'>{sessionUser.name}</p>
+        <p className='fishUser' onClick={() => handleOpen()}>{sessionUser.name}</p>
+        <Modal open={open} onClose={handleClose}><Profile user={user} setUser = {setUser}/></Modal>
         <p className='fishTitle'>{session.title}</p>
         <p className='fishTimer'>{ formatTime(timer) }</p>
       </div>

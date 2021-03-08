@@ -1,12 +1,12 @@
 import React from 'react'
 import { Button } from '@material-ui/core';
 import './profile.css'
+import './modal.css'
 import EditMe from './editMe'
 
-  
 const Profile = ({user,setUser}) => {
     return (
-        <div className="profCard">
+        <div className="profCard modalContainer">
             <div className='profHeader'>
                 <div className="profImg"></div>
                 <div id='profText'>
