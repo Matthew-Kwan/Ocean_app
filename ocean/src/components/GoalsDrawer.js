@@ -50,7 +50,6 @@ export default function GoalsDrawer(props) {
 
   //goal states
   const [goalId, setGoalId] = React.useState(0); //incrementing unique goalIds
-  const [taskId, setTaskId] = React.useState(0);
 
   const [newGoal, setNewGoal] = React.useState({  //new goal state
     id: goalId,
@@ -179,12 +178,6 @@ export default function GoalsDrawer(props) {
   const handleFormTaskEdit = (e, taskId) => { //handle individual task edit
     e.preventDefault()
     const value = e.target.value;
-
-
-    const existingTaskWithId = editGoal.tasks.find(function(task, index) {
-      if(task.id == taskId)
-        return true;
-    });
 
     //if edit task
     if (editGoal.tasks[taskId].id != null)
@@ -617,7 +610,9 @@ export default function GoalsDrawer(props) {
     //const index = goals.indexOf(goal);
     //goals.splice(index, 1);
 
-    props.refreshGoals();
+    const newGoalsForRefresh = goals.slice(0);
+
+    props.refreshGoals(newGoalsForRefresh);
   }
 
 
