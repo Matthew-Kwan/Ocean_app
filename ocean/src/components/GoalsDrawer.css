@@ -120,4 +120,8 @@
     font-weight: bold;
 }
 
+.seeYourGoalsButton {
+    z-index: 2;
+}
+
 
