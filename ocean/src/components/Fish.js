@@ -32,7 +32,7 @@ const Fish = ({users, user, setUser, session, fishType}) => {
 
     // get the user for the session
     if (fishType == "ocean")
-      setSessionUser(users.filter(user => user.id == session.userId)[0])
+      setSessionUser(users.filter(u => u.id == session.userId)[0])
 
     return function cleanup() {
       clearInterval(increment.current)
@@ -63,7 +63,7 @@ const Fish = ({users, user, setUser, session, fishType}) => {
         {fishType == "ocean"?
           <div>
             <p className='fishUser' onClick={() => handleOpen()}>{sessionUser.name}</p>
-            <Modal open={open} onClose={handleClose}><Profile user={user} setUser = {setUser}/></Modal>
+            <Modal open={open} onClose={handleClose}><Profile mainUser={user} user={sessionUser} setUser={setUser}/></Modal>
             <p className='fishTitle'>{session.title}</p>
             <p className='fishTimer'>{ formatTime(timer) }</p>
           </div>
