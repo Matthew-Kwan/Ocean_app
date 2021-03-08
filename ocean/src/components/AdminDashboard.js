@@ -1,53 +1,6 @@
 import './admin.css'
 import React, { useState, useEffect } from 'react'
-// import AdminReportsTable from './AdminReportsTable.js'
 
-
-
-
-// import React Router
-// import { Route, Switch, Link, useRouteMatch,
-//     useParams  } from 'react-router-dom'
-// function Topic() {
-//     let { topicId } = useParams();
-//     return <h3>Requested topic ID: {topicId}</h3>;
-//   }
-// const AdminDashboard = () => {
-//     let match = useRouteMatch();
-   
-//     return (
-//         <div>
-//         <h2>Topics</h2>
-  
-//         <ul>
-//           <li>
-//             <Link to={`${match.url}/components`}>Components</Link>
-//           </li>
-//           <li>
-//             <Link to={`${match.url}/props-v-state`}>
-//               Props v. State
-//             </Link>
-//           </li>
-//         </ul>
-  
-//         {/* The Topics page has its own <Switch> with more routes
-//             that build on the /topics URL path. You can think of the
-//             2nd <Route> here as an "index" page for all topics, or
-//             the page that is shown when no topic is selected */}
-//         <Switch>
-//           <Route path={`${match.path}/:topicId`}>
-//             <Topic />
-//           </Route>
-//           <Route path={match.path}>
-//             <h3>Please select a topic.</h3>
-//           </Route>
-//         </Switch>
-//       </div>
-//     )
-// }
-
-// export default AdminDashboard;
-// -----------------------
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -56,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import AdminReportsTable from './AdminReportsTable';
 import AdminUsersTable from './AdminUsersTable';
+import AdminSessionsTable from './AdminSessionsTable'
 
 
 function TabPanel(props) {
@@ -103,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AdminDashboard({users}) {
+export default function AdminDashboard({users, sessions}) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -119,15 +73,15 @@ export default function AdminDashboard({users}) {
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs example"
-        className={classes.tabs}
-      >
+        className={classes.tabs}>
         <Tab label="Sessions" {...a11yProps(0)} />
         <Tab label="Users" {...a11yProps(1)} />
         <Tab label="Active Reports" {...a11yProps(2)} />
        
       </Tabs>
+      
       <TabPanel value={value} index={0}>
-        Item One
+        <AdminSessionsTable sessions = {sessions}></AdminSessionsTable>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <AdminUsersTable users = {users}></AdminUsersTable>

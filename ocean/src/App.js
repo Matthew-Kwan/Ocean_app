@@ -323,7 +323,7 @@ function App() {
         <Route path="/admin" render={() => {
 
         return(
-          <AdminDashboard users = {usersList}/>
+          <AdminDashboard users = {usersList} sessions = {sessions}/>
         )
         }}/>
 
