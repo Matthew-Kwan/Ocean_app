@@ -21,8 +21,7 @@ class ButtonModal extends React.Component {
                 <Button onClick={this.handleOpen} variant="outlined" color="primary">{`${this.props.buttonName}`}</Button>
                 <Modal
                     open={this.state.open}
-                    onClose={this.handleClose}
-                    >
+                    onClose={this.handleClose}>
                     {this.props.content}
                     
                 </Modal>

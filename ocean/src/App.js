@@ -8,7 +8,7 @@ import Profile from './components/Profile'
 import YourProfile from './components/YourProfile'
 import Login from './components/Login'
 import AdminDashboard from './components/AdminDashboard'
-
+import Nav from './components/NavBar'
 
 // import materialUI components
 import { makeStyles } from '@material-ui/core/styles';
@@ -20,6 +20,8 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
 import './components/modal.css'
+import './components/nav.scss'
+
 import './components/profile.css'
 import ProgressBar from './components/ProgressBar'
 import ButtonModal from './components/ButtonModal'
@@ -58,48 +60,62 @@ const useStyles = makeStyles({
   },
 });
 
-const LoginModule = ({loggedIn,handleLogin,classes}) => {
+const LoginModule = ({ loggedIn, handleLogin, classes }) => {
   if (loggedIn) {
     return (
       <div></div>
     )
   } else {
-    return(
+    return (
       <div id='loginbody'>
-            <Card id='loginModule' className={classes.root}>
-                <CardContent>
-                    <h3>
-                    Dive into Ocean</h3>
-                    <form className={classes.root} noValidate autoComplete="off" onSubmit={handleLogin}>
-                        <div className = 'input' id="username-input">
-                        <TextField required id="outlined-basic" size='small' label="Username" variant="outlined" /></div>
-                        <div className= 'input' id="password-input">
-                        <TextField required name="" id="outlined-basic" size='small' label="Password" type="password" variant="outlined" /></div>
-                        <Button type='submit' variant="contained" color="primary">
-                            Login
+        <Card id='loginModule' className={classes.root}>
+          <CardContent>
+            <h3>
+              Dive into Ocean</h3>
+            <form className={classes.root} noValidate autoComplete="off" onSubmit={handleLogin}>
+              <div className='input' id="username-input">
+                <TextField required id="outlined-basic" size='small' label="Username" variant="outlined" /></div>
+              <div className='input' id="password-input">
+                <TextField required name="" id="outlined-basic" size='small' label="Password" type="password" variant="outlined" /></div>
+              <Button type='submit' variant="contained" color="primary">
+                Login
                         </Button>
-                    </form>
+            </form>
 
-                </CardContent>
+          </CardContent>
 
-                </Card>
-            <img className="illustration"></img>
-      </div> )
+        </Card>
+        <img className="illustration"></img>
+      </div>)
 
   }
 }
-const NavBar = ({loggedIn, handleLogout, user, setUser}) => {
+const NavBar = ({ loggedIn, handleLogout, user, setUser }) => {
+  
   if (loggedIn) {
     return (
       <div id="navBar">
-        {/* <Link className="link" to="/">home</Link> */}
-        <Link className="link" to="/ocean">ocean</Link>
-        <Link className="link" to="/tank">tank</Link>
-        <Link className="link" to="/profile">profile</Link>
-        <span id="urProfileBtn" ><ButtonModal buttonName ='Ur Profile' content = {YourProfile({user, setUser})}/></span>
-        <Link className="link" to="/admin">admin dashboard</Link>
-        { loggedIn ? <Link to="/" onClick={handleLogout}> logout </Link> : null }
-    </div>
+        <Link className="link btn-1" to="/ocean">
+          <svg>
+            <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
+          </svg>ocean</Link>
+        <Link className="link btn-1" to="/tank">
+          <svg>
+            <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
+          </svg>tank</Link>
+        <Link className="link btn-1" to="/profile">
+          <svg>
+            <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
+          </svg>profile</Link>
+        
+        <span id="urProfileBtn" ><ButtonModal buttonName='Ur Profile' content={YourProfile({ user, setUser })} /></span>
+        <Link className="link btn-1" to="/admin">
+          <svg>
+            <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
+          </svg>
+          admin</Link>
+        { loggedIn ? <Link className="link btn-1" to="/" onClick={handleLogout}> logout </Link> : null}
+      </div>
     )
   } else {
     return (
@@ -118,8 +134,8 @@ function App() {
       completed: false,
       completionPercent: 50,
       tasks: [
-        {id: 0, task: 'Research React', completed: true},
-        {id: 1, task: 'Make demo app', completed: false}
+        { id: 0, task: 'Research React', completed: true },
+        { id: 1, task: 'Make demo app', completed: false }
       ]
     },
     {
@@ -130,11 +146,11 @@ function App() {
       completed: false,
       completionPercent: 60,
       tasks: [
-        {id: 0, task: 'study for CSC309', completed: true},
-        {id: 1, task: 'study for CSC384', completed: true},
-        {id: 2, task: 'drop MIE424', completed: true},
-        {id: 3, task: 'submit AI minor form request', completed: false},
-        {id: 4, task: 'submit extra form request', completed: false}
+        { id: 0, task: 'study for CSC309', completed: true },
+        { id: 1, task: 'study for CSC384', completed: true },
+        { id: 2, task: 'drop MIE424', completed: true },
+        { id: 3, task: 'submit AI minor form request', completed: false },
+        { id: 4, task: 'submit extra form request', completed: false }
       ]
     }
   ]
@@ -148,8 +164,8 @@ function App() {
       completed: false,
       completionPercent: 50,
       tasks: [
-        {id: 0, task: 'Research React', completed: true},
-        {id: 1, task: 'Make demo app', completed: false}
+        { id: 0, task: 'Research React', completed: true },
+        { id: 1, task: 'Make demo app', completed: false }
       ]
     },
     {
@@ -160,11 +176,11 @@ function App() {
       completed: false,
       completionPercent: 60,
       tasks: [
-        {id: 0, task: 'study for CSC309', completed: true},
-        {id: 1, task: 'study for CSC384', completed: true},
-        {id: 2, task: 'drop MIE424', completed: true},
-        {id: 3, task: 'submit AI minor form request', completed: false},
-        {id: 4, task: 'submit extra form request', completed: false}
+        { id: 0, task: 'study for CSC309', completed: true },
+        { id: 1, task: 'study for CSC384', completed: true },
+        { id: 2, task: 'drop MIE424', completed: true },
+        { id: 3, task: 'submit AI minor form request', completed: false },
+        { id: 4, task: 'submit extra form request', completed: false }
       ]
     }
   ]
@@ -175,17 +191,17 @@ function App() {
       userId: 1,
       goalId: 2,
       title: "Work on ocean component",
-      startTime: new Date(2021,2,1,8,0,0),
-      endTime: new Date(2021,2,1,12,0,0)
+      startTime: new Date(2021, 2, 1, 8, 0, 0),
+      endTime: new Date(2021, 2, 1, 12, 0, 0)
     },
     {
       sessionId: 2,
       userId: 1,
       goalId: 1,
       title: "Learn more about React",
-      startTime: new Date(2021,2,2,8,0,0),
-      endTime: new Date(2021,2,2,12,0,0)
-  }];
+      startTime: new Date(2021, 2, 2, 8, 0, 0),
+      endTime: new Date(2021, 2, 2, 12, 0, 0)
+    }];
 
   const usersList = [
     {
@@ -197,7 +213,7 @@ function App() {
       tagline: '24yyyyy, 🇨🇦',
       goals: goals1,
       friends: [
-        {id:3, name: 'GrassyMans'},
+        { id: 3, name: 'GrassyMans' },
       ],
       sessions: sessions_user_1
     },
@@ -210,7 +226,7 @@ function App() {
       tagline: 'your favourite neighborhood admin',
       goals: goals2,
       friends: [
-        {id:4, name: 'Billy'},
+        { id: 4, name: 'Billy' },
       ]
     },
     {
@@ -295,8 +311,9 @@ function App() {
   return (
 
     <BrowserRouter>
+      {/* <Nav user ={user}></Nav> */}
       <div>
-        <NavBar loggedIn={loggedIn} handleLogout={handleLogout} user = {user} setUser = {setUser}/>
+        <NavBar loggedIn={loggedIn} handleLogout={handleLogout} user={user} setUser={setUser} />
         {/* <Link className="link" to="/">home</Link>
         <Link className="link" to="/ocean">ocean</Link>
         <Link className="link" to="/tank">tank</Link>
@@ -309,39 +326,39 @@ function App() {
         <Route path="/ocean" render={() => {
           // will need this to redirect to login page if the user is not logged in
           return (
-            <Ocean user={user} setUser={setUser} users={users} sessions={sessions} setSessions={setSessions}/>
+            <Ocean user={user} setUser={setUser} users={users} sessions={sessions} setSessions={setSessions} />
           )
-        }}/>
+        }} />
 
         <Route path="/profile" render={() => {
 
-          return(
-            <Profile mainUser={user} user={usersList[1]} setUser = {setUser}/>
+          return (
+            <Profile mainUser={user} user={usersList[1]} setUser={setUser} />
           )
-        }}/>
+        }} />
 
         <Route path="/admin" render={() => {
 
-        return(
-          <AdminDashboard users = {usersList} sessions = {sessions}/>
-        )
-        }}/>
+          return (
+            <AdminDashboard users={usersList} sessions={sessions} />
+          )
+        }} />
 
         <Route path="/yourprofile" render={() => {
 
-        return(
-          <YourProfile user={user} setUser = {setUser}/>
-        )
-        }}/>
+          return (
+            <YourProfile user={user} setUser={setUser} />
+          )
+        }} />
 
         <Route path="/tank" render={() => {
           return (
-            <Tank user={user}/>
+            <Tank user={user} />
           )
-        }}/>
+        }} />
 
         <Route path="/">
-          {loggedIn ? <Redirect to="/ocean"/> : null}
+          {loggedIn ? <Redirect to="/ocean" /> : null}
         </Route>
 
 
