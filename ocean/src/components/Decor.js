@@ -1,7 +1,7 @@
 import React from 'react'
 import {useEffect} from 'react'
 import './decor.css'
-import coral from '../coral2.png'
+import coral from './coral2.png'
 
 const Decor = ({goal}) => {
 
