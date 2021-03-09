@@ -66,7 +66,6 @@ const Tank= ({user}) => {
                 
 
             </div>
-            
             <div className="tankBottom"></div>
 
 

@@ -10,6 +10,7 @@
   flex: 1 1 auto;
   z-index: 1;
   background-color: rgb(76, 131, 233);
+  background: linear-gradient(29deg, rgb(33, 66, 212) 0%,  rgb(42, 156, 250) 100%);    
 }
 
 .sessionBox {
