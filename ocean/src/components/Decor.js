@@ -4,7 +4,8 @@ import './decor.css'
 import coral from '../images/coral.png'
 import squidwardHouse from '../images/squidward-house.png'
 
-let decorArr = [squidwardHouse, coral];
+let decorArr = [squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral,
+                squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral];
 
 const Decor = ({goal, count}) => {
 

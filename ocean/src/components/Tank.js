@@ -21,6 +21,7 @@ const Tank= ({user}) => {
 
         return function cleanup() {
             counter = 4-sessions.length;
+            decorCount = 0;
           }
     }, []);
 
@@ -40,7 +41,7 @@ const Tank= ({user}) => {
         //setDecorCount(decorCount+1)
         decorCount++;
 
-        if (decorCount > 1)
+        if (decorCount > 19)
             decorCount = 0;
 
         return (
