@@ -1,0 +1,12 @@
+.column{
+    width:150px;
+    height:100vh;
+    background: linear-gradient(29deg, rgb(23, 32, 71) 0%,  rgb(0, 92, 167) 100%);  
+
+}
+
+#adminNav{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

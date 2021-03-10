@@ -12,21 +12,22 @@ const Profile = ({mainUser, user, setUser}) => {
         // add user to friends
         let newFriends = mainUser.friends
         newFriends.push({id:user.id, name: user.name})
-        setUser({...user, friends: newFriends})
+        setUser({...mainUser, friends: newFriends})
     }
 
     const isFriend = mainUser.friends.filter(friend => friend.id == user.id).length > 0 ? true: false
 
     const [reported, setReported] = useState(false)
 
-
     return (
         <div className="profCard modalContainer">
             <div className='profHeader'>
                 <div className="profImg"></div>
                 <div id='profText'>
-                    {EditMe(user,setUser,"name")}
-                    {EditMe(user,setUser,"tagline")}
+                    <h2 className="profName">{user.name}</h2>
+                    {user.tagline? <p>{user.tagline}</p> : null}
+                    
+               
                 </div>
 
             </div>
@@ -38,7 +39,7 @@ const Profile = ({mainUser, user, setUser}) => {
                     }
                   }>View Tank</Link></Button> 
                 
-                {(isFriend) ? <div>Friend has been added</div> : <Button variant="contained" color="primary" onClick = {() => AddFriend(mainUser, user, setUser)}>
+                {(isFriend) ? <div className='centerText'>Friend has been added</div> : <Button variant="contained" color="primary" onClick = {() => AddFriend(mainUser, user, setUser)}>
                     Add Friend
                     </Button>}
                 {(!reported)?

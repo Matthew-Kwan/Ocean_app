@@ -55,7 +55,7 @@ const SessionBox = ({ user, session, setSession, setInSession }) => {
 
   return (
     <Container className="sessionBoxContainer">
-      <h3> Start a new Session </h3>
+      <p className="sessionLabel"> Start a new Session </p>
       <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
         <TextField
             className="session-form-input sessionInput"
