@@ -1,15 +1,20 @@
 .decoration{
     height: 100%;
     width: 300px;
+    bottom: 0;
 }
 
-.decorationDiv {}
+.decorationDiv {
+    bottom: 0;
+}
 
 .decoration:hover + .hideGoalContent {
+
+    opacity: 100;
+    width: 20vw;
     z-index: 2;
-    width: 10vw;
     color: black;
-    background-color: white;
+    background-color: rgb(255, 255, 255, 0.8);
     display: block;
     border-radius: 20px;
     margin: auto;
@@ -17,4 +22,14 @@
 
 .hideGoalContent {
     display: none;
+}
+
+.goalContent {
+    margin: 20px;
+    overflow: auto;
+    width: 20vw;
+}
+
+.bold {
+    font-weight: bold; 
 }
