@@ -1,20 +1,25 @@
 import React from 'react'
+import {useState, useRef} from 'react'
 import {useEffect} from 'react'
 import './tank.css'
 import GoalsDrawer from './GoalsDrawer'
 import Fish from './Fish'
 import Decor from './Decor'
+import { useParams } from 'react-router-dom'
 
 
 let counter = 2;
 
-const Tank= ({user}) => {
+const OtherTank= ({users}) => {
 
+    const id = useRef(useParams().id)
+    const [tankOwner, setTankOwner] = useState(users.filter(u => u.id == id.current)[0])
     const [sessions, setSessions] = React.useState([]);
-    const [goals, setGoals] = React.useState(user.goals);
+    const [goals, setGoals] = React.useState(tankOwner.goals);
 
     useEffect(() => {
-        const tmpSessions = user.sessions.filter(session => session.endTime !== null)
+        console.log(tankOwner)
+        const tmpSessions = tankOwner.sessions.filter(session => session.endTime !== null)
         setSessions(tmpSessions);
         return function cleanup() {
             counter = 4-sessions.length;
@@ -42,8 +47,9 @@ const Tank= ({user}) => {
         <div className="tank">
 
             <div className="tankContent">
+                <h1> {tankOwner.name}'s Tank</h1>
 
-                <GoalsDrawer goals={user.goals} refreshGoals={refreshGoals}/>
+                <GoalsDrawer goals={tankOwner.goals} refreshGoals={refreshGoals}/>
 
                 <ul id="fishListTank">
                     {sessions.map(session => handleFish(session))}
@@ -75,4 +81,4 @@ const Tank= ({user}) => {
     )
 }
 
-export default Tank;
+export default OtherTank;
