@@ -61,24 +61,26 @@ const Fish = ({users, user, setUser, session, fishType}) => {
       seconds = Math.floor((duration / 1000) % 60),
       minutes = Math.floor((duration / (1000 * 60)) % 60),
       hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-  
+
     hours = (hours < 10) ? "0" + hours : hours;
     minutes = (minutes < 10) ? "0" + minutes : minutes;
     seconds = (seconds < 10) ? "0" + seconds : seconds;
-  
+
     return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
   }
 
   return (
     <div className={style}>
         {fishType == "ocean"?
-          <div className="fishImageDiv">
-            <img src={smallFish} id={imageStyle.current} alt="session"/>
-            <div>
-              <p className='fishUser' onClick={() => handleOpen()}>{sessionUser.name}</p>
+          <div>
+            <div className="fishImageDiv">
+              <img src={smallFish} className="fishClickDiv" id={imageStyle.current} onClick={() => handleOpen()} alt="session"/>
               <Modal open={open} onClose={handleClose}><Profile mainUser={user} user={sessionUser} setUser={setUser}/></Modal>
-              <p className='fishTitle'>{session.title}</p>
-              <p className='fishTimer'>{ formatTime(timer) }</p>
+              <div>
+                <p className='fishUser'>{sessionUser.name}</p>
+                <p className='fishTitle'>{session.title}</p>
+                <p className='fishTimer'>{ formatTime(timer) }</p>
+              </div>
             </div>
           </div>
         :
