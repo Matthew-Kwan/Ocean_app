@@ -23,6 +23,7 @@ import Modal from '@material-ui/core/Modal';
 
 import './components/modal.css'
 import './components/nav.scss'
+import './components/login.css'
 
 import './components/profile.css'
 import ProgressBar from './components/ProgressBar'
@@ -30,7 +31,7 @@ import ButtonModal from './components/ButtonModal'
 
 
 // import React Router
-import { Route, Switch, Link, Redirect, BrowserRouter, useParams } from 'react-router-dom'
+import { Route, Switch, NavLink,Link, Redirect, BrowserRouter ,useParams} from 'react-router-dom'
 
 // hardcoded data
 
@@ -76,12 +77,11 @@ const LoginModule = ({loggedIn,handleLogin,setSignUp,classes}) => {
                         <TextField required id="outlined-basic" size='small' label="Username" variant="outlined" /></div>
                         <div className= 'input' id="password-input">
                         <TextField required name="" id="outlined-basic" size='small' label="Password" type="password" variant="outlined" /></div>
-                        <span>
                           <Button type='submit' variant="contained" color="primary">
                               Login
                           </Button>
-                          <p>If you don't have an account, create one <span id="switchLogin" onClick={() => handleSignUp()}>here</span></p>
-                        </span>
+                         
+                          <p id='#loginText'>If you don't have an account, create one <span id="switchLogin" onClick={() => handleSignUp()}>here</span></p>
                     </form>
 
           </CardContent>
@@ -153,22 +153,26 @@ const NavBar = ({ loggedIn, handleLogout, user, setUser }) => {
   if (loggedIn) {
     return (
       <div id="navBar">
-        <Link className="link btn-1" to="/ocean">
+        <Modal open={modalOpen} onClose={handleModalClose} useNativeDriver={true}>
+          <YourProfile user ={user} setUser={setUser}/>
+        </Modal>
+        <NavLink activeClassName='activeLink' className="link btn-1" to="/ocean">
           <svg>
             <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
-          </svg>ocean</Link>
-        <Link className="link btn-1" to="/tank">
+          </svg>ocean</NavLink>
+        <NavLink activeClassName='activeLink' className="link btn-1" to="/tank">
           <svg>
             <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
-          </svg>tank</Link>
+          </svg>tank</NavLink>
         
-        <Link className="link btn-1" onClick={() => handleModalOpen()}>
+        <a className="link btn-1" onClick={() => handleModalOpen()}>
           <svg>
             <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
        
 
           </svg>Your Profile
-        </Link>
+  
+        </a>
 
         <Modal open={modalOpen} onClose={handleModalClose}>
             <YourProfile user ={user} setUser={setUser}/>
@@ -179,11 +183,10 @@ const NavBar = ({ loggedIn, handleLogout, user, setUser }) => {
             <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
           </svg>
           admin</Link> : null }
-       
-        { loggedIn ? <Link className="link btn-1" to="/" onClick={handleLogout}> <svg>
-            <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
-       
 
+        { loggedIn ? <Link className="link btn-1" to="/" onClick={handleLogout}> 
+         <svg>
+            <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
           </svg>logout </Link> : null}
       </div>
     )

@@ -20,17 +20,18 @@
   right: 5vw;
   top: 30vh;
 
-  padding: 3vh 1vw 3vh 1vw;
+  padding: 1vh 1vw 3vh 1vw;
 
-  width: 15vw;
+  width: 20vw;
   height: auto;
   z-index: 2;
 
   background: white;
+  display:flex;
+  align-items: flex-start;
 
-  text-align: center;
-  border: solid 3px black;
-  border-radius: 15%;
+  /* text-align: center; */
+  border-radius: 5%;
 }
 
 .session-form-input {

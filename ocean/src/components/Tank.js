@@ -67,6 +67,7 @@ const Tank= ({user}) => {
                 <div className='decorContent'>
 
                     {goals.map(goal => handleGoal(goal))}
+
                 </div>
 
 

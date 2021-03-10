@@ -31,8 +31,8 @@ const InSessionBox = ({session, setInSession}) => {
 
   return (
     <Container>
-      <h1> Session In Progress </h1>
-      <h1> Title: {session.title} </h1>
+      <h3> Session In Progress </h3>
+      <h1> Currently working on: {session.title} </h1>
       <h3> Goal: {session.goal} </h3>
       <p>{ formatTime(timer) }</p>
       <Button type="submit" onClick={handleEndSession} variant="outlined" color="red">
