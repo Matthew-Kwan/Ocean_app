@@ -24,7 +24,7 @@ function EditMe(item, setUser, text_type) {
   return (
     <Editable
       text={toChange}
-      placeholder="Write a task name"
+      placeholder="Add a tagline for yourself"
       type="input"
       text_type = {text_type}
     >
