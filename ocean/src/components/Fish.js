@@ -13,6 +13,7 @@ const Fish = ({users, user, setUser, session, fishType}) => {
   const imageStyle = useRef('')
   const [sessionUser, setSessionUser] = useState({})
   const [open, setOpen] = useState(false)
+  const [hovered, setHovered] = useState(false)
 
   useEffect(() => {
     increment.current = setInterval(() => {
@@ -69,19 +70,27 @@ const Fish = ({users, user, setUser, session, fishType}) => {
     return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
   }
 
+  const removeHidden = () => {
+    setHovered(true)
+  }
+
+  const addHidden = () => {
+    setHovered(false)
+  }
+
   return (
     <div className={style}>
         {fishType == "ocean"?
           <div>
-            <div className="fishImageDiv">
-              <img src={smallFish} className="fishClickDiv" id={imageStyle.current} onClick={() => handleOpen()} alt="session"/>
-              <Modal open={open} onClose={handleClose}><Profile mainUser={user} user={sessionUser} setUser={setUser}/></Modal>
-              <div>
+            <div className="fishImageDiv fishClickDiv" onClick={() => handleOpen()}>
+              <img src={smallFish} id={imageStyle.current} alt="session"/>
+              <div className="fishContent">
                 <p className='fishUser'>{sessionUser.name}</p>
-                <p className='fishTitle'>{session.title}</p>
+                <p onMouseEnter={() => removeHidden()} onMouseLeave={() => addHidden()}className='fishTitle tooltip'>{session.title}</p> <span className={hovered ? "tooltiptext" :"tooltiptext hidden"}>{session.title}</span>
                 <p className='fishTimer'>{ formatTime(timer) }</p>
               </div>
             </div>
+            <Modal open={open} onClose={handleClose}><Profile mainUser={user} user={sessionUser} setUser={setUser}/></Modal>
           </div>
         :
           <div className="fishImageDiv">
