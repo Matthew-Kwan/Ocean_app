@@ -109,11 +109,12 @@ const NavBar = ({ loggedIn, handleLogout, user, setUser }) => {
           </svg>profile</Link>
         
         <span id="urProfileBtn" ><ButtonModal buttonName='Ur Profile' content={YourProfile({ user, setUser })} /></span>
-        <Link className="link btn-1" to="/admin">
+        { user.adminFlag? <Link className="link btn-1" to="/admin">
           <svg>
             <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
           </svg>
-          admin</Link>
+          admin</Link> : null }
+       
         { loggedIn ? <Link className="link btn-1" to="/" onClick={handleLogout}> logout </Link> : null}
       </div>
     )
