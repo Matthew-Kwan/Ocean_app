@@ -10,7 +10,6 @@ let counter = 1;
 // Create some sort of mapping of session data onto fishes that just swim around the ocean
 const Ocean = ({user, setUser, users, sessions, setSessions}) => {
 
-
   const sessionsList = [
     {
       sessionId: 1,
@@ -94,7 +93,6 @@ const Ocean = ({user, setUser, users, sessions, setSessions}) => {
       <div className="oceanContent">
         {/*other fish*/}
         <div className="currentSessionBox">
-          <h1>Ocean</h1>
           <ul id="fishList">
             {currentSessions.map(session => handleFish(session))}
           </ul>

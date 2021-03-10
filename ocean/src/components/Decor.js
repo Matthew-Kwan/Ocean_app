@@ -4,9 +4,8 @@ import './decor.css'
 import coral from '../images/coral.png'
 import squidwardHouse from '../images/squidward-house.png'
 
-let decorArr = [squidwardHouse, coral];
-let title = null;
-let tasks = null;
+let decorArr = [squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral,
+                squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral];
 
 const Decor = ({goal, count}) => {
 
@@ -16,17 +15,22 @@ const Decor = ({goal, count}) => {
 
 
     return (
-        <div >
+        <div className= "decorationDiv">
+
             <img src={decorArr[count]} className="decoration"/>
+
             <div className = "hideGoalContent">
-                <p>{goal.title}</p>
-                <p> Tasks: </p>
-                <ul>
-                    {goal.tasks.map (task => 
-                        <li>{task.task}</li>
-                    )}
-                </ul>
+                <div className = "goalContent">
+                    <p className ="bold">{goal.title}</p>
+                    <p className = "bold"> Tasks: </p>
+                    <ul>
+                        {goal.tasks.map (task => 
+                            <li>{task.task}</li>
+                        )}
+                    </ul>
+                </div>
             </div>
+
         </div>
     )
 

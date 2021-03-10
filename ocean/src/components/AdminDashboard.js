@@ -67,7 +67,8 @@ export default function AdminDashboard({users, sessions}) {
 
   return (
     <div className={classes.root}>
-      <Tabs
+      <div className='column'></div>
+      <Tabs id="adminNav"
         orientation="vertical"
         variant="scrollable"
         value={value}

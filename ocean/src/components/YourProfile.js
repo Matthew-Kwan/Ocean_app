@@ -33,7 +33,6 @@ const YourProfile = ({user, setUser}) => {
                 </div>
             </div>
             <div>
-    
                 <h3>Recently Completed Goals</h3>
                 <ol>
                         {

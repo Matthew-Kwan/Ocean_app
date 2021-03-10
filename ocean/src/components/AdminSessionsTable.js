@@ -8,19 +8,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-// import usersList from '../App.js'
 
 const useStyles = makeStyles({
   table: {
     minWidth: 450,
   },
 });
-// sessionId: 1,
-// userId: 1,
-// goalId: 2,
-// title: "Work on ocean component",
-// startTime: new Date(2021,2,1,8,0,0),
-// endTime: new Date(2021,2,1,12,0,0),
 
 
 export default function AdminSessionsTable({sessions}) {
@@ -53,8 +46,6 @@ export default function AdminSessionsTable({sessions}) {
               <TableCell align="right">{row.userId}</TableCell>
               <TableCell align="right">{row.goalId}</TableCell>
               {/* <TableCell align="right">{row.startTime}</TableCell> */}
-
-
 
             </TableRow>
           ))}

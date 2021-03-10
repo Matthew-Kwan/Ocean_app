@@ -21,6 +21,7 @@ const Tank= ({user}) => {
 
         return function cleanup() {
             counter = 4-sessions.length;
+            decorCount = 0;
           }
     }, []);
 
@@ -40,7 +41,7 @@ const Tank= ({user}) => {
         //setDecorCount(decorCount+1)
         decorCount++;
 
-        if (decorCount > 1)
+        if (decorCount > 19)
             decorCount = 0;
 
         return (
@@ -65,9 +66,9 @@ const Tank= ({user}) => {
                 </ul>
 
                 <div className='decorContent'>
-
-                    {goals.map(goal => handleGoal(goal))}
-
+                    <div className = 'decorRow'>
+                        {goals.map(goal => handleGoal(goal))}
+                    </div>
                 </div>
 
 

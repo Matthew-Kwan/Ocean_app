@@ -52,10 +52,11 @@ const SessionBox = ({ user, session, setSession, setInSession }) => {
     setInSession(true)
   }
 
+  // send post request to server, adding the current active session to all sessions table
 
   return (
     <Container className="sessionBoxContainer">
-      <h3> Start a new Session </h3>
+      <p className="sessionLabel"> Start a new Session </p>
       <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
         <TextField
             className="session-form-input sessionInput"
