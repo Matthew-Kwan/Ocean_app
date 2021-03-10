@@ -5,6 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
+import './ocean.css'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -53,11 +54,11 @@ const SessionBox = ({ user, session, setSession, setInSession }) => {
 
 
   return (
-    <Container>
+    <Container className="sessionBoxContainer">
       <h3> Start a new Session </h3>
       <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
         <TextField
-            className="session-form-input"
+            className="session-form-input sessionInput"
             label="Title"
             name="title"
             helperText="Please enter a title for your session"
@@ -66,8 +67,10 @@ const SessionBox = ({ user, session, setSession, setInSession }) => {
           >
           </TextField>
 
+        <br></br>
+
         <TextField
-            className="session-form-input"
+            className="session-form-input sessionInput"
             select
             label="Goal"
             name="goal"
@@ -80,7 +83,7 @@ const SessionBox = ({ user, session, setSession, setInSession }) => {
                 {option.title}
               </MenuItem>
             ))}
-        </TextField>
+        </TextField> <br></br>
 
         <Button type="submit" variant="outlined" color="primary">
           Start Session

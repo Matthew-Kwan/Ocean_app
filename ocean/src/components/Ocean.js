@@ -69,7 +69,11 @@ const Ocean = ({user, setUser, users, sessions, setSessions}) => {
     // sets current sessions to the sessions that are currently still in progress
     counter = 1
     setSessions(sessionsList)
-    setCurrentSessions(sessionsList.filter((s) => s.endTime === null))
+    let currSess = sessionsList.filter((s) => s.endTime === null)
+    if (currSess.length > 3) {
+      currSess = currSess.slice(0,3)
+    }
+    setCurrentSessions(currSess)
 
     return function cleanup() {
       counter = 1
@@ -90,6 +94,7 @@ const Ocean = ({user, setUser, users, sessions, setSessions}) => {
       <div className="oceanContent">
         {/*other fish*/}
         <div className="currentSessionBox">
+          <h1>Ocean</h1>
           <ul id="fishList">
             {currentSessions.map(session => handleFish(session))}
           </ul>
