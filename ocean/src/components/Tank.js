@@ -7,26 +7,25 @@ import Decor from './Decor'
 
 
 let counter = 2;
+let decorCount = 0;
 
 const Tank= ({user}) => {
 
     const [sessions, setSessions] = React.useState([]);
     const [goals, setGoals] = React.useState(user.goals);
+    //const [decorCount, setDecorCount] = React.useState(0);
 
     useEffect(() => {
         const tmpSessions = user.sessions.filter(session => session.endTime !== null)
         setSessions(tmpSessions);
+
         return function cleanup() {
             counter = 4-sessions.length;
           }
     }, []);
 
     const refreshGoals = (updatedGoals) => {
-        console.log(goals)
-        setGoals(updatedGoals);
-        console.log("goals",goals)
-        console.log("updatedGoals", updatedGoals)
-        
+        setGoals(updatedGoals);     
     }
 
     const handleFish = (session) => {
@@ -34,6 +33,22 @@ const Tank= ({user}) => {
         counter = counter + 1
         return (
             <li key={session.id} className="fishListTankItem"><Fish session={session} fishType="tank"/></li>
+        )
+    }
+
+    const handleGoal = (goal) => {
+        //setDecorCount(decorCount+1)
+        decorCount++;
+
+        if (decorCount > 1)
+            decorCount = 0;
+
+        return (
+            <div className = "decorationSlot">
+                {goal.completed?                                 
+                    <Decor goal={goal} count={decorCount}/>
+                :<div></div>} 
+            </div>  
         )
     }
 
@@ -53,13 +68,7 @@ const Tank= ({user}) => {
             
                     <div className = "decorRow" > 
 
-                        {goals.map(goal => 
-                            <div className = "decorationSlot">
-                                {goal.completed?                                 
-                                    <Decor goal={goal}/>
-                                :<div></div>} 
-                            </div>  
-                        )}
+                        {goals.map(goal => handleGoal(goal))}
                     </div>
 
                 </div>

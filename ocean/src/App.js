@@ -203,7 +203,7 @@ function App() {
       ]
     },
     {
-      id: 2,
+      id: 20000,
       title: 'School',
       totalTasksNum: 5,
       completedTasksNum: 3,
@@ -233,7 +233,7 @@ function App() {
       ]
     },
     {
-      id: 2,
+      id: 30000,
       title: 'More Admin stuff',
       totalTasksNum: 5,
       completedTasksNum: 3,

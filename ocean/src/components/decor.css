@@ -2,3 +2,20 @@
     height: 100%;
     width: 300px;
 }
+
+.decorationDiv {}
+
+.decoration:hover + .hideGoalContent {
+    z-index: 2;
+    font-weight: bold;
+    width: 10vw;
+    color: black;
+    background-color: white;
+    display: block;
+    border-radius: 20px;
+    margin: auto;
+}
+
+.hideGoalContent {
+    display: none;
+}

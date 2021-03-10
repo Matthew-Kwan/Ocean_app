@@ -92,15 +92,15 @@ export default function GoalsDrawer(props) {
     }
   }, [editGoal])
 
-    //useEffect for details modal
-    useEffect(() => {
-      if (firstUpdateDetails.current) {
-        firstUpdateDetails.current = false;
-      } else {
-       // do things after first render
-        setDetailsContent();
-      }
-    }, [detailsGoal])
+  //useEffect for details modal
+  useEffect(() => {
+    if (firstUpdateDetails.current) {
+      firstUpdateDetails.current = false;
+    } else {
+      // do things after first render
+      setDetailsContent();
+    }
+  }, [detailsGoal])
 
 
   //  HANDLERS
