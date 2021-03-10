@@ -52,14 +52,19 @@ const Profile = ({mainUser, user, setUser}) => {
                 </div>
                 <h3>Recently Completed Goals</h3>
                 <ol>
-                    <li>Read Book</li>
-                    <li>Finish CSC309 Project</li>
+                        {
+                        (user.goals).map(goal => (
+                            <li>{goal.title}</li>
+                        )) 
+                    }
                 </ol>
-
                 <h3>Recently Completed Sessions</h3>
                 <ol>
-                    <li>Read Book</li>
-                    <li>Finish CSC309 Project</li>
+                {
+                        (user.sessions).map(goal => (
+                            <li>{goal.title}</li>
+                        )) 
+                    }
                 </ol>
             </div>
         </div>

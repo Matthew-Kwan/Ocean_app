@@ -17,6 +17,8 @@
     /* border:1px solid black; */
     margin: auto;
     margin-left:20%;
+    
+
 
 }
 
@@ -24,4 +26,9 @@
 
 .hi, .input{
     margin-bottom: 15px;
+}
+
+#loginText{
+    width:80px;
+    background-color: cadetblue;
 }

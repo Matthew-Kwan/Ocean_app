@@ -90,7 +90,6 @@ const Ocean = ({user, setUser, users, sessions, setSessions}) => {
       <div className="oceanContent">
         {/*other fish*/}
         <div className="currentSessionBox">
-          <h1>Ocean</h1>
           <ul id="fishList">
             {currentSessions.map(session => handleFish(session))}
           </ul>
