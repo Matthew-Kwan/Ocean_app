@@ -31,10 +31,19 @@ const InSessionBox = ({session, setInSession}) => {
 
   return (
     <Container>
-      <h3> Session In Progress </h3>
-      <h1> Currently working on: {session.title} </h1>
-      <h3> Goal: {session.goal} </h3>
-      <p>{ formatTime(timer) }</p>
+      <p className = "sessionLabel"> SESSION IN PROGRESS </p>
+      <div className="sessionInfo">
+        <p> You're currently working on: </p> 
+        <h2> {session.title} </h2>
+      </div>
+      <div className="sessionInfo">
+        <p> For the goal: </p> 
+        <h2> {session.goal} </h2>
+      </div>
+      <div className="sessionInfo">
+        <p> Elapsed Time: </p> 
+        <h2> {formatTime(timer) } </h2>
+      </div>
       <Button type="submit" onClick={handleEndSession} variant="outlined" color="red">
           End Session
         </Button>
