@@ -26,9 +26,6 @@ const Decor = ({goal, count}) => {
                         <li>{task.task}</li>
                     )}
                 </ul>
-
-                
-
             </div>
         </div>
     )

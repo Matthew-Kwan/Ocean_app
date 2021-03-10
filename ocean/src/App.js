@@ -180,7 +180,11 @@ const NavBar = ({ loggedIn, handleLogout, user, setUser }) => {
           </svg>
           admin</Link> : null }
        
-        { loggedIn ? <Link className="link btn-1" to="/" onClick={handleLogout}> logout </Link> : null}
+        { loggedIn ? <Link className="link btn-1" to="/" onClick={handleLogout}> <svg>
+            <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
+       
+
+          </svg>logout </Link> : null}
       </div>
     )
   } else {

@@ -625,7 +625,7 @@ export default function GoalsDrawer(props) {
     <div className = 'goalsButtonDiv'>
       {['See Your Goals'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button id = "seeYourGoalsButton" onClick={toggleDrawer(anchor, true)} variant="outlined" color="light">{anchor} </Button>
+          <Button id = "seeYourGoalsButton" onClick={toggleDrawer(anchor, true)} variant="outlined" color="primary">{anchor} </Button>
           <Drawer anchor={'right'} open={state[anchor]} onClose={toggleDrawer(anchor, false)} >
             {drawer(anchor)}
           </Drawer>
