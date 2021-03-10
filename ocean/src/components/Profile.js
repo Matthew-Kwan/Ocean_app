@@ -3,6 +3,7 @@ import { Button, colors } from '@material-ui/core';
 import './profile.css'
 import './modal.css'
 import EditMe from './editMe'
+import {Link} from 'react-router-dom'
 
 const Profile = ({mainUser, user, setUser}) => {
 
@@ -30,7 +31,12 @@ const Profile = ({mainUser, user, setUser}) => {
 
             </div>
             <div className = 'profButtons'>
-                <Button variant="contained" color="primary">View Tank</Button>
+              <Link to={
+                    {
+                      pathname: `/tank/${user.id}`
+                    }
+                  }>
+                <Button variant="contained" color="primary">View Tank</Button> </Link>
                 {(isFriend) ? <div>Friend has been added</div> : <Button variant="contained" color="primary" onClick = {() => AddFriend(mainUser, user, setUser)}>
                     Add Friend
                     </Button>}

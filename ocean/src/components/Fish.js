@@ -56,20 +56,40 @@ const Fish = ({users, user, setUser, session, fishType}) => {
     setOpen(false);
   };
 
+  function msToTime(duration) {
+    var milliseconds = parseInt((duration % 1000) / 100),
+      seconds = Math.floor((duration / 1000) % 60),
+      minutes = Math.floor((duration / (1000 * 60)) % 60),
+      hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+  
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+  
+    return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+  }
+
   return (
     <div className={style}>
-      <div className="fishImageDiv">
-        <img src={smallFish} id={imageStyle.current} alt="session"/>
         {fishType == "ocean"?
-          <div>
-            <p className='fishUser' onClick={() => handleOpen()}>{sessionUser.name}</p>
-            <Modal open={open} onClose={handleClose}><Profile mainUser={user} user={sessionUser} setUser={setUser}/></Modal>
-            <p className='fishTitle'>{session.title}</p>
-            <p className='fishTimer'>{ formatTime(timer) }</p>
+          <div className="fishImageDiv">
+            <img src={smallFish} id={imageStyle.current} alt="session"/>
+            <div>
+              <p className='fishUser' onClick={() => handleOpen()}>{sessionUser.name}</p>
+              <Modal open={open} onClose={handleClose}><Profile mainUser={user} user={sessionUser} setUser={setUser}/></Modal>
+              <p className='fishTitle'>{session.title}</p>
+              <p className='fishTimer'>{ formatTime(timer) }</p>
+            </div>
           </div>
         :
-          <div></div>}
-      </div>
+          <div className="fishImageDiv">
+            <img className = "fishImage" src={smallFish} id={imageStyle.current} alt="session"/>
+            <div className = "hideFishContent">
+              <p className='fishTitleTank'>{session.title}</p>
+              <p className='fishTotalTimeTank'>Session Total Time: <br></br>{msToTime(session.endTime - session.startTime)}</p>
+            </div>
+          </div>
+        }
     </div>
   )
 }

@@ -1,31 +1,37 @@
 import React from 'react'
+import {useState, useRef} from 'react'
 import {useEffect} from 'react'
 import './tank.css'
 import GoalsDrawer from './GoalsDrawer'
 import Fish from './Fish'
 import Decor from './Decor'
+import { useParams } from 'react-router-dom'
 
 
 let counter = 2;
-let decorCount = 0;
 
-const Tank= ({user}) => {
+const OtherTank= ({users}) => {
 
+    const id = useRef(useParams().id)
+    const [tankOwner, setTankOwner] = useState(users.filter(u => u.id == id.current)[0])
     const [sessions, setSessions] = React.useState([]);
-    const [goals, setGoals] = React.useState(user.goals);
-    //const [decorCount, setDecorCount] = React.useState(0);
+    const [goals, setGoals] = React.useState(tankOwner.goals);
 
     useEffect(() => {
-        const tmpSessions = user.sessions.filter(session => session.endTime !== null)
+        console.log(tankOwner)
+        const tmpSessions = tankOwner.sessions.filter(session => session.endTime !== null)
         setSessions(tmpSessions);
-
         return function cleanup() {
             counter = 4-sessions.length;
           }
     }, []);
 
     const refreshGoals = (updatedGoals) => {
-        setGoals(updatedGoals);     
+        console.log(goals)
+        setGoals(updatedGoals);
+        console.log("goals",goals)
+        console.log("updatedGoals", updatedGoals)
+
     }
 
     const handleFish = (session) => {
@@ -36,29 +42,14 @@ const Tank= ({user}) => {
         )
     }
 
-    const handleGoal = (goal) => {
-        //setDecorCount(decorCount+1)
-        decorCount++;
-
-        if (decorCount > 1)
-            decorCount = 0;
-
-        return (
-            <div className = "decorationSlot">
-                {goal.completed?                                 
-                    <Decor goal={goal} count={decorCount}/>
-                :<div></div>} 
-            </div>  
-        )
-    }
-
     return (
 
         <div className="tank">
 
             <div className="tankContent">
+                <h1> {tankOwner.name}'s Tank</h1>
 
-                <GoalsDrawer goals={user.goals} refreshGoals={refreshGoals}/>
+                <GoalsDrawer goals={tankOwner.goals} refreshGoals={refreshGoals}/>
 
                 <ul id="fishListTank">
                     {sessions.map(session => handleFish(session))}
@@ -66,7 +57,6 @@ const Tank= ({user}) => {
 
                 <div className='decorContent'>
 
-<<<<<<< HEAD
                     <div className = "decorRow" >
 
                         {goals.map(goal =>
@@ -76,9 +66,6 @@ const Tank= ({user}) => {
                                 :<div></div>}
                             </div>
                         )}
-=======
-                        {goals.map(goal => handleGoal(goal))}
->>>>>>> c8f44de666eb8e87a2b00e8e8c0a5ee067d2b157
                     </div>
 
                 </div>
@@ -94,4 +81,4 @@ const Tank= ({user}) => {
     )
 }
 
-export default Tank;
+export default OtherTank;

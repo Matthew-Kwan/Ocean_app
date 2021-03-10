@@ -9,6 +9,7 @@ import YourProfile from './components/YourProfile'
 import Login from './components/Login'
 import AdminDashboard from './components/AdminDashboard'
 import Nav from './components/NavBar'
+import OtherTank from './components/OtherTank';
 
 // import materialUI components
 import { makeStyles } from '@material-ui/core/styles';
@@ -30,7 +31,7 @@ import ButtonModal from './components/ButtonModal'
 
 
 // import React Router
-import { Route, Switch, NavLink,Link, Redirect, BrowserRouter } from 'react-router-dom'
+import { Route, Switch, NavLink,Link, Redirect, BrowserRouter ,useParams} from 'react-router-dom'
 
 // hardcoded data
 
@@ -173,6 +174,10 @@ const NavBar = ({ loggedIn, handleLogout, user, setUser }) => {
   
         </a>
 
+        <Modal open={modalOpen} onClose={handleModalClose}>
+            <YourProfile user ={user} setUser={setUser}/>
+        </Modal>
+
         { user.adminFlag? <Link className="link btn-1" to="/admin">
           <svg>
             <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
@@ -207,7 +212,7 @@ function App() {
       ]
     },
     {
-      id: 2,
+      id: 20000,
       title: 'School',
       totalTasksNum: 5,
       completedTasksNum: 3,
@@ -237,7 +242,7 @@ function App() {
       ]
     },
     {
-      id: 2,
+      id: 30000,
       title: 'More Admin stuff',
       totalTasksNum: 5,
       completedTasksNum: 3,
@@ -271,6 +276,24 @@ function App() {
       endTime: new Date(2021, 2, 2, 12, 0, 0)
     }];
 
+    const sessions_other_users = [
+      {
+        sessionId: 1,
+        userId: 1,
+        goalId: 2,
+        title: "Work on ocean component",
+        startTime: new Date(2021, 2, 1, 8, 0, 0),
+        endTime: new Date(2021, 2, 1, 12, 0, 0)
+      },
+      {
+        sessionId: 2,
+        userId: 1,
+        goalId: 1,
+        title: "Learn more about React",
+        startTime: new Date(2021, 2, 2, 8, 0, 0),
+        endTime: new Date(2021, 2, 2, 12, 0, 0)
+      }];
+
   const usersList = [
     {
       id: 1,
@@ -295,7 +318,8 @@ function App() {
       goals: goals2,
       friends: [
         { id: 4, name: 'Billy' },
-      ]
+      ],
+      sessions: sessions_other_users
     },
     {
       id: 3,
@@ -306,7 +330,8 @@ function App() {
       tagline: '',
       goals: goals2,
       friends: [
-      ]
+      ],
+      sessions: sessions_other_users
     },
     {
       id: 4,
@@ -317,7 +342,8 @@ function App() {
       tagline: '',
       goals: goals2,
       friends: [
-      ]
+      ],
+      sessions: sessions_other_users
     }
   ]
 
@@ -425,6 +451,12 @@ function App() {
 
           return (
             <YourProfile user={user} setUser={setUser} />
+          )
+        }} />
+
+        <Route path="/tank/:id" render={() => {
+          return (
+            <OtherTank users={users} />
           )
         }} />
 
