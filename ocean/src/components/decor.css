@@ -7,7 +7,6 @@
 
 .decoration:hover + .hideGoalContent {
     z-index: 2;
-    font-weight: bold;
     width: 10vw;
     color: black;
     background-color: white;

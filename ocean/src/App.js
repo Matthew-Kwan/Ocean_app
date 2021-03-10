@@ -167,10 +167,11 @@ const NavBar = ({ loggedIn, handleLogout, user, setUser }) => {
        
 
           </svg>Your Profile
-          <Modal open={modalOpen} onClose={handleModalClose}>
-            <YourProfile user ={user} setUser={setUser}/>
-          </Modal>
         </Link>
+
+        <Modal open={modalOpen} onClose={handleModalClose}>
+            <YourProfile user ={user} setUser={setUser}/>
+        </Modal>
 
         { user.adminFlag? <Link className="link btn-1" to="/admin">
           <svg>
