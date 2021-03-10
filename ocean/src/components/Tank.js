@@ -66,7 +66,6 @@ const Tank= ({user}) => {
 
                 <div className='decorContent'>
 
-<<<<<<< HEAD
                     <div className = "decorRow" >
 
                         {goals.map(goal =>
@@ -76,9 +75,7 @@ const Tank= ({user}) => {
                                 :<div></div>}
                             </div>
                         )}
-=======
                         {goals.map(goal => handleGoal(goal))}
->>>>>>> c8f44de666eb8e87a2b00e8e8c0a5ee067d2b157
                     </div>
 
                 </div>
