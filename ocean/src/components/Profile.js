@@ -31,12 +31,13 @@ const Profile = ({mainUser, user, setUser}) => {
 
             </div>
             <div className = 'profButtons'>
-              <Link to={
+            
+                <Button variant="contained" color="primary">  <Link id = "linkButton" color="white" to={
                     {
                       pathname: `/tank/${user.id}`
                     }
-                  }>
-                <Button variant="contained" color="primary">View Tank</Button> </Link>
+                  }>View Tank</Link></Button> 
+                
                 {(isFriend) ? <div>Friend has been added</div> : <Button variant="contained" color="primary" onClick = {() => AddFriend(mainUser, user, setUser)}>
                     Add Friend
                     </Button>}

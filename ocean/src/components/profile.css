@@ -86,3 +86,8 @@
     flex-direction: row;
     align-items: center;
 }
+
+#linkButton{
+    width:100%;
+    color:white;
+}
