@@ -21,9 +21,11 @@ const Tank= ({user}) => {
           }
     }, []);
 
-    const refreshGoals = () => {
+    const refreshGoals = (updatedGoals) => {
         console.log(goals)
-        setGoals(goals);
+        setGoals(updatedGoals);
+        console.log("goals",goals)
+        console.log("updatedGoals", updatedGoals)
         
     }
 
@@ -64,7 +66,6 @@ const Tank= ({user}) => {
                 
 
             </div>
-            
             <div className="tankBottom"></div>
 
 
