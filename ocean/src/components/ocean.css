@@ -15,14 +15,27 @@
   background-size: 100% 100%;  
 }
 
+.sessionBoxContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.sessionInput {
+  flex: 1;
+}
+
 .sessionBox {
+
+  display: flex;
+  flex-direction: column;
+
   position: absolute;
   right: 5vw;
   top: 30vh;
 
   padding: 1vh 1vw 3vh 1vw;
 
-  width: 20vw;
+  width: auto;
   height: auto;
   z-index: 2;
 

@@ -66,17 +66,7 @@ const Tank= ({user}) => {
 
                 <div className='decorContent'>
 
-                    <div className = "decorRow" >
-
-                        {goals.map(goal =>
-                            <div className = "decorationSlot">
-                                {goal.completed?
-                                    <Decor goal={goal}/>
-                                :<div></div>}
-                            </div>
-                        )}
-                        {goals.map(goal => handleGoal(goal))}
-                    </div>
+                    {goals.map(goal => handleGoal(goal))}
 
                 </div>
 

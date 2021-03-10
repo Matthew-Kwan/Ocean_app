@@ -49,8 +49,6 @@ const OtherTank= ({users}) => {
             <div className="tankContent">
                 <h1> {tankOwner.name}'s Tank</h1>
 
-                <GoalsDrawer goals={tankOwner.goals} refreshGoals={refreshGoals}/>
-
                 <ul id="fishListTank">
                     {sessions.map(session => handleFish(session))}
                 </ul>
