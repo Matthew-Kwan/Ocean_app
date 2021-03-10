@@ -18,6 +18,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import Modal from '@material-ui/core/Modal';
 
 import './components/modal.css'
 import './components/nav.scss'
@@ -26,6 +27,7 @@ import './components/profile.css'
 import ProgressBar from './components/ProgressBar'
 import ButtonModal from './components/ButtonModal'
 
+
 // import React Router
 import { Route, Switch, Link, Redirect, BrowserRouter } from 'react-router-dom'
 
@@ -33,15 +35,6 @@ import { Route, Switch, Link, Redirect, BrowserRouter } from 'react-router-dom'
 
 
 // helper functions
-
-function handleModalOpen(state) {
-  state = true;
-};
-
-function handleModalClose(state) {
-  state = false;
-};
-
 
 const useStyles = makeStyles({
   root: {
@@ -61,6 +54,7 @@ const useStyles = makeStyles({
 });
 
 const LoginModule = ({ loggedIn, handleLogin, classes }) => {
+  
   if (loggedIn) {
     return (
       <div></div>
@@ -90,6 +84,23 @@ const LoginModule = ({ loggedIn, handleLogin, classes }) => {
   }
 }
 const NavBar = ({ loggedIn, handleLogout, user, setUser }) => {
+
+
+  const [modalOpen, setModalOpen] = useState(false)
+
+  useEffect(() => {
+    console.log(modalOpen)
+  }, [modalOpen])
+
+
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () =>  {
+    setModalOpen(false)
+  };
+
   
   if (loggedIn) {
     return (
@@ -102,13 +113,19 @@ const NavBar = ({ loggedIn, handleLogout, user, setUser }) => {
           <svg>
             <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
           </svg>tank</Link>
-        <Link className="link btn-1" to="/profile">
+        
+        <Link className="link btn-1" onClick={() => handleModalOpen()}>
           <svg>
             <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
-          </svg>profile</Link>
-        
-        <span id="urProfileBtn" ><ButtonModal buttonName='Ur Profile' content={YourProfile({ user, setUser })} /></span>
-        { user.adminFlag ? <Link className="link btn-1" to="/admin">
+       
+
+          </svg>Your Profile
+          <Modal open={modalOpen} onClose={handleModalClose}>
+            <YourProfile user ={user} setUser={setUser}/>
+          </Modal>
+        </Link>
+
+        { user.adminFlag? <Link className="link btn-1" to="/admin">
           <svg>
             <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
           </svg>
