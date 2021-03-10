@@ -216,6 +216,8 @@ export default function GoalsDrawer(props) {
       goalToEdit.completionPercent = Math.round((editGoal.completedTasksNum/goalToEdit.totalTasksNum)*100);
 
     handleEditModalClose();
+
+    //TODO: PUT request to handle edited content
   };
 
   //form add task
@@ -349,6 +351,8 @@ export default function GoalsDrawer(props) {
     //instant refresh modal
     handleDetailsModalOpen(goalToEdit);
     handleDetailsModalClose();
+
+    //TODO: PUT request to save completed/non completed tasks and completion request
 
   }
 
@@ -594,6 +598,8 @@ export default function GoalsDrawer(props) {
   */
   function addGoal(goal) {
     goals.push(goal)
+
+    //TODO: POST request to add goal
   }
 
   /*
@@ -613,6 +619,8 @@ export default function GoalsDrawer(props) {
     const newGoalsForRefresh = goals.slice(0);
 
     props.refreshGoals(newGoalsForRefresh);
+
+    //TODO: DELETE request to delete goal
   }
   
 
