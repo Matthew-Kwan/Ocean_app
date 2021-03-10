@@ -120,8 +120,10 @@
     font-weight: bold;
 }
 
-.seeYourGoalsButton {
+#seeYourGoalsButton {
     z-index: 2;
+    background-color: white;
+    
 }
 
 

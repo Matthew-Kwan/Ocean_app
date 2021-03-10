@@ -7,7 +7,9 @@
 .tankContent {
     height: 100%;
     background-color: rgb(155, 233, 245);
-  background: linear-gradient(29deg, rgb(22, 102, 223) 0%,  rgb(101, 186, 255) 100%);    
+  /* background: linear-gradient(29deg, rgb(22, 102, 223) 0%,  rgb(101, 186, 255) 100%);    */
+  background-image: url("../images/bg_tank.png");
+  background-size: 100% auto;   
 
 }
 
@@ -27,7 +29,7 @@
 
 .tankBottom {
     height: 100px;
-    background: rgb(219, 187, 98);
+    background: #F0D267;
 }
 
 .div{

@@ -48,10 +48,7 @@ const Login = () => {
                 </CardContent>
               
                 </Card>
-            <img class="illustration"></img>
-            
-
-
+          
             
         </div>
     )

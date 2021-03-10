@@ -85,7 +85,6 @@ const LoginModule = ({ loggedIn, handleLogin, classes }) => {
           </CardContent>
 
         </Card>
-        <img className="illustration"></img>
       </div>)
 
   }
@@ -109,7 +108,7 @@ const NavBar = ({ loggedIn, handleLogout, user, setUser }) => {
           </svg>profile</Link>
         
         <span id="urProfileBtn" ><ButtonModal buttonName='Ur Profile' content={YourProfile({ user, setUser })} /></span>
-        { user.adminFlag? <Link className="link btn-1" to="/admin">
+        { user.adminFlag ? <Link className="link btn-1" to="/admin">
           <svg>
             <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
           </svg>
