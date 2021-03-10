@@ -19,7 +19,6 @@ const Profile = ({mainUser, user, setUser}) => {
 
     const [reported, setReported] = useState(false)
 
-
     return (
         <div className="profCard modalContainer">
             <div className='profHeader'>

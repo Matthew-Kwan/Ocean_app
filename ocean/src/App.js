@@ -198,6 +198,7 @@ const NavBar = ({ loggedIn, handleLogout, user, setUser }) => {
 }
 
 function App() {
+  // HARDCODED DATA: Goals, sessions, and user objects are defined here. With our backend done, we would pull these from the server
   const goals1 = [
     {
       id: 30000,
