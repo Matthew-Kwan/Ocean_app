@@ -35,7 +35,6 @@ const Editable = ({
 - It will display a label is `isEditing` is false
 - It will display the children (input or textarea) if `isEditing` is true
 - when input `onBlur`, we will set the default non edit mode
-Note: For simplicity purpose, I removed all the classnames, you can check the repo for CSS styles
 */
   return (
     <section {...props}>

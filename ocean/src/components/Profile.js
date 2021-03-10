@@ -13,6 +13,7 @@ const Profile = ({mainUser, user, setUser}) => {
         let newFriends = mainUser.friends
         newFriends.push({id:user.id, name: user.name})
         setUser({...mainUser, friends: newFriends})
+        // send out put/patch request to friends
     }
 
     const isFriend = mainUser.friends.filter(friend => friend.id == user.id).length > 0 ? true: false
@@ -26,18 +27,14 @@ const Profile = ({mainUser, user, setUser}) => {
                 <div id='profText'>
                     <h2 className="profName">{user.name}</h2>
                     {user.tagline? <p>{user.tagline}</p> : null}
-                    
-               
                 </div>
-
             </div>
             <div className = 'profButtons'>
-            
+                {/* Profile Actions */}
                 <Button variant="contained" color="primary">  <Link id = "linkButton" color="white" to={
                     {
                       pathname: `/tank/${user.id}`
-                    }
-                  }>View Tank</Link></Button> 
+                    }}>View Tank</Link></Button> 
                 
                 {(isFriend) ? <div className='centerText'>Friend has been added</div> : <Button variant="contained" color="primary" onClick = {() => AddFriend(mainUser, user, setUser)}>
                     Add Friend

@@ -16,8 +16,6 @@ const useStyles = makeStyles({
   },
 });
 
-
-
 export default function AdminUsersTable({users}) {
   const classes = useStyles();
 

@@ -29,11 +29,11 @@
   margin-bottom: 18px;
 }
 
-.sessionInfo h1,h2,p{
+.sessionInfo > h1,h2,p{
   color: #333333;
 
-  margin:0px;
-  padding:0px;
+  /* margin:0px; */
+  /* padding:0px; d */
 
 }
 

@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   },
 });
 
-// HARDCODED DATA - we would pull the reports from
+// HARDCODED DATA - we would pull the reports from the reports table in our server
 const reports = [
   {id:1,user:'3', reportedBy:'5', resolved:false},
   {id:2,user:'7', reportedBy:'2', resolved:false},

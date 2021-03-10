@@ -120,7 +120,7 @@ const SignUpModule = ({loggedIn,handleRegister,setSignUp,classes}) => {
                           <Button type='submit' variant="contained" color="primary">
                               Sign Up
                           </Button>
-                          <p>If you already have an account, login <span id="switchLogin" onClick={() => handleSignUp()}>here</span></p>
+                          <p> <br></br>If you already have an account, login <span id="switchLogin" onClick={() => handleSignUp()}>here</span></p>
                         </span>
                     </form>
 
@@ -415,15 +415,8 @@ function App() {
   return (
 
     <BrowserRouter>
-      {/* <Nav user ={user}></Nav> */}
       <div>
         <NavBar loggedIn={loggedIn} handleLogout={handleLogout} user={user} setUser={setUser} />
-        {/* <Link className="link" to="/">home</Link>
-        <Link className="link" to="/ocean">ocean</Link>
-        <Link className="link" to="/tank">tank</Link>
-        <Link className="link" to="/profile">profile</Link>
-        <Link className="link" to="/yourprofile">ur profile</Link>
-        { loggedIn ? <Link to="/" onClick={handleLogout}> Log Out </Link> : null } */}
       </div>
 
       <Switch>

@@ -28,6 +28,7 @@ const InSessionBox = ({session, setInSession}) => {
     setTimer(0)
     setInSession(false)
   }
+  // send a put request to session table to add the end time for finished session
 
   return (
     <Container>

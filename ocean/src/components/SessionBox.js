@@ -52,6 +52,7 @@ const SessionBox = ({ user, session, setSession, setInSession }) => {
     setInSession(true)
   }
 
+  // send post request to server, adding the current active session to all sessions table
 
   return (
     <Container className="sessionBoxContainer">

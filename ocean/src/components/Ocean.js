@@ -10,7 +10,6 @@ let counter = 1;
 // Create some sort of mapping of session data onto fishes that just swim around the ocean
 const Ocean = ({user, setUser, users, sessions, setSessions}) => {
 
-
   const sessionsList = [
     {
       sessionId: 1,

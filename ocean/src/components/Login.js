@@ -25,33 +25,3 @@ const useStyles = makeStyles({
     marginBottom: 12,
   },
 });
-
-const Login = () => {
-    const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
-    return (
-        <div id='loginbody'>
-            <Card id='loginModule' className={classes.root}>
-                <CardContent>
-                    <h3>
-                    Dive into Ocean</h3>
-                    <form className={classes.root} noValidate autoComplete="off">
-                        <div className = 'input'>
-                        <TextField required id="outlined-basic" size='small' label="Username" variant="outlined" /></div>
-                        <div className= 'input'>
-                        <TextField required id="outlined-basic" size='small' label="Password" type="password" variant="outlined" /></div>
-
-                    </form>
-                    <Button variant="contained" color="primary">
-                        Login
-                        </Button>
-                </CardContent>
-              
-                </Card>
-          
-            
-        </div>
-    )
-}
-
-export default Login;
