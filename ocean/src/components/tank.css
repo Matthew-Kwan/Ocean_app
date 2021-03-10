@@ -2,7 +2,6 @@
     display: flex;
     flex-flow: column;
     height: 100%;
-    overflow-x: auto;
 }
 
 .tankContent {
@@ -20,6 +19,7 @@
     padding: 10px;
     border-spacing: 10px;
     border-collapse: separate;
+    border: 1px solid green;
 
 }
 
@@ -39,9 +39,10 @@
 
 .decorationSlot {
     display: table-cell;
-    padding-left: 50px;
+    padding-left: 150px;
     padding-bottom: 20px;
-    
+    position: relative;
+    vertical-align: bottom;
 }
 
 .spacer{

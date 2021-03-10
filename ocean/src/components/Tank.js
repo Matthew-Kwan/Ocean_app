@@ -65,9 +65,9 @@ const Tank= ({user}) => {
                 </ul>
 
                 <div className='decorContent'>
-
-                    {goals.map(goal => handleGoal(goal))}
-
+                    <div className = 'decorRow'>
+                        {goals.map(goal => handleGoal(goal))}
+                    </div>
                 </div>
 
 
