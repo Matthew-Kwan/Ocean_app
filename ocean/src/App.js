@@ -87,7 +87,6 @@ const LoginModule = ({loggedIn,handleLogin,setSignUp,classes}) => {
           </CardContent>
 
         </Card>
-        <img className="illustration"></img>
       </div>)
 
   }
@@ -169,10 +168,11 @@ const NavBar = ({ loggedIn, handleLogout, user, setUser }) => {
        
 
           </svg>Your Profile
-          <Modal open={modalOpen} onClose={handleModalClose}>
-            <YourProfile user ={user} setUser={setUser}/>
-          </Modal>
         </Link>
+
+        <Modal open={modalOpen} onClose={handleModalClose}>
+            <YourProfile user ={user} setUser={setUser}/>
+        </Modal>
 
         { user.adminFlag? <Link className="link btn-1" to="/admin">
           <svg>
@@ -205,7 +205,7 @@ function App() {
       ]
     },
     {
-      id: 2,
+      id: 20000,
       title: 'School',
       totalTasksNum: 5,
       completedTasksNum: 3,
@@ -235,7 +235,7 @@ function App() {
       ]
     },
     {
-      id: 2,
+      id: 30000,
       title: 'More Admin stuff',
       totalTasksNum: 5,
       completedTasksNum: 3,

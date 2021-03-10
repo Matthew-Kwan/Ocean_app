@@ -92,15 +92,15 @@ export default function GoalsDrawer(props) {
     }
   }, [editGoal])
 
-    //useEffect for details modal
-    useEffect(() => {
-      if (firstUpdateDetails.current) {
-        firstUpdateDetails.current = false;
-      } else {
-       // do things after first render
-        setDetailsContent();
-      }
-    }, [detailsGoal])
+  //useEffect for details modal
+  useEffect(() => {
+    if (firstUpdateDetails.current) {
+      firstUpdateDetails.current = false;
+    } else {
+      // do things after first render
+      setDetailsContent();
+    }
+  }, [detailsGoal])
 
 
   //  HANDLERS
@@ -614,7 +614,7 @@ export default function GoalsDrawer(props) {
 
     props.refreshGoals(newGoalsForRefresh);
   }
-
+  
 
   //  RETURN
 
@@ -625,7 +625,7 @@ export default function GoalsDrawer(props) {
     <div className = 'goalsButtonDiv'>
       {['See Your Goals'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button className = "seeYourGoalsButton" onClick={toggleDrawer(anchor, true)} variant="outlined" color="primary">{anchor} </Button>
+          <Button id = "seeYourGoalsButton" onClick={toggleDrawer(anchor, true)} variant="outlined" color="light">{anchor} </Button>
           <Drawer anchor={'right'} open={state[anchor]} onClose={toggleDrawer(anchor, false)} >
             {drawer(anchor)}
           </Drawer>

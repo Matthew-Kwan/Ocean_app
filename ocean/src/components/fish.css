@@ -183,6 +183,7 @@
   -moz-animation: bounce 2s infinite;
   -webkit-animation: bounce 2s infinite;
   animation: bounce 2s infinite;
+  z-index: 1000;
 }
 
 .fishUser {
@@ -216,6 +217,23 @@
   left: 5vw;
 }
 
+.fishTitleTank {
+  position: absolute;
+  top: 5vh;
+  left: 5vw;
+
+  font-weight: bold;
+  width: 10vw;
+}
+
+
+.fishTotalTimeTank {
+  position: absolute;
+  top: 10vh;
+  left: 5vw;
+}
+
+
 #fishImageRight {
   transform: scaleX(-1);
   width: 100%;
@@ -225,5 +243,15 @@
 #fishImageLeft {
   width: 100%;
   height: auto;
+}
+
+.hideFishContent {
+  display: none;
+}
+
+.fishImage:hover + .hideFishContent {
+  display: block;
+  color: black;
+  
 }
 
