@@ -11,3 +11,13 @@
 #urProfileBtn {
 
 }
+
+#switchLogin {
+  cursor: pointer;
+  color: rgb(85, 70, 218);
+  font-weight: bold;
+}
+
+#switchLogin:hover {
+  text-decoration: underline;
+}
