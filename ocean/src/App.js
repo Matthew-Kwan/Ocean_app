@@ -58,7 +58,12 @@ const useStyles = makeStyles({
   },
 });
 
-const LoginModule = ({loggedIn,handleLogin,classes}) => {
+const LoginModule = ({loggedIn,handleLogin,setSignUp,classes}) => {
+
+
+  const handleSignUp = () => {
+    setSignUp(true)
+  }
   if (loggedIn) {
     return (
       <div></div>
@@ -75,9 +80,12 @@ const LoginModule = ({loggedIn,handleLogin,classes}) => {
                         <TextField required id="outlined-basic" size='small' label="Username" variant="outlined" /></div>
                         <div className= 'input' id="password-input">
                         <TextField required name="" id="outlined-basic" size='small' label="Password" type="password" variant="outlined" /></div>
-                        <Button type='submit' variant="contained" color="primary">
-                            Login
-                        </Button>
+                        <span>
+                          <Button type='submit' variant="contained" color="primary">
+                              Login
+                          </Button>
+                          <p>If you don't have an account, create one <span id="switchLogin" onClick={() => handleSignUp()}>here</span></p>
+                        </span>
                     </form>
 
                 </CardContent>
@@ -88,6 +96,47 @@ const LoginModule = ({loggedIn,handleLogin,classes}) => {
 
   }
 }
+
+const SignUpModule = ({loggedIn,handleRegister,setSignUp,classes}) => {
+
+
+  const handleSignUp = () => {
+    setSignUp(false)
+  }
+  if (loggedIn) {
+    return (
+      <div></div>
+    )
+  } else {
+    return(
+      <div id='loginbody'>
+            <Card id='loginModule' className={classes.root}>
+                <CardContent>
+                    <h3>
+                    Dive into Ocean</h3>
+                    <form className={classes.root} noValidate autoComplete="off" onSubmit={handleRegister}>
+                        <div className = 'input' id="email-input">
+                        <TextField required id="outlined-basic" size='small' label="Email" name="email" variant="outlined" /></div>
+                        <div className = 'input' id="username-input">
+                        <TextField required id="outlined-basic" size='small' label="Username" name="username" variant="outlined" /></div>
+                        <div className= 'input' id="password-input">
+                        <TextField required name="password" id="outlined-basic" size='small' label="Password" type="password" variant="outlined" /></div>
+                        <span>
+                          <Button type='submit' variant="contained" color="primary">
+                              Sign Up
+                          </Button>
+                          <p>If you already have an account, login <span id="switchLogin" onClick={() => handleSignUp()}>here</span></p>
+                        </span>
+                    </form>
+
+                </CardContent>
+                </Card>
+            <img className="illustration"></img>
+      </div> )
+
+  }
+}
+
 const NavBar = ({loggedIn, handleLogout, user, setUser}) => {
   if (loggedIn) {
     return (
@@ -256,6 +305,8 @@ function App() {
 
   const [loggedIn, setLoggedIn] = useState(false)
 
+  const [signUp, setSignUp] = useState(false)
+
   const classes = useStyles();
 
   useEffect(() => {
@@ -283,6 +334,13 @@ function App() {
       console.log("Incorrect username and password")
       window.alert("Incorrect username and password")
     }
+  }
+
+  // CHANGE IN PHASE 2, FOR NOW AUTO LOGS YOU IN AS THE FIRST USER IN THE HARDCODED DATA
+  const handleRegister = (e) => {
+    e.preventDefault()
+    setLoggedIn(true)
+    setUser(users[0])
   }
 
   // logout function
@@ -347,7 +405,7 @@ function App() {
 
       </Switch>
 
-      <LoginModule loggedIn={loggedIn} handleLogin={handleLogin} classes={classes}></LoginModule>
+      { signUp ? <SignUpModule loggedIn={loggedIn} handleRegister={handleRegister} setSignUp={setSignUp} classes={classes}></SignUpModule> : <LoginModule loggedIn={loggedIn} handleLogin={handleLogin} setSignUp={setSignUp} classes={classes}></LoginModule>}
 
     </BrowserRouter>
   );
