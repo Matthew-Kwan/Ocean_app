@@ -62,3 +62,8 @@
 .fishListTankItem {
     flex: 2;
 }
+
+.tankOwner{
+    margin: 50px;
+    color: white;
+}

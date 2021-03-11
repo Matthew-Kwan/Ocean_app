@@ -47,7 +47,7 @@ const OtherTank= ({users}) => {
         <div className="tank">
 
             <div className="tankContent">
-                <h1> {tankOwner.name}'s Tank</h1>
+                <h1 className = "tankOwner"> {tankOwner.name}'s Tank</h1>
 
                 <ul id="fishListTank">
                     {sessions.map(session => handleFish(session))}
