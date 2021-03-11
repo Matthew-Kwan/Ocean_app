@@ -9,6 +9,13 @@
 5. After the install finishes, run `npm start`.
 6. Use the login credentials below to log in to the platform.
 
+## Installed Third-Party Packages
+In case `npm install` did not install all the packages, here are all our third-party dependencies.
+
+- Material UI
+- react-router-dom
+- sass
+
 ## Application Usage Notes
 Please do **not refresh** the page while using the application. State management has not been implemented yet and this will break the application. Please refer to “Limitations of Phase 1” for more details.
 
@@ -84,9 +91,3 @@ There are some additional pieces of work that we would like to perform on the fr
 4) There are some miscallaneous styling bugs in tank and ocean we will address
 
 Phase 2 will address these extra front-end fixes, but the backend will be the first thing prioritized.
-
-## Installed Third-Party Packages
-
-- Material UI
-- react-router-dom
-- sass
