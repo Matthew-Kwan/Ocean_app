@@ -23,8 +23,8 @@ Please do **not refresh** the page while using the application. State management
 
 **Standard user profile:**
 
-username - test <br>
-password - test
+username - user <br>
+password - user
 
 **Admin user profile:**
 
@@ -50,7 +50,7 @@ There is a "Start Session" box in the ocean view that allows you to pick a goal,
 
 ### Tank View
 
-This is your own personal tank that keeps track of all your completed sessions and completed/in-progress goals. Here, you can see your current goals, and create new goals with/without tasks. In this view, the fish in your tank represent your past completed sessions, and the decor in the tank represent your past completed goals. On hover over either the fish or decor, you will see the respective corresponding past session or goal details. Currently, default user `test` has two completed sessions (fish) and two in-progress goals. Click `Finish!` on the goals to see the corresponding decor appear.
+This is your own personal tank that keeps track of all your completed sessions and completed/in-progress goals. Here, you can see your current goals, and create new goals with/without tasks. In this view, the fish in your tank represent your past completed sessions, and the decor in the tank represent your past completed goals. On hover over either the fish or decor, you will see the respective corresponding past session or goal details. Currently, default user `user` has two completed sessions (fish) and two in-progress goals. Click `Finish!` on the goals to see the corresponding decor appear.
 
 #### Creating Goals
 
