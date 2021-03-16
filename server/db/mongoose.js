@@ -2,7 +2,6 @@
    our mongo server through the Mongoose API.
    We will access the connection in our express server. */
 const mongoose = require('mongoose')
-require('../.env')
 
 /* Connnect to our database */
 // Get the URI of the local database, or the one specified on deployment.
