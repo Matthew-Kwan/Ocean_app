@@ -209,27 +209,42 @@ app.get('/api/reports/:id', async (req, res) => {
 
 })
 
-// get report by submitted user
-// app.get('/api/reports', async (req, res) => {
+app.patch('/api/reports/:id', async (req,res) => {
+	const id = req.params.id
+	if (!ObjectID.isValid(id)) {
+		res.status(404).send('Restaurant not found')
+		return;
+	}
 
-// 	// check mongoose connection established.
-// 	if (mongoose.connection.readyState != 1) {
-// 		log('Issue with mongoose connection')
-// 		res.status(500).send('Internal server error')
-// 		return;
-// 	}
+	// check mongoose connection established.
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal server error')
+		return;
+	} 
+	log('deleting resveration')
+	Report.findById(id).then((report) => {
+		if (!report) {
+			res.status(404).send('Report not found')  // could not find this student
+		} else {
+			
+				report.set(req.body)
+				report.save().then((result) => {
+					res.status(200).send({report})
+				}).catch((err0r) => {
+					res.status(400).send('Bad Request')
+				})
+			}
+			})
+	.catch((error) => {
+		log(error)
+		res.status(500).send('Internal Server Error')  // server error
+	})
 
-// 	// Get the students
-// 	try {
-// 		const reports = await Report.find()
-// 		// res.send(students) // just the array
-// 		res.status(200).send({ reports }) // can wrap students in object if want to add more properties
-// 	} catch(error) {
-// 		log(error)
-// 		res.status(500).send("Internal Server Error")
-// 	}
+})
 
-// })
+// maybe TODO: get report by submitted user
+
 
 
 /*** END OF REPORT ROUTES */
