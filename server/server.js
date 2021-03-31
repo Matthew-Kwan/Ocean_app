@@ -17,6 +17,7 @@ mongoose.set('bufferCommands', false);  // don't buffer db requests if the db se
 
 // // import the mongoose models
 const { User } = require('./models/user')
+const { Session } = require('./models/session')
 
 // // to validate object IDs
 // const { ObjectID } = require('mongodb')
@@ -112,6 +113,29 @@ app.get('/api/users', async (req, res) => {
 /*** END USER ROUTES */
 
 /*** SESSION ROUTES */
+
+// a GET route to get all sessions
+app.get('/api/users', async (req, res) => {
+
+	// check mongoose connection established.
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal server error')
+		return;
+	}
+
+	// Get the students
+	try {
+		const users = await User.find()
+		// res.send(students) // just the array
+		res.status(200).send({ users }) // can wrap students in object if want to add more properties
+	} catch(error) {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	}
+
+})
+
 
 /*** END OF SESSION ROUTES */
 
