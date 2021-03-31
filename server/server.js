@@ -88,7 +88,7 @@ app.post('/api/users', async (req, res) => {
   }
 })
 
-// a GET route to get all students
+// a GET route to get all users
 app.get('/api/users', async (req, res) => {
 
 	// check mongoose connection established.
@@ -115,7 +115,7 @@ app.get('/api/users', async (req, res) => {
 /*** SESSION ROUTES */
 
 // a GET route to get all sessions
-app.get('/api/users', async (req, res) => {
+app.get('/api/sessions', async (req, res) => {
 
 	// check mongoose connection established.
 	if (mongoose.connection.readyState != 1) {
@@ -126,15 +126,97 @@ app.get('/api/users', async (req, res) => {
 
 	// Get the students
 	try {
-		const users = await User.find()
+		const sessions = await Session.find()
 		// res.send(students) // just the array
-		res.status(200).send({ users }) // can wrap students in object if want to add more properties
+		res.status(200).send({ sessions }) // can wrap students in object if want to add more properties
 	} catch(error) {
 		log(error)
 		res.status(500).send("Internal Server Error")
 	}
 
 })
+
+// a POST route to post a session
+app.post('/api/sessions', async (req, res) => {
+
+  // check mongoose connection established.
+	// if (mongoose.connection.readyState != 1) {
+	// 	log('Issue with mongoose connection')
+	// 	res.status(500).send('Internal server error')
+	// 	return;
+	// }
+
+  const body = req.body
+
+  if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal server error')
+		return;
+	}
+
+  // Create a new session
+	const session = new Session({
+		userId: body.userId,
+		goalId: body.goalId,
+    title: body.title,
+    startTime: body.startTime,
+    endTime: body.endTime,
+	})
+
+  try {
+    const result = await session.save()
+    res.status(201).send(result)
+  } catch (error) {
+    console.log(error) // log server error to the console, not to the client.
+		if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+			res.status(500).send('Internal server error')
+		} else {
+			res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+		}
+  }
+})
+
+// put request for updating a single session
+app.put('/api/sessions/:id', async (req, res) => {
+
+  // check mongoose connection established.
+	// if (mongoose.connection.readyState != 1) {
+	// 	log('Issue with mongoose connection')
+	// 	res.status(500).send('Internal server error')
+	// 	return;
+	// }
+
+  const body = req.body
+  const id = req.params.id
+
+  if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal server error')
+		return;
+	}
+
+  // Create a new session
+	const session = new Session({
+		userId: body.userId,
+		goalId: body.goalId,
+    title: body.title,
+    startTime: body.startTime,
+    endTime: body.endTime,
+	})
+
+  try {
+    const result = await Session.findByIdAndUpdate(id, session, { new:true })
+    res.status(202).send(result)
+  } catch (error) {
+    console.log(error) // log server error to the console, not to the client.
+		if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+			res.status(500).send('Internal server error')
+		} else {
+			res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+		}
+  }
+})
+
 
 
 /*** END OF SESSION ROUTES */
