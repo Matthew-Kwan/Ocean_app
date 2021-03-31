@@ -298,8 +298,8 @@ function App() {
   const usersList = [
     {
       id: 1,
-      username: 'test',
-      password: 'test',
+      username: 'user',
+      password: 'user',
       adminFlag: false,
       name: 'Pom',
       tagline: '24yyyyy, 🇨🇦',

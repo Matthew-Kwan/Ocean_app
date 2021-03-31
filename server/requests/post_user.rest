@@ -1,0 +1,25 @@
+POST http://localhost:5000/api/users
+Content-Type: application/json
+
+{
+  "id": 1,
+  "username": "user",
+  "password": "user",
+  "adminFlag": false,
+  "name": "GrassyMans",
+  "tagline": "Grassy Man from a Grassy World",
+  "goals": [
+    {
+      "id": 30000,
+      "title": "Software",
+      "totalTasksNum": 2,
+      "completedTasksNum": 1,
+      "completed": false,
+      "completionPercent": 50,
+      "tasks": [
+        { "id": 0, "task": "Research React", "completed": true },
+        { "id": 1, "task": "Make demo app", "completed": false }
+      ]
+    }
+  ]
+}
