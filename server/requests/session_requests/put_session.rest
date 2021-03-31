@@ -1,0 +1,10 @@
+PUT http://localhost:5000/api/sessions/6064f5b652095c36c43be823
+Content-Type: application/json
+
+{
+  "userId": "605118682f32db0b7c9af836",
+  "goalId": 2,
+  "title": "test session",
+  "startTime": "2020-01-01T20:51:00-05:00",
+  "endTime": "2020-01-02T20:51:00-05:00"
+}

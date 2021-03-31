@@ -196,13 +196,13 @@ app.put('/api/sessions/:id', async (req, res) => {
 	}
 
   // Create a new session
-	const session = new Session({
+	const session = {
 		userId: body.userId,
 		goalId: body.goalId,
     title: body.title,
     startTime: body.startTime,
     endTime: body.endTime,
-	})
+	}
 
   try {
     const result = await Session.findByIdAndUpdate(id, session, { new:true })
@@ -214,6 +214,22 @@ app.put('/api/sessions/:id', async (req, res) => {
 		} else {
 			res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
 		}
+  }
+})
+
+// DELETE REQUEST FOR SESSION FOR ADMINS (?)
+app.delete('/api/sessions/:id', async (req, res) => {
+  const id = req.params.id
+  try {
+    const result = await Session.findByIdAndRemove(id)
+    res.status(202).send(result)
+  } catch (error) {
+    console.log(error)
+    if (isMongoError(error)) {
+      res.status(500).send('Internal server error')
+    } else {
+      res.status(404).send('Not Found')
+    }
   }
 })
 
