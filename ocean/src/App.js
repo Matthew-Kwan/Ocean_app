@@ -11,6 +11,9 @@ import AdminDashboard from './components/AdminDashboard'
 import Nav from './components/NavBar'
 import OtherTank from './components/OtherTank';
 
+// import actions
+import { getUsers } from "./actions/users.js";
+
 // import materialUI components
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -80,7 +83,7 @@ const LoginModule = ({loggedIn,handleLogin,setSignUp,classes}) => {
                           <Button type='submit' variant="contained" color="primary">
                               Login
                           </Button>
-                         
+
                           <p id='#loginText'>If you don't have an account, create one <span id="switchLogin" onClick={() => handleSignUp()}>here</span></p>
                     </form>
 
@@ -149,7 +152,7 @@ const NavBar = ({ loggedIn, handleLogout, user, setUser }) => {
     setModalOpen(false)
   };
 
-  
+
   if (loggedIn) {
     return (
       <div id="navBar">
@@ -164,14 +167,14 @@ const NavBar = ({ loggedIn, handleLogout, user, setUser }) => {
           <svg>
             <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
           </svg>tank</NavLink>
-        
+
         <a className="link btn-1" onClick={() => handleModalOpen()}>
           <svg>
             <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
-       
+
 
           </svg>Your Profile
-  
+
         </a>
 
         <Modal open={modalOpen} onClose={handleModalClose}>
@@ -184,7 +187,7 @@ const NavBar = ({ loggedIn, handleLogout, user, setUser }) => {
           </svg>
           admin</Link> : null }
 
-        { loggedIn ? <Link className="link btn-1" to="/" onClick={handleLogout}> 
+        { loggedIn ? <Link className="link btn-1" to="/" onClick={handleLogout}>
          <svg>
             <circle cx="50%" cy="50%" r="50%" width="100%" height="100%" stroke="white" stroke-width="3" />
           </svg>logout </Link> : null}
@@ -350,7 +353,7 @@ function App() {
 
   // React states
 
-  const [users, setUsers] = useState(usersList)
+  const [users, setUsers] = useState([])
   const [user, setUser] = useState({
     id: null,
     username: '',
@@ -371,8 +374,10 @@ function App() {
 
   const classes = useStyles();
 
+
+  // GET Request
   useEffect(() => {
-    setUsers(usersList)
+    getUsers(setUsers)
   }, []) //
 
 
@@ -384,17 +389,18 @@ function App() {
     const password = document.querySelector('#password-input').children[0].children[1].children[0].value
 
     console.log(username, password)
+
     // filter users for user
     const returnedUsers = users.filter(user => user.username === username && user.password === password)
+    console.log(returnedUsers)
 
     if (returnedUsers.length === 1) {
       setUser(returnedUsers[0])
       setLoggedIn(true)
-      window.alert("Successfully logged in")
+      // TODO: show a login notificataion for the user under the login form
     } else {
       // TODO: Show an error message for the user
       console.log("Incorrect username and password")
-      window.alert("Incorrect username and password")
     }
   }
 

@@ -20,7 +20,7 @@ function EditMe(item, setUser, text_type) {
   } else{
     toChange = item.tagline
   }
-  
+
   return (
     <Editable
       text={toChange}
@@ -38,7 +38,7 @@ function EditMe(item, setUser, text_type) {
         value={toChange}
         // onChange={e => setUser({item: e.target.value})}
         onChange={e => setUser({...item, [e.target.name]: e.target.value})}
-        
+
       />
     </Editable>
   );

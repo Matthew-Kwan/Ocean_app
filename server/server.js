@@ -8,8 +8,12 @@ const path = require('path')
 const usersRouter = require('./routers/user')
 const { ObjectID } = require('mongodb')
 const express = require('express')
+const cors = require('cors')
 // starting the express server
 const app = express();
+
+// start cors
+app.use(cors())
 
 // mongoose and mongo connection
 const { mongoose } = require('./db/mongoose')
@@ -110,6 +114,22 @@ app.get('/api/users', async (req, res) => {
 		res.status(500).send("Internal Server Error")
 	}
 
+})
+
+// a DELETE route to delete a user
+app.delete('/api/users/:id', async (req, res) => {
+  const id = req.params.id
+  try {
+    const result = await User.findByIdAndRemove(id)
+    res.status(202).send(result)
+  } catch (error) {
+    console.log(error)
+    if (isMongoError(error)) {
+      res.status(500).send('Internal server error')
+    } else {
+      res.status(404).send('Not Found')
+    }
+  }
 })
 
 /*** END USER ROUTES */

@@ -44,7 +44,7 @@ export default function GoalsDrawer(props) {
   })
 
   //drawer state
-  const [state, setState] = React.useState({ 
+  const [state, setState] = React.useState({
     right: false
   });
 
