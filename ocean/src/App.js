@@ -377,7 +377,8 @@ function App() {
 
   // GET Request
   useEffect(() => {
-    getUsers(setUsers)
+    // getUsers(setUsers)
+    setUsers(usersList)
   }, []) //
 
 
