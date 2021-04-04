@@ -4,6 +4,7 @@ import InSessionBox from './InSessionBox'
 import SessionBox from './SessionBox'
 import Fish from './Fish'
 
+import { getSessions } from '../actions/sessions'
 
 let counter = 1;
 
@@ -33,7 +34,6 @@ const Ocean = ({user, setUser, users, sessions, setSessions}) => {
       goalId: 2,
       title: "Report some peeps",
       startTime: new Date(2021,2,6,8,0,0),
-      endTime: null,
     },
     {
       sessionId: 4,
@@ -41,7 +41,6 @@ const Ocean = ({user, setUser, users, sessions, setSessions}) => {
       goalId: 1,
       title: "Working on a project",
       startTime: new Date(2021,2,6,8,0,0),
-      endTime: null,
     },
     {
       sessionId: 5,
@@ -49,7 +48,6 @@ const Ocean = ({user, setUser, users, sessions, setSessions}) => {
       goalId: 1,
       title: "Creating music",
       startTime: new Date(2021,2,6,8,0,0),
-      endTime: null,
     },
   ]
   /* states that will need to be here / passed in
@@ -59,28 +57,39 @@ const Ocean = ({user, setUser, users, sessions, setSessions}) => {
 
   const [inSession, setInSession] = useState(false)
   const [session, setSession] = useState({
+    userId: user._id,
+    goalId: '',
     title: '',
-    goal: '',
   })
   const [currentSessions, setCurrentSessions] = useState([])
 
   useEffect(() => {
+    console.log('mount useEffect run')
     // sets current sessions to the sessions that are currently still in progress
     counter = 1
-    setSessions(sessionsList)
-    let currSess = sessionsList.filter((s) => s.endTime === null)
+    getSessions(setSessions)
+
+    // cleanup function on unmount to reset the counter to 1
+    return function cleanup() {
+      counter = 1
+    }
+  }, [])
+
+  useEffect(() => {
+    console.log('session useEffect run')
+
+    // if endTime is not defined, then that means that the session is still in progress
+    let currSess = sessions.filter((s) => s.endTime === undefined)
+
+    // HARDCODE: limits the number of fish to 3
     if (currSess.length > 3) {
       currSess = currSess.slice(0,3)
     }
     setCurrentSessions(currSess)
-
-    return function cleanup() {
-      counter = 1
-    }
-  }, []) //
+  }, [sessions])
 
   const handleFish = (session) => {
-    session = {...session, counter: counter}
+    session = {...session, counter: counter }
     counter = counter + 1
     return (
       <li key={session.id} className="fishListItem"><Fish users={users} user={user} setUser={setUser} session={session} fishType="ocean"/></li>
@@ -99,7 +108,7 @@ const Ocean = ({user, setUser, users, sessions, setSessions}) => {
         </div>
         {/*absolute position for session box*/}
         <div className="sessionBox">
-          {inSession ? <InSessionBox session={session} setInSession={setInSession}/> : <SessionBox user={user} session={session} setSession={setSession} setInSession={setInSession}/>}
+          {inSession ? <InSessionBox session={session} setInSession={setInSession} goalTitle={user.goals.filter(g => g._id == session.goalId)[0].title}/> : <SessionBox user={user} session={session} setSession={setSession} setInSession={setInSession}/>}
         </div>
       </div>
     </div>

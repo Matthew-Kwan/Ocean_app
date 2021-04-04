@@ -7,6 +7,9 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import './ocean.css'
 
+// import actions
+import { addSession } from '../actions/sessions'
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -50,6 +53,13 @@ const SessionBox = ({ user, session, setSession, setInSession }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     setInSession(true)
+
+    const newSession = session
+
+    newSession.startTime = new Date()
+
+    // send post request to create a session here
+    addSession(newSession)
   }
 
   // send post request to server, adding the current active session to all sessions table
@@ -74,13 +84,13 @@ const SessionBox = ({ user, session, setSession, setInSession }) => {
             className="session-form-input sessionInput"
             select
             label="Goal"
-            name="goal"
-            value={session.goal}
+            name="goalId"
+            value={session.goalId}
             onChange={handleChange}
             helperText="Please select a goal"
           >
             {user.goals.map((option) => (
-              <MenuItem key={option.id} value={option.title}>
+              <MenuItem key={option.id} value={option._id}>
                 {option.title}
               </MenuItem>
             ))}

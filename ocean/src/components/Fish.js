@@ -5,9 +5,11 @@ import smallFish from './smallFish.png'
 import Profile from './Profile'
 import Modal from '@material-ui/core/Modal';
 
+
+
 const Fish = ({users, user, setUser, session, fishType}) => {
 
-  const [timer, setTimer] = useState(Math.floor(Math.abs(new Date() - session.startTime)/1000))
+  const [timer, setTimer] = useState(Math.floor(Math.abs(new Date() - new Date(session.startTime))/1000))
   const [style, setStyle] = useState(`fish${session.counter}`)
   const increment = useRef(null)
   const imageStyle = useRef('')
@@ -33,7 +35,7 @@ const Fish = ({users, user, setUser, session, fishType}) => {
 
     // get the user for the session
     if (fishType == "ocean")
-      setSessionUser(users.filter(u => u.id == session.userId)[0])
+      setSessionUser(users.filter(u => u._id == session.userId)[0])
 
     return function cleanup() {
       clearInterval(increment.current)

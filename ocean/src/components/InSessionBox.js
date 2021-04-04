@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 
-const InSessionBox = ({session, setInSession}) => {
+const InSessionBox = ({session, setInSession, goalTitle="No Goal Selected"}) => {
 
   const [timer, setTimer] = useState(0)
   const increment = useRef(null)
@@ -34,15 +34,15 @@ const InSessionBox = ({session, setInSession}) => {
     <Container>
       <p className = "sessionLabel"> SESSION IN PROGRESS </p>
       <div className="sessionInfo">
-        <p> You're currently working on: </p> 
+        <p> You're currently working on: </p>
         <h2> {session.title} </h2>
       </div>
       <div className="sessionInfo">
-        <p> For the goal: </p> 
-        <h2> {session.goal} </h2>
+        <p> For the goal: </p>
+        <h2> {goalTitle} </h2>
       </div>
       <div className="sessionInfo">
-        <p> Elapsed Time: </p> 
+        <p> Elapsed Time: </p>
         <h2> {formatTime(timer) } </h2>
       </div>
       <Button type="submit" onClick={handleEndSession} variant="outlined" color="red">
