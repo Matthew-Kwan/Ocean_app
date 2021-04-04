@@ -1,5 +1,5 @@
 import React  from 'react'
-
+import Modal from '@material-ui/core/Modal'
 import './profile.css'
 
 import './modal.css'
@@ -7,11 +7,12 @@ import './modal.css'
 import EditMe from './editMe'
 
 
-
 const YourProfile = ({user, setUser}) => {
+
+
     return (
         <div className="profCard modalContainer">
-            <h2> Your Profile</h2>
+            <h2> Your Profile </h2>
             <div className='profHeader'>
                 <div className="profImg"></div>
                 <div id='profText'>
