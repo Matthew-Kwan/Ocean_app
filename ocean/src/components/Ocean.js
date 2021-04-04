@@ -4,52 +4,52 @@ import InSessionBox from './InSessionBox'
 import SessionBox from './SessionBox'
 import Fish from './Fish'
 
-import { getSessions } from '../actions/sessions'
+import { getSessions, updateSession } from '../actions/sessions'
 
 let counter = 1;
 
 // Create some sort of mapping of session data onto fishes that just swim around the ocean
 const Ocean = ({user, setUser, users, sessions, setSessions}) => {
 
-  const sessionsList = [
-    {
-      sessionId: 1,
-      userId: 1,
-      goalId: 2,
-      title: "Work on ocean component",
-      startTime: new Date(2021,2,1,8,0,0),
-      endTime: new Date(2021,2,1,12,0,0),
-    },
-    {
-      sessionId: 2,
-      userId: 1,
-      goalId: 1,
-      title: "Learn more about React",
-      startTime: new Date(2021,2,2,8,0,0),
-      endTime: new Date(2021,2,2,12,0,0),
-    },
-    {
-      sessionId: 3,
-      userId: 3,
-      goalId: 2,
-      title: "Report some peeps",
-      startTime: new Date(2021,2,6,8,0,0),
-    },
-    {
-      sessionId: 4,
-      userId: 4,
-      goalId: 1,
-      title: "Working on a project",
-      startTime: new Date(2021,2,6,8,0,0),
-    },
-    {
-      sessionId: 5,
-      userId: 2,
-      goalId: 1,
-      title: "Creating music",
-      startTime: new Date(2021,2,6,8,0,0),
-    },
-  ]
+  // const sessionsList = [
+  //   {
+  //     sessionId: 1,
+  //     userId: 1,
+  //     goalId: 2,
+  //     title: "Work on ocean component",
+  //     startTime: new Date(2021,2,1,8,0,0),
+  //     endTime: new Date(2021,2,1,12,0,0),
+  //   },
+  //   {
+  //     sessionId: 2,
+  //     userId: 1,
+  //     goalId: 1,
+  //     title: "Learn more about React",
+  //     startTime: new Date(2021,2,2,8,0,0),
+  //     endTime: new Date(2021,2,2,12,0,0),
+  //   },
+  //   {
+  //     sessionId: 3,
+  //     userId: 3,
+  //     goalId: 2,
+  //     title: "Report some peeps",
+  //     startTime: new Date(2021,2,6,8,0,0),
+  //   },
+  //   {
+  //     sessionId: 4,
+  //     userId: 4,
+  //     goalId: 1,
+  //     title: "Working on a project",
+  //     startTime: new Date(2021,2,6,8,0,0),
+  //   },
+  //   {
+  //     sessionId: 5,
+  //     userId: 2,
+  //     goalId: 1,
+  //     title: "Creating music",
+  //     startTime: new Date(2021,2,6,8,0,0),
+  //   },
+  // ]
   /* states that will need to be here / passed in
   user -> goals, friends
   sessions -> currently ongoing sessions
@@ -62,6 +62,7 @@ const Ocean = ({user, setUser, users, sessions, setSessions}) => {
     title: '',
   })
   const [currentSessions, setCurrentSessions] = useState([])
+  const [newSessionId, setNewSessionId] = useState('')
 
   useEffect(() => {
     console.log('mount useEffect run')
@@ -72,6 +73,11 @@ const Ocean = ({user, setUser, users, sessions, setSessions}) => {
     // cleanup function on unmount to reset the counter to 1
     return function cleanup() {
       counter = 1
+
+      // if function inSession -> end the session and update it
+      if (inSession === true) {
+        updateSession(session, newSessionId)
+      }
     }
   }, [])
 
@@ -108,7 +114,8 @@ const Ocean = ({user, setUser, users, sessions, setSessions}) => {
         </div>
         {/*absolute position for session box*/}
         <div className="sessionBox">
-          {inSession ? <InSessionBox session={session} setInSession={setInSession} goalTitle={user.goals.filter(g => g._id == session.goalId)[0].title}/> : <SessionBox user={user} session={session} setSession={setSession} setInSession={setInSession}/>}
+          {inSession ? <InSessionBox session={session} setInSession={setInSession} goalTitle={user.goals.filter(g => g._id == session.goalId)[0].title} newSessionId={newSessionId}/>
+          : <SessionBox user={user} session={session} setSession={setSession} setInSession={setInSession} setNewSessionId={setNewSessionId}/>}
         </div>
       </div>
     </div>

@@ -48,13 +48,56 @@ export const addSession = (session_data) => {
   });
 
   // Send the request with fetch()
-  fetch(request)
+  const result = fetch(request)
       .then(function (res) {
           // Handle response we get from the API.
           // Usually check the error codes to see what happened.
           if (res.status === 201) {
               // If student was added successfully, tell the user.
               console.log('Session Posted Successfully!')
+              return res.json()
+          } else {
+              // If server couldn't add the student, tell the user.
+              // Here we are adding a generic message, but you could be more specific in your app.
+              alert("Could not post the session")
+          }
+      }).then(data => {
+          return data.id
+      }
+      )
+      .catch(error => {
+          console.log("POST session error: ", error);
+      });
+
+      return result
+};
+
+// a function to handle PUT requests for sessions
+export const updateSession = (session_data, id) => {
+  // the URL for the request
+  const url = `${API_HOST}/api/sessions/${id}`;
+
+  // The data we are going to send in our request
+  const session = session_data
+
+  // Create our request constructor with all the parameters we need
+  const request = new Request(url, {
+      method: "PUT",
+      body: JSON.stringify(session),
+      headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json"
+      }
+  });
+
+  // Send the request with fetch()
+  fetch(request)
+      .then(function (res) {
+          // Handle response we get from the API.
+          // Usually check the error codes to see what happened.
+          if (res.status === 202) {
+              // If student was added successfully, tell the user.
+              console.log('Session Updated Successfully!')
               return res.json();
           } else {
               // If server couldn't add the student, tell the user.
@@ -63,9 +106,6 @@ export const addSession = (session_data) => {
           }
       })
       .catch(error => {
-          console.log("POST session error: ", error);
+          console.log("PUT session error: ", error);
       });
 };
-
-// a function to handle PUT requests for sessions
-

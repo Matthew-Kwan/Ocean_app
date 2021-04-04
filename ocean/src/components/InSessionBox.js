@@ -3,7 +3,10 @@ import React, { useState, useEffect, useRef } from 'react'
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 
-const InSessionBox = ({session, setInSession, goalTitle="No Goal Selected"}) => {
+// import actions
+import { updateSession } from '../actions/sessions'
+
+const InSessionBox = ({session, setInSession, goalTitle="No Goal Selected", newSessionId}) => {
 
   const [timer, setTimer] = useState(0)
   const increment = useRef(null)
@@ -27,6 +30,13 @@ const InSessionBox = ({session, setInSession, goalTitle="No Goal Selected"}) => 
     clearInterval(increment.current)
     setTimer(0)
     setInSession(false)
+
+    const endSession = session
+    endSession.endTime = new Date()
+
+    // PUT request
+    updateSession(endSession, newSessionId)
+
   }
   // send a put request to session table to add the end time for finished session
 

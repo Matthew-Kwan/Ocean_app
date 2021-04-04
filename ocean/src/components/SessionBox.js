@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SessionBox = ({ user, session, setSession, setInSession }) => {
+const SessionBox = ({ user, session, setSession, setInSession, setNewSessionId}) => {
 
   /* session: object with
     - title
@@ -52,14 +52,16 @@ const SessionBox = ({ user, session, setSession, setInSession }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setInSession(true)
-
     const newSession = session
 
     newSession.startTime = new Date()
 
     // send post request to create a session here
     addSession(newSession)
+    .then((id) => {
+      setNewSessionId(id)
+    })
+    setInSession(true)
   }
 
   // send post request to server, adding the current active session to all sessions table
