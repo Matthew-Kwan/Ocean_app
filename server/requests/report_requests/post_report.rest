@@ -2,7 +2,7 @@ POST http://localhost:5000/api/reports
 Content-Type: application/json
 
 {
-  "title": "i hate this man so fking much",
+  "title": "i mean ",
   "reportedUser": "233trdfgdh4t",
-  "reportedBy": "asds4tgdfdgfg",
+  "reportedBy": "asds4tgdfdgfg"
 }

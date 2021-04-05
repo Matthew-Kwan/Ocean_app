@@ -4,8 +4,56 @@ import './profile.css'
 import './modal.css'
 import EditMe from './editMe'
 import {Link} from 'react-router-dom'
+import Modal from '@material-ui/core/Modal'
+import {addReport} from '../actions/reports'
 
 const Profile = ({mainUser, user, setUser}) => {
+
+    const submitReport = (e) => {
+        e.preventDefault()
+
+        console.log('submitting report here')
+
+        setReported(true)
+        setOpenReportModal(false);
+        let title = document.getElementById("reportReason").value;
+        // var value = e.options[e.selectedIndex].value;
+        const newReport = {
+            "reportedBy": "PLEASE REPLACE MEEEE" ,
+            "reportedUser":  "report user ID - will be replaaced"  ,
+            "title":  title,
+            "resolved": false,
+        }
+        addReport(newReport)
+
+
+    }
+
+    const ReportModal = () => (
+    
+    <div className ="modalContainer">
+        <div className = 'modalContent'>
+          <h3 >Why are you reporting this user?</h3>
+         
+          
+            <form onSubmit= {submitReport}>
+
+            <select id="reportReason" name="reportReason">
+                <option value="profanity">Profanity</option>
+                <option value="hate speech">Hate Speech</option>
+                <option value="inappropriate">General Inappropriateness</option>
+                <option value="other">Other</option>
+            </select>
+            <br></br>
+            <br></br>
+            <input type="submit"/>
+
+            </form>
+        </div>
+
+    </div>)
+
+    
 
     function AddFriend(mainUser,user, setUser) {
         console.log('adding friend')
@@ -19,7 +67,15 @@ const Profile = ({mainUser, user, setUser}) => {
     const isFriend = mainUser.friends.filter(friend => friend.id == user.id).length > 0 ? true: false
 
     const [reported, setReported] = useState(false)
+    const [openReportModal, setOpenReportModal] = React.useState(false);
 
+    const handleReportModalOpen = () => { //open Report modal
+        setOpenReportModal(true);
+      };
+
+    const handleReportModalClose = () => {
+        setOpenReportModal(false);
+    }
     return (
         <div className="profCard modalContainer">
             <div className='profHeader'>
@@ -40,8 +96,11 @@ const Profile = ({mainUser, user, setUser}) => {
                     Add Friend
                     </Button>}
                 {(!reported)?
-                    <Button color="secondary" onClick = {() => {setReported(true)}}> Report </Button> : <Button color="secondary" disabled={true}>Reported</Button>}
-
+                    <Button color="secondary" onClick = {handleReportModalOpen}> Report </Button> : <Button color="secondary" disabled={true}>Reported</Button>}
+                    <Modal open={openReportModal} onClose={handleReportModalClose} >
+                         {ReportModal()}
+                         
+                     </Modal>
             </div>
             <div>
                 <h3>Friends</h3>
