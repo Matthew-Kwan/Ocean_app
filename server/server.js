@@ -312,7 +312,7 @@ app.post('/api/reports', async (req, res) => {
   })
 
 //   get all reports
-  app.get('/api/reports', async (req, res) => {
+app.get('/api/reports', async (req, res) => {
 
 	// check mongoose connection established.
 	if (mongoose.connection.readyState != 1) {
@@ -332,6 +332,23 @@ app.post('/api/reports', async (req, res) => {
 	}
 
 })
+
+// delete report by ID
+app.delete('/api/reports/:id', async (req, res) => {
+	const id = req.params.id
+	try {
+	  const result = await Report.findByIdAndRemove(id)
+	  res.status(202).send(result)
+	} catch (error) {
+	  console.log(error)
+	  if (isMongoError(error)) {
+		res.status(500).send('Internal server error')
+	  } else {
+		console.log(error)
+		res.status(404).send('Not Found')
+	  }
+	}
+  })
 
 // get report by ID
 
@@ -360,11 +377,49 @@ app.get('/api/reports/:id', async (req, res) => {
 	}
 
 })
+app.put('/api/reports/:id', async (req, res) => {
 
+	// check mongoose connection established.
+	  // if (mongoose.connection.readyState != 1) {
+	  // 	log('Issue with mongoose connection')
+	  // 	res.status(500).send('Internal server error')
+	  // 	return;
+	  // }
+  
+	const body = req.body
+	const id = req.params.id
+  
+	if (mongoose.connection.readyState != 1) {
+		  log('Issue with mongoose connection')
+		  res.status(500).send('Internal server error')
+		  return;
+	  }
+  
+	// Create a new session
+	  const session = {
+		  userId: body.userId,
+		  goalId: body.goalId,
+	  title: body.title,
+	  startTime: body.startTime,
+	  endTime: body.endTime,
+	  }
+  
+	try {
+	  const result = await Report.findByIdAndUpdate(id, req.body, { new:true })
+	  res.status(202).send(result)
+	} catch (error) {
+	  console.log(error) // log server error to the console, not to the client.
+		  if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+			  res.status(500).send('Internal server error')
+		  } else {
+			  res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+		  }
+	}
+  })
 app.patch('/api/reports/:id', async (req,res) => {
 	const id = req.params.id
 	if (!ObjectID.isValid(id)) {
-		res.status(404).send('Restaurant not found')
+		res.status(404).send('Report not found')
 		return;
 	}
 

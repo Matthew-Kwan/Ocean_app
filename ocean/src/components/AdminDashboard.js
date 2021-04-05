@@ -7,7 +7,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import AdminReportsTable from './AdminReportsTable';
+import AdminActiveReportsTable from './AdminActiveReportsTable';
+import AdminResolvedReportsTable from './AdminResolvedReportsTable';
 import AdminUsersTable from './AdminUsersTable';
 import AdminSessionsTable from './AdminSessionsTable'
 
@@ -78,6 +79,8 @@ export default function AdminDashboard({users, sessions}) {
         <Tab label="Sessions" {...a11yProps(0)} />
         <Tab label="Users" {...a11yProps(1)} />
         <Tab label="Active Reports" {...a11yProps(2)} />
+        <Tab label="Resolved Reports" {...a11yProps(2)} />
+
        
       </Tabs>
       
@@ -88,7 +91,10 @@ export default function AdminDashboard({users, sessions}) {
         <AdminUsersTable users = {users}></AdminUsersTable>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <AdminReportsTable></AdminReportsTable>
+        <AdminActiveReportsTable></AdminActiveReportsTable>
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <AdminResolvedReportsTable></AdminResolvedReportsTable>
       </TabPanel>
       
     </div>

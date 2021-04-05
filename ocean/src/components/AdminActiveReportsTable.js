@@ -9,7 +9,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { getReports } from '../actions/reports';
+import { getReports, deleteReport, markReviewed, addReport } from '../actions/reports';
+// import { deleteUsers} from '../actions/users';
 
 
 
@@ -20,17 +21,7 @@ const useStyles = makeStyles({
 });
 
 
-// HARDCODED DATA - we would pull the reports from the reports table in our server
-// const reports = [
-//   {id:1,user:'3', reportedBy:'5', resolved:false},
-//   {id:2,user:'7', reportedBy:'2', resolved:false},
-
-//   {id:3,user:'2', reportedBy:'10', resolved:false},
-
-//   {id:4,user:'3', reportedBy:'5', resolved:false},
-// ];
-
-export default function AdminReportsTable() {
+export default function AdminActiveReportsTable() {
   const [reports, setReports] = useState([])
 
   useEffect(() => {
@@ -39,12 +30,35 @@ export default function AdminReportsTable() {
   
   const classes = useStyles();
 
+  const deleteUser = (report) => {
+    
+    console.log('deleting User')
+    console.log('and then dismissing Report')
+    // TODO: ADD DELETE USER HERE
+    deleteReport(report._id)
+    getReports(setReports)
+
+  }
+
+  const dismissReport = (report) => {
+    console.log(report)
+    
+    console.log('dismissing Report')
+    console.log(report)
+    deleteReport(report._id)
+    getReports(setReports)
+
+  }
+  
   return (
       <TableContainer component={Paper}>
           <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
             Active Reports
           </Typography>
         <Table className={classes.table} aria-label="simple table">
+
+
+          
           <TableHead>
             <TableRow>
               <TableCell align="right">Report ID</TableCell>
@@ -52,18 +66,24 @@ export default function AdminReportsTable() {
               <TableCell align="right">Reported By User</TableCell>
               <TableCell align="right">User</TableCell>
               <TableCell align="right">Resolved</TableCell>
+              <TableCell align="right">Ban User</TableCell>
+              <TableCell align="right">Dismiss</TableCell>
+              
 
             </TableRow>
           </TableHead>
           <TableBody>
-            {reports.map((row) => (
-              <TableRow key={row.title}>
+            {reports.filter(report => report.resolved == false).map((row) => (
+              <TableRow key={row._id}>
               
                 <TableCell align="right">{row._id}</TableCell>
                 <TableCell align="right">{row.title}</TableCell>
                 <TableCell align="right">{row.reportedBy}</TableCell>
                 <TableCell align="right">{row.reportedUser}</TableCell>
                 <TableCell align="right">{row.resolved ? "Yes" : "No"}</TableCell>
+                <TableCell align="right"><button onClick={() => deleteUser(row)}>Ban</button></TableCell>
+                <TableCell align="right"><button  onClick={() => dismissReport(row)}>Dismiss</button></TableCell>
+
 
               </TableRow>
             ))}

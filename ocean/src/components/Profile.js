@@ -17,10 +17,9 @@ const Profile = ({mainUser, user, setUser}) => {
         setReported(true)
         setOpenReportModal(false);
         let title = document.getElementById("reportReason").value;
-        // var value = e.options[e.selectedIndex].value;
         const newReport = {
-            "reportedBy": "PLEASE REPLACE MEEEE" ,
-            "reportedUser":  "report user ID - will be replaaced"  ,
+            "reportedBy": mainUser._id ,
+            "reportedUser":  user._id  ,
             "title":  title,
             "resolved": false,
         }
