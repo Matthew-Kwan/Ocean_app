@@ -62,6 +62,7 @@ const goalSchema = new mongoose.Schema({
   tasks: [taskSchema]
 })
 
+// UNIQUENESS VALIDATION
 const User = mongoose.model('User', {
 
   id: {

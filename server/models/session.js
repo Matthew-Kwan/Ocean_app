@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
 const sessionSchema = new mongoose.Schema({
 	userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-	goalId: {type: Number},
+	goalId: {type: String},
   title: {type: String},
   startTime: {type: Date},
   endTime: {type: Date},

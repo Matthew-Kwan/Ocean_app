@@ -18,7 +18,7 @@ const Report = mongoose.model('Report', {
 		required: true,
 		// default: 1
     },
-    
+
     resolved:{
         type: Boolean,
         required:true,

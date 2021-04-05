@@ -3,6 +3,7 @@
 require('dotenv').config()
 
 const log = console.log
+const logger = require('./logger.js')
 const path = require('path')
 
 const usersRouter = require('./routers/user')
@@ -32,6 +33,15 @@ const { Report } = require('./models/report')
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
+// request-logger
+const requestLogger = (request, response, next) => {
+  logger.info('Method:', request.method)
+  logger.info('Path:  ', request.path)
+  logger.info('Body:  ', request.body)
+  logger.info('---')
+  next()
+}
+app.use(requestLogger)
 /*** Helper functions below **********************************/
 function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddently disconnects
 	return typeof error === 'object' && error !== null && error.name === "MongoNetworkError"

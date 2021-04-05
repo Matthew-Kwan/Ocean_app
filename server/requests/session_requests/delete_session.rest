@@ -1,0 +1,1 @@
+DELETE http://localhost:5000/api/sessions/6064f5d152095c36c43be825
