@@ -62,6 +62,23 @@ const goalSchema = new mongoose.Schema({
   tasks: [taskSchema]
 })
 
+const friendSchema = new mongoose.Schema({
+  id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
+  name: {
+    type: String
+  }
+})
+
+const sessionSchema = new mongoose.Schema({
+  id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Session',
+  }
+})
+
 // UNIQUENESS VALIDATION
 const User = mongoose.model('User', {
 
@@ -90,6 +107,8 @@ const User = mongoose.model('User', {
     type: String
   },
   goals: [goalSchema],
+  friends: [friendSchema],
+  sessions: [sessionSchema]
 })
 
 module.exports = { User }

@@ -2,12 +2,12 @@ POST http://localhost:5000/api/users
 Content-Type: application/json
 
 {
-  "id": 1,
-  "username": "user",
-  "password": "user",
-  "adminFlag": false,
-  "name": "GrassyMans",
-  "tagline": "Grassy Man from a Grassy World",
+  "id": 2,
+  "username": "admin",
+  "password": "admin",
+  "adminFlag": true,
+  "name": "AdminJim",
+  "tagline": "Administration is my passion.",
   "goals": [
     {
       "id": 30000,

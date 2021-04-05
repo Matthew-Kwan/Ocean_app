@@ -444,7 +444,7 @@ function App() {
         <Route path="/admin" render={() => {
 
           return (
-            <AdminDashboard users={usersList} sessions={sessions} />
+            <AdminDashboard users={users} sessions={sessions} />
           )
         }} />
 

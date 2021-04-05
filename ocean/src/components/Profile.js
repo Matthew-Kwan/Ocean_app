@@ -30,12 +30,12 @@ const Profile = ({mainUser, user, setUser}) => {
     }
 
     const ReportModal = () => (
-    
+
     <div className ="modalContainer">
         <div className = 'modalContent'>
           <h3 >Why are you reporting this user?</h3>
-         
-          
+
+
             <form onSubmit= {submitReport}>
 
             <select id="reportReason" name="reportReason">
@@ -53,18 +53,17 @@ const Profile = ({mainUser, user, setUser}) => {
 
     </div>)
 
-    
 
     function AddFriend(mainUser,user, setUser) {
         console.log('adding friend')
         // add user to friends
         let newFriends = mainUser.friends
-        newFriends.push({id:user.id, name: user.name})
+        newFriends.push({id:user._id, name: user.name})
         setUser({...mainUser, friends: newFriends})
         // send out put/patch request to friends
     }
 
-    const isFriend = mainUser.friends.filter(friend => friend.id == user.id).length > 0 ? true: false
+    const isFriend = mainUser.friends.filter(friend => friend._id == user._id).length > 0 ? true: false
 
     const [reported, setReported] = useState(false)
     const [openReportModal, setOpenReportModal] = React.useState(false);
@@ -89,9 +88,9 @@ const Profile = ({mainUser, user, setUser}) => {
                 {/* Profile Actions */}
                 <Button variant="contained" color="primary">  <Link id = "linkButton" color="white" to={
                     {
-                      pathname: `/tank/${user.id}`
-                    }}>View Tank</Link></Button> 
-                
+                      pathname: `/tank/${user._id}`
+                    }}>View Tank</Link></Button>
+
                 {(isFriend) ? <div className='centerText'>Friend has been added</div> : <Button variant="contained" color="primary" onClick = {() => AddFriend(mainUser, user, setUser)}>
                     Add Friend
                     </Button>}
@@ -99,7 +98,7 @@ const Profile = ({mainUser, user, setUser}) => {
                     <Button color="secondary" onClick = {handleReportModalOpen}> Report </Button> : <Button color="secondary" disabled={true}>Reported</Button>}
                     <Modal open={openReportModal} onClose={handleReportModalClose} >
                          {ReportModal()}
-                         
+
                      </Modal>
             </div>
             <div>
@@ -119,7 +118,7 @@ const Profile = ({mainUser, user, setUser}) => {
                         {
                         (user.goals).map(goal => (
                             <li>{goal.title}</li>
-                        )) 
+                        ))
                     }
                 </ol>
                 <h3>Recently Completed Sessions</h3>
@@ -127,7 +126,7 @@ const Profile = ({mainUser, user, setUser}) => {
                 {
                         (user.sessions).map(goal => (
                             <li>{goal.title}</li>
-                        )) 
+                        ))
                     }
                 </ol>
             </div>
