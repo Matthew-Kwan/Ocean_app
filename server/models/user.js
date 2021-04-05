@@ -44,6 +44,9 @@ const taskSchema = new mongoose.Schema({
 })
 
 const goalSchema = new mongoose.Schema({
+  id: {
+    type: Number
+  },
   title: {
     type: String
   },

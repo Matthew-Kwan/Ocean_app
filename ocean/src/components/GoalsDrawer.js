@@ -13,6 +13,7 @@ import './GoalsDrawer.css'
 import './modal.css'
 
 import ProgressBar from './ProgressBar'
+import { updateUser } from '../actions/users.js'
 
 /*
 GoalsDrawer, returns a button that expands a side drawer from the left that contains goal information
@@ -22,7 +23,7 @@ GoalsDrawer, returns a button that expands a side drawer from the left that cont
 export default function GoalsDrawer(props) {
 
   //user goal list
-  const { goals } = props;
+  const { goals, user, setUser } = props;
 
   //  STATES
 
@@ -217,7 +218,9 @@ export default function GoalsDrawer(props) {
 
     handleEditModalClose();
 
-    //TODO: PUT request to handle edited content
+    //PUT request to handle edited content
+    updateUser(user, user._id)
+
   };
 
   //form add task
@@ -353,6 +356,7 @@ export default function GoalsDrawer(props) {
     handleDetailsModalClose();
 
     //TODO: PUT request to save completed/non completed tasks and completion request
+    updateUser(user, user._id)
 
   }
 
@@ -598,6 +602,9 @@ export default function GoalsDrawer(props) {
   */
   function addGoal(goal) {
     goals.push(goal)
+    updateUser(user, user._id)
+
+
 
     //TODO: POST request to add goal
   }
@@ -621,6 +628,7 @@ export default function GoalsDrawer(props) {
     props.refreshGoals(newGoalsForRefresh);
 
     //TODO: DELETE request to delete goal
+    updateUser(user, user._id)
   }
   
 

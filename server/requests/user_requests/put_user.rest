@@ -1,0 +1,38 @@
+PUT http://localhost:5000/api/users/605118682f32db0b7c9af836
+Content-Type: application/json
+
+{
+    "_id":"605118682f32db0b7c9af836",
+    "id":1,
+    "username":"user",
+    "password":"user",
+    "adminFlag":false,
+    "name":"Jeremy",
+    "tagline":"Grassy Man from a Grassy World",
+    "goals":[
+        {
+            "_id":"605118682f32db0b7c9af837",
+            "title":"Software",
+            "totalTasksNum":2,
+            "completedTasksNum":1,
+            "completed":false,
+            "completionPercent":50,
+            "tasks":[
+                {
+                    "_id":"605118682f32db0b7c9af838",
+                    "id":0,
+                    "task":"Research React",
+                    "completed":true
+                },
+                {
+                    "_id":"605118682f32db0b7c9af839",
+                    "id":1,
+                    "task":"Make demo app",
+                    "completed":false
+                }
+            ]
+        }
+    ],
+    "friends":[],
+    "sessions":[]
+}

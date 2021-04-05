@@ -84,11 +84,13 @@ app.post('/api/users', async (req, res) => {
 	const user = new User({
 		id: body.id,
 		username: body.username,
-    password: body.password,
-    adminFlag: body.adminFlag,
-    name: body.name,
-    tagline: body.tagline,
-    goals: body.goals,
+		password: body.password,
+		adminFlag: body.adminFlag,
+		name: body.name,
+		tagline: body.tagline,
+		goals: body.goals,
+		friends: body.friends,
+		sessions: body.sessions
 	})
 
   try {
@@ -125,6 +127,62 @@ app.get('/api/users', async (req, res) => {
 	}
 
 })
+
+// a GET route to get user by id
+app.get('/api/users/:id', async (req, res) => {
+
+	const id = req.params.id
+
+	// check mongoose connection established.
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal server error')
+		return;
+	}
+
+	// Get the students
+	try {
+		const user = await User.findById(id)
+		// res.send(students) // just the array
+		res.status(200).send({ user }) // can wrap students in object if want to add more properties
+	} catch(error) {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	}
+
+})
+
+// a PUT route to edit a user by is
+
+app.put('/api/users/:id', async (req, res) => {
+	const id = req.params.id
+	const body = req.body
+
+	const user = {
+		id: body.id,
+		username: body.username,
+		password: body.password,
+		adminFlag: body.adminFlag,
+		name: body.name,
+		tagline: body.tagline,
+		goals: body.goals,
+		friends: body.friends,
+		sessions: body.sessions
+	}
+
+	try {
+	  const result = await User.findByIdAndUpdate(id, user, { new:true })
+
+	  res.status(202).send(result)
+	} catch (error) {
+	  console.log(error)
+	  if (isMongoError(error)) {
+		res.status(500).send('Internal server error')
+	  } else {
+		res.status(404).send('Not Found')
+	  }
+	}
+  })
 
 // a DELETE route to delete a user
 app.delete('/api/users/:id', async (req, res) => {
@@ -190,9 +248,9 @@ app.post('/api/sessions', async (req, res) => {
 	const session = new Session({
 		userId: body.userId,
 		goalId: body.goalId,
-    title: body.title,
-    startTime: body.startTime,
-    endTime: body.endTime,
+		title: body.title,
+		startTime: body.startTime,
+		endTime: body.endTime,
 	})
 
   try {
@@ -231,9 +289,9 @@ app.put('/api/sessions/:id', async (req, res) => {
 	const session = {
 		userId: body.userId,
 		goalId: body.goalId,
-    title: body.title,
-    startTime: body.startTime,
-    endTime: body.endTime,
+		title: body.title,
+		startTime: body.startTime,
+		endTime: body.endTime,
 	}
 
   try {

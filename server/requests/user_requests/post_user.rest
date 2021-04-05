@@ -2,12 +2,12 @@ POST http://localhost:5000/api/users
 Content-Type: application/json
 
 {
-  "id": 2,
-  "username": "admin",
-  "password": "admin",
-  "adminFlag": true,
-  "name": "AdminJim",
-  "tagline": "Administration is my passion.",
+  "id": 6,
+  "username": "user5",
+  "password": "user5",
+  "adminFlag": false,
+  "name": "user5",
+  "tagline": "user5",
   "goals": [
     {
       "id": 30000,
@@ -18,6 +18,18 @@ Content-Type: application/json
       "completionPercent": 50,
       "tasks": [
         { "id": 0, "task": "Research React", "completed": true },
+        { "id": 1, "task": "Make demo app", "completed": false }
+      ]
+    },
+    {
+      "id": 4000,
+      "title": "React",
+      "totalTasksNum": 2,
+      "completedTasksNum": 0,
+      "completed": false,
+      "completionPercent": 0,
+      "tasks": [
+        { "id": 0, "task": "Research React", "completed": false },
         { "id": 1, "task": "Make demo app", "completed": false }
       ]
     }

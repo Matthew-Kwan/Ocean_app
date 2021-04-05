@@ -463,7 +463,7 @@ function App() {
 
         <Route path="/tank" render={() => {
           return (
-            <Tank user={user} />
+            <Tank user={user} setUser={setUser}/>
           )
         }} />
 

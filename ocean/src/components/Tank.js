@@ -9,7 +9,7 @@ import Decor from './Decor'
 let counter = 2;
 let decorCount = 0;
 
-const Tank= ({user}) => {
+const Tank= ({user, setUser}) => {
 
     const [sessions, setSessions] = React.useState([]);
     const [goals, setGoals] = React.useState(user.goals);
@@ -59,7 +59,7 @@ const Tank= ({user}) => {
 
             <div className="tankContent">
 
-                <GoalsDrawer goals={user.goals} refreshGoals={refreshGoals}/>
+                <GoalsDrawer goals={user.goals} user = {user} setUser={setUser} refreshGoals={refreshGoals}/>
 
                 <ul id="fishListTank">
                     {sessions.map(session => handleFish(session))}
