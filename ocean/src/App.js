@@ -414,7 +414,6 @@ function App() {
   // CHANGE IN PHASE 2, FOR NOW AUTO LOGS YOU IN AS THE FIRST USER IN THE HARDCODED DATA
   const handleRegister = (e) => {
     e.preventDefault()
-    setLoggedIn(true)
     console.log("handle register reached")
     const name = document.querySelector('#name-input').children[0].children[1].children[0].value
     const username = document.querySelector('#username-input').children[0].children[1].children[0].value
@@ -422,10 +421,17 @@ function App() {
     
     console.log(name, username, password)
 
-    const user = {id: 1, username: username, password: password, adminFlag: false, name: name, tagline: "", goals: [], friends: [], sessions: []}
+    const usernameExists = users.filter(user => user.username === username)
 
-    addUser(user)
-    setUser(user)
+
+    if (!usernameExists) {
+      const user = {id: 1, username: username, password: password, adminFlag: false, name: name, tagline: "", goals: [], friends: [], sessions: []}
+      addUser(user)
+      setUser(user)
+      setLoggedIn(true)
+    }
+    else  
+      console.log("username already exists")
     //setUser(users[0])
   }
 
