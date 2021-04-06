@@ -17,6 +17,7 @@ const Tank= ({user, setUser}) => {
     //const [decorCount, setDecorCount] = React.useState(0);
 
     useEffect(() => {
+        console.log('USER: ', user)
         const tmpSessions = user.sessions.filter(session => session.endTime !== null)
         setSessions(tmpSessions);
 
@@ -32,7 +33,7 @@ const Tank= ({user, setUser}) => {
     }, []);
 
     const refreshGoals = (updatedGoals) => {
-        setGoals(updatedGoals);     
+        setGoals(updatedGoals);
     }
 
     const handleFish = (session) => {
@@ -52,10 +53,10 @@ const Tank= ({user, setUser}) => {
 
         return (
             <div className = "decorationSlot">
-                {goal.completed?                                 
+                {goal.completed?
                     <Decor goal={goal} count={decorCount}/>
-                :<div></div>} 
-            </div>  
+                :<div></div>}
+            </div>
         )
     }
 
