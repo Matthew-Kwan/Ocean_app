@@ -221,6 +221,12 @@ app.delete('/api/users/:id', async (req, res) => {
   const id = req.params.id
   try {
     const result = await User.findByIdAndRemove(id)
+    try {
+      const session_result = await Session.deleteMany({userId: id})
+      console.log(session_result)
+    } catch (error) {
+      console.log("Could not delete users sessions")
+    }
     res.status(202).send(result)
   } catch (error) {
     console.log(error)
@@ -230,6 +236,7 @@ app.delete('/api/users/:id', async (req, res) => {
       res.status(404).send('Not Found')
     }
   }
+
 })
 
 /*** END USER ROUTES */
@@ -342,6 +349,7 @@ app.put('/api/sessions/:id', async (req, res) => {
 // DELETE REQUEST FOR SESSION FOR ADMINS (?)
 app.delete('/api/sessions/:id', async (req, res) => {
   const id = req.params.id
+
   try {
     const result = await Session.findByIdAndRemove(id)
     res.status(202).send(result)
@@ -354,6 +362,8 @@ app.delete('/api/sessions/:id', async (req, res) => {
     }
   }
 })
+
+
 
 
 
