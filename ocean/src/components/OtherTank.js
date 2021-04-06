@@ -13,7 +13,7 @@ let counter = 2;
 const OtherTank= ({users}) => {
 
     const id = useRef(useParams().id)
-    const [tankOwner, setTankOwner] = useState(users.filter(u => u.id == id.current)[0])
+    const [tankOwner, setTankOwner] = useState(users.filter(u => u._id == id.current)[0])
     const [sessions, setSessions] = React.useState([]);
     const [goals, setGoals] = React.useState(tankOwner.goals);
 
