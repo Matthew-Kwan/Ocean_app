@@ -7,7 +7,7 @@ import Tank from './components/Tank'
 import Profile from './components/Profile'
 import YourProfile from './components/YourProfile'
 import Login from './components/Login'
-import AdminDashboard from './components/AdminDashboard'
+import AdminDashboard from './components/Admin/AdminDashboard'
 import Nav from './components/NavBar'
 import OtherTank from './components/OtherTank';
 
@@ -451,7 +451,7 @@ function App() {
         <Route path="/admin" render={() => {
 
           return (
-            <AdminDashboard users={users} sessions={sessions} />
+            <AdminDashboard users={users} sessions={sessions} setUsers={setUser} />
           )
         }} />
 

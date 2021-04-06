@@ -1,40 +1,74 @@
-PUT http://localhost:5000/api/users/606b9a15f97baa5b58141f08
+PUT http://localhost:5000/api/users/606ce2beddcb661f464f428e
 Content-Type: application/json
 
-{
-    "_id":"605118682f32db0b7c9af836",
-    "id":1,
-    "username":"user5",
-    "password":"user5",
-    "adminFlag":false,
-    "name":"Jeremy",
-    "tagline":"Grassy Man from a Grassy World",
-    "goals": [
+ {
+      "_id": "606ce2beddcb661f464f428e",
+      "id": 6,
+      "username": "user5",
+      "password": "user5",
+      "adminFlag": false,
+      "name": "ling",
+      "tagline": "user5",
+      "goals": [
         {
-            "id": 30000,
-            "title": "Software",
-            "totalTasksNum": 2,
-            "completedTasksNum": 1,
-            "completed": false,
-            "completionPercent": 50,
-            "tasks": [
-                { "id": 0, "task": "Research React", "completed": true },
-                { "id": 1, "task": "Make demo app", "completed": false }
-            ]
+          "_id": "606cc959ddcb661f464f4286",
+          "id": 30000,
+          "title": "Software",
+          "totalTasksNum": 2,
+          "completedTasksNum": 1,
+          "completed": false,
+          "completionPercent": 50,
+          "tasks": [
+            {
+              "_id": "606cc959ddcb661f464f4287",
+              "id": 0,
+              "task": "Research React",
+              "completed": true
+            },
+            {
+              "_id": "606cc959ddcb661f464f4288",
+              "id": 1,
+              "task": "Make demo app",
+              "completed": false
+            }
+          ]
         },
         {
-            "id": 4000,
-            "title": "React",
-            "totalTasksNum": 2,
-            "completedTasksNum": 0,
-            "completed": false,
-            "completionPercent": 0,
-            "tasks": [
-                { "id": 0, "task": "Research React", "completed": false },
-                { "id": 1, "task": "Make demo app", "completed": false }
-            ]
+          "_id": "606cc959ddcb661f464f4289",
+          "id": 4000,
+          "title": "React",
+          "totalTasksNum": 2,
+          "completedTasksNum": 0,
+          "completed": false,
+          "completionPercent": 0,
+          "tasks": [
+            {
+              "_id": "606cc959ddcb661f464f428a",
+              "id": 0,
+              "task": "Research React",
+              "completed": false
+            },
+            {
+              "_id": "606cc959ddcb661f464f428b",
+              "id": 1,
+              "task": "Make demo app",
+              "completed": false
+            }
+          ]
         }
-    ],
-    "friends":[],
-    "sessions":[]
+      ],
+      "friends": [
+        
+      ],
+      "sessions": [
+          {
+  "userId": "606ce2beddcb661f464f428e",
+  "goalId": "2",
+  "title": "test dddd#2 session",
+  "startTime": "2020-01-02T01:51:00.000Z",
+  "id": "606ce2caddcb661f464f4295"
 }
+        
+      ],
+      "__v": 0
+    }

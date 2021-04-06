@@ -220,7 +220,9 @@ app.put('/api/users/:id/goal', async (req, res) => {
 app.delete('/api/users/:id', async (req, res) => {
   const id = req.params.id
   try {
-    const result = await User.findByIdAndRemove(id)
+	const result = await User.findByIdAndRemove(id)
+	console.log(result)
+	console.log('trying to remove')
     res.status(202).send(result)
   } catch (error) {
     console.log(error)
