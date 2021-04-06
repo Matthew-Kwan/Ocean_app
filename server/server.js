@@ -153,7 +153,6 @@ app.get('/api/users/:id', async (req, res) => {
 })
 
 // a PUT route to edit a user by is
-
 app.put('/api/users/:id', async (req, res) => {
 	const id = req.params.id
 	const body = req.body
@@ -182,7 +181,40 @@ app.put('/api/users/:id', async (req, res) => {
 		res.status(404).send('Not Found')
 	  }
 	}
-  })
+})
+
+// a PUT route to edit a user by is
+app.put('/api/users/:id/goal', async (req, res) => {
+	const id = req.params.id
+	const body = req.body
+
+	const goal = {
+		id: body.id,
+		title: body.title,
+		totalTasksNum: body.totalTasksNum,
+		completedTasksNum: body.completedTasksNum,
+		completed: body.completed,
+		completionPercent: body.completionPercent,
+		tasks: body.tasks
+	}
+
+	try {
+	  const result = await User.findById(id)
+
+	  result.goals.push(goal)
+
+	  const result2 = await User.findByIdAndUpdate(id, result, { new:true })
+
+	  res.status(202).send(result2)
+	} catch (error) {
+	  console.log(error)
+	  if (isMongoError(error)) {
+		res.status(500).send('Internal server error')
+	  } else {
+		res.status(404).send('Not Found')
+	  }
+	}
+})
 
 // a DELETE route to delete a user
 app.delete('/api/users/:id', async (req, res) => {

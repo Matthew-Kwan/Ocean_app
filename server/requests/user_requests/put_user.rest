@@ -1,35 +1,37 @@
-PUT http://localhost:5000/api/users/605118682f32db0b7c9af836
+PUT http://localhost:5000/api/users/606b9a15f97baa5b58141f08
 Content-Type: application/json
 
 {
     "_id":"605118682f32db0b7c9af836",
     "id":1,
-    "username":"user",
-    "password":"user",
+    "username":"user5",
+    "password":"user5",
     "adminFlag":false,
     "name":"Jeremy",
     "tagline":"Grassy Man from a Grassy World",
-    "goals":[
+    "goals": [
         {
-            "_id":"605118682f32db0b7c9af837",
-            "title":"Software",
-            "totalTasksNum":2,
-            "completedTasksNum":1,
-            "completed":false,
-            "completionPercent":50,
-            "tasks":[
-                {
-                    "_id":"605118682f32db0b7c9af838",
-                    "id":0,
-                    "task":"Research React",
-                    "completed":true
-                },
-                {
-                    "_id":"605118682f32db0b7c9af839",
-                    "id":1,
-                    "task":"Make demo app",
-                    "completed":false
-                }
+            "id": 30000,
+            "title": "Software",
+            "totalTasksNum": 2,
+            "completedTasksNum": 1,
+            "completed": false,
+            "completionPercent": 50,
+            "tasks": [
+                { "id": 0, "task": "Research React", "completed": true },
+                { "id": 1, "task": "Make demo app", "completed": false }
+            ]
+        },
+        {
+            "id": 4000,
+            "title": "React",
+            "totalTasksNum": 2,
+            "completedTasksNum": 0,
+            "completed": false,
+            "completionPercent": 0,
+            "tasks": [
+                { "id": 0, "task": "Research React", "completed": false },
+                { "id": 1, "task": "Make demo app", "completed": false }
             ]
         }
     ],

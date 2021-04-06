@@ -382,6 +382,12 @@ function App() {
   }, []) //
 
 
+  useEffect(() => {
+    console.log('users updated', users)
+    // setUsers(usersList)
+  }, [users]) //
+
+
   // login function
   const handleLogin = (e) => {
     e.preventDefault()
@@ -417,6 +423,7 @@ function App() {
 
     setUser({})
     setLoggedIn(false)
+    getUsers(setUsers)
   }
 
   return (

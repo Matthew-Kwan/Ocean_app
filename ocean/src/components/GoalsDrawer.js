@@ -13,7 +13,7 @@ import './GoalsDrawer.css'
 import './modal.css'
 
 import ProgressBar from './ProgressBar'
-import { updateUser } from '../actions/users.js'
+import { updateUser, updateUserAddGoal } from '../actions/users.js'
 
 /*
 GoalsDrawer, returns a button that expands a side drawer from the left that contains goal information
@@ -23,7 +23,7 @@ GoalsDrawer, returns a button that expands a side drawer from the left that cont
 export default function GoalsDrawer(props) {
 
   //user goal list
-  const { goals, user, setUser } = props;
+  const { goals, user, setUser, setGoals} = props;
 
   //  STATES
 
@@ -63,6 +63,7 @@ export default function GoalsDrawer(props) {
   });
 
   const [editGoal, setEditGoal] = React.useState({ //edit goal state
+    _id: null,
     id: null,
     title: '',
     tasks: [],
@@ -74,6 +75,7 @@ export default function GoalsDrawer(props) {
 
 
   const [detailsGoal, setDetailsGoal] = React.useState({ //details goal state
+    _id: null,
     id: null,
     title: '',
     tasks: [],
@@ -148,6 +150,8 @@ export default function GoalsDrawer(props) {
 
   const handleFormSubmit = (e) => { //handle form submit
     e.preventDefault();
+
+    newGoal.id = goalId;
     newGoal.totalTasksNum = newGoal.tasks.length; //set total number of tasks
     refreshDrawerAdd('right', newGoal); //refreshDrawer and add new goal to drawer
     setGoalId(goalId+1); //reset goal and tasks, increase goalId
@@ -202,7 +206,7 @@ export default function GoalsDrawer(props) {
     e.preventDefault();
 
     const goalToEdit = goals.find(function(goal, index) {
-      if(goal.id == editGoal.id)
+      if(goal._id == editGoal._id)
         return true;
     });
     
@@ -285,6 +289,7 @@ export default function GoalsDrawer(props) {
 
   const handleDetailsModalOpen = (goal) => { //open correct details modal
     setDetailsGoal({
+      _id: goal._id,
       id: goal.id,
       title: goal.title,
       tasks: goal.tasks,
@@ -308,6 +313,7 @@ export default function GoalsDrawer(props) {
 
   const handleEditModalOpen = (goal) => { //set current edit goal
     setEditGoal({
+      _id: goal._id,
       id: goal.id,
       title: goal.title,
       tasks: goal.tasks.slice(0), //make a copy of array to modify
@@ -330,7 +336,7 @@ export default function GoalsDrawer(props) {
   const handleCheckChange = (taskId) => {
 
     const goalToEdit = goals.find(function(goal, index) {
-      if(goal.id == detailsGoal.id)
+      if(goal._id == detailsGoal._id)
         return true;
     });
 
@@ -355,7 +361,7 @@ export default function GoalsDrawer(props) {
     handleDetailsModalOpen(goalToEdit);
     handleDetailsModalClose();
 
-    //TODO: PUT request to save completed/non completed tasks and completion request
+    //PUT request to save completed/non completed tasks and completion request
     updateUser(user, user._id)
 
   }
@@ -417,7 +423,7 @@ export default function GoalsDrawer(props) {
                 <div className = 'leftButton'>     
                   <Button onClick={() => handleDetailsModalOpen(goal)} variant="outlined" color="primary">Check Tasks</Button>
                 </div>              
-                <Button className = 'rightButton' variant="outlined" color="primary" onClick={refreshDrawerDelete(anchor, goal.id) }>Finished!</Button>
+                <Button className = 'rightButton' variant="outlined" color="primary" onClick={refreshDrawerDelete(anchor, goal._id) }>Finished!</Button>
                       
               </div>
 
@@ -601,12 +607,16 @@ export default function GoalsDrawer(props) {
   * addGoal to mem goal array
   */
   function addGoal(goal) {
-    goals.push(goal)
-    updateUser(user, user._id)
+    //goals.push(goal)
 
+    // POST request to add goal
+    updateUserAddGoal(goal, user._id)
+    .then((result) => {
+      console.log(result.goals)
+      setUser(result)
+      }
+    )
 
-
-    //TODO: POST request to add goal
   }
 
   /*
@@ -615,7 +625,7 @@ export default function GoalsDrawer(props) {
   function deleteGoal(goalId) {
 
     const goal = goals.find(function(goal, index) {
-      if(goal.id == goalId)
+      if(goal._id == goalId)
         return true;
     });
     
@@ -627,7 +637,7 @@ export default function GoalsDrawer(props) {
 
     props.refreshGoals(newGoalsForRefresh);
 
-    //TODO: DELETE request to delete goal
+    //DELETE request to delete goal
     updateUser(user, user._id)
   }
   

@@ -1,0 +1,15 @@
+PUT http://localhost:5000/api/users/606b9a15f97baa5b58141f08/goal
+Content-Type: application/json
+
+{
+    "id": 0,
+    "title": "mie424",
+    "totalTasksNum": 2,
+    "completedTasksNum": 0,
+    "completed": false,
+    "completionPercent": 0,
+    "tasks": [
+        { "id": 0, "task": "A4", "completed": false },
+        { "id": 1, "task": "Final Project", "completed": false }
+    ]
+}
