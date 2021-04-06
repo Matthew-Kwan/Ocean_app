@@ -91,7 +91,7 @@ export const addUser = (user_data) => {
                 alert("Could not post the user")
             }
         }).then(data => {
-            return data.id
+            return data
         }
         )
         .catch(error => {
@@ -153,7 +153,7 @@ export const updateUserAddGoal = (goal_data, id) => {
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
-        }
+        },
     });
 
         // Send the request with fetch()
@@ -185,11 +185,13 @@ export const deleteUser = (id) => {
 
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
-        method: "DELETE"
+        method: "DELETE",
     });
         // Send the request with fetch()
-    fetch(request)
+    const result = fetch(request)
     .then(function (res) {
+        console.log('fetched the request result')
+
         // Handle response we get from the API.
         // Usually check the error codes to see what happened.
         if (res.status === 202) {
@@ -205,6 +207,8 @@ export const deleteUser = (id) => {
     .catch(error => {
         console.log("DELETE user error: ", error);
     });
+
+    return result
 };
 
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,6 +9,9 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 // import usersList from '../App.js'
+import { deleteUser, getUsers} from '../../actions/users';
+
+
 
 const useStyles = makeStyles({
   table: {
@@ -17,10 +20,12 @@ const useStyles = makeStyles({
 });
 
 
-export default function AdminUsersTable({users}) {
+export default function AdminUsersTable({users,setUsers}) {
 
   const classes = useStyles();
-
+  
+  useEffect(() => setUsers(users),[])
+  getUsers(setUsers)
   return (
     <TableContainer component={Paper}>
         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">

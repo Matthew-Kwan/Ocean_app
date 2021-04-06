@@ -2,7 +2,8 @@ import React  from 'react'
 import Modal from '@material-ui/core/Modal'
 import './profile.css'
 
-import './modal.css'
+import '../Tank/modal.css'
+
 
 import EditMe from './editMe'
 

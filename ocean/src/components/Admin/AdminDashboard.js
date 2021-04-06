@@ -58,12 +58,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AdminDashboard({users, sessions}) {
+export default function AdminDashboard({users, sessions, setUsers}) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+
   };
 
   return (
@@ -79,7 +80,7 @@ export default function AdminDashboard({users, sessions}) {
         <Tab label="Sessions" {...a11yProps(0)} />
         <Tab label="Users" {...a11yProps(1)} />
         <Tab label="Active Reports" {...a11yProps(2)} />
-        <Tab label="Resolved Reports" {...a11yProps(2)} />
+        {/* <Tab label="Resolved Reports" {...a11yProps(2)} /> */}
 
        
       </Tabs>
@@ -88,14 +89,14 @@ export default function AdminDashboard({users, sessions}) {
         <AdminSessionsTable sessions = {sessions}></AdminSessionsTable>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <AdminUsersTable users = {users}></AdminUsersTable>
+        <AdminUsersTable users = {users} setUsers = {setUsers}></AdminUsersTable>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <AdminActiveReportsTable></AdminActiveReportsTable>
+        <AdminActiveReportsTable setUsers = {setUsers}></AdminActiveReportsTable>
       </TabPanel>
-      <TabPanel value={value} index={3}>
+      {/* <TabPanel value={value} index={3}>
         <AdminResolvedReportsTable></AdminResolvedReportsTable>
-      </TabPanel>
+      </TabPanel> */}
       
     </div>
   );

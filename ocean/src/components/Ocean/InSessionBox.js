@@ -4,7 +4,7 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 
 // import actions
-import { updateSession } from '../actions/sessions'
+import { updateSession } from '../../actions/sessions'
 
 const InSessionBox = ({session, setInSession, goalTitle="No Goal Selected", newSessionId}) => {
 

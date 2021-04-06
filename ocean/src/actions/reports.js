@@ -83,11 +83,10 @@ export const addReport = (report) => {
 export const deleteReport = (reportID) => {
     // the URL for the request
     const url = `${API_HOST}/api/reports/${reportID}`;
+    console.log('trying to delete')
     console.log(url)
     // The data we are going to send in our request
-    // const student = formComp.state
 
-    // Create our request constructor with all the parameters we need
     const request = new Request(url, {
         method: "delete",
         // body: JSON.stringify(report),
@@ -98,34 +97,24 @@ export const deleteReport = (reportID) => {
     });
 
     // Send the request with fetch()
-    fetch(request)
+    const result = fetch(request)
         .then(function (res) {
             // Handle response we get from the API.
             // Usually check the error codes to see what happened.
             if (res.status === 202) {
                 // If student was added successfully, tell the user.
                 console.log('report succesfully deleted')
-                // dashboardComp.setState({
-                //     message: {
-                //         body: "Success: Added a student.",
-                //         type: "success"
-                //     }
-                // });
+                return res
+
             } else {
                 console.log('report failed to delete')
-                // If server couldn't add the student, tell the user.
-                // Here we are adding a generic message, but you could be more specific in your app.
-                // dashboardComp.setState({
-                //     message: {
-                //         body: "Error: Could not add student.",
-                //         type: "error"
-                //     }
-                // });
             }
         })
         .catch(error => {
             console.log(error);
         });
+
+    return result
 };
 
 export const markReviewed = (report) => {

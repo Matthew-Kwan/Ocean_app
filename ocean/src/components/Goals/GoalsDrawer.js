@@ -10,10 +10,10 @@ import ClearIcon from '@material-ui/icons/Clear';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
 import './GoalsDrawer.css'
-import './modal.css'
+import '../Tank/modal.css'
 
 import ProgressBar from './ProgressBar'
-import { updateUser, updateUserAddGoal } from '../actions/users.js'
+import { updateUser, updateUserAddGoal } from '../../actions/users.js'
 
 /*
 GoalsDrawer, returns a button that expands a side drawer from the left that contains goal information

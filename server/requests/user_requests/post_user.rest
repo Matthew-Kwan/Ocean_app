@@ -6,7 +6,7 @@ Content-Type: application/json
   "username": "user5",
   "password": "user5",
   "adminFlag": false,
-  "name": "user5",
+  "name": "ling",
   "tagline": "user5",
   "goals": [
     {

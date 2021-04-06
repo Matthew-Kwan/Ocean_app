@@ -9,10 +9,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { getReports, deleteReport, markReviewed, addReport } from '../actions/reports';
-// import { deleteUsers} from '../actions/users';
-
-
+import { getReports, deleteReport, markReviewed, addReport } from '../../actions/reports';
+import { deleteUser, getUsers} from '../../actions/users';
 
 const useStyles = makeStyles({
   table: {
@@ -21,32 +19,33 @@ const useStyles = makeStyles({
 });
 
 
-export default function AdminActiveReportsTable() {
+export default function AdminActiveReportsTable({setUsers}) {
   const [reports, setReports] = useState([])
-
-  useEffect(() => {
+  useEffect(() => { 
     getReports(setReports)
   }, [] )
   
   const classes = useStyles();
 
-  const deleteUser = (report) => {
+  const banUser = (report) => {
     
+    console.log(report)
     console.log('deleting User')
     console.log('and then dismissing Report')
-    // TODO: ADD DELETE USER HERE
-    deleteReport(report._id)
-    getReports(setReports)
+    console.log(report.reportedUser)
+
+    
+    deleteReport(report._id).then(()=>getReports(setReports))
+    deleteUser(report.reportedUser).then(()=>getUsers(setUsers))
+
+    console.log('finished banning')
 
   }
 
   const dismissReport = (report) => {
     console.log(report)
-    
     console.log('dismissing Report')
-    console.log(report)
-    deleteReport(report._id)
-    getReports(setReports)
+    deleteReport(report._id).then(()=>getReports(setReports))
 
   }
   
@@ -81,7 +80,7 @@ export default function AdminActiveReportsTable() {
                 <TableCell align="right">{row.reportedBy}</TableCell>
                 <TableCell align="right">{row.reportedUser}</TableCell>
                 <TableCell align="right">{row.resolved ? "Yes" : "No"}</TableCell>
-                <TableCell align="right"><button onClick={() => deleteUser(row)}>Ban</button></TableCell>
+                <TableCell align="right"><button onClick={() => banUser(row)}>Ban</button></TableCell>
                 <TableCell align="right"><button  onClick={() => dismissReport(row)}>Dismiss</button></TableCell>
 
 
