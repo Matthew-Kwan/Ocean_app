@@ -87,9 +87,12 @@ const Ocean = ({user, setUser, users, sessions, setSessions}) => {
     // if endTime is not defined, then that means that the session is still in progress
     let currSess = sessions.filter((s) => s.endTime === undefined)
 
+    console.log(currSess)
+
     // HARDCODE: limits the number of fish to 3
     if (currSess.length > 3) {
-      currSess = currSess.slice(0,3)
+      console.log(currSess.length)
+      currSess = currSess.slice(currSess.length-3,currSess.length)
     }
     setCurrentSessions(currSess)
   }, [sessions])
