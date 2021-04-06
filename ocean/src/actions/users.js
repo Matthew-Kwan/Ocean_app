@@ -91,7 +91,7 @@ export const addUser = (user_data) => {
                 alert("Could not post the user")
             }
         }).then(data => {
-            return data.id
+            return data
         }
         )
         .catch(error => {
