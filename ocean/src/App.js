@@ -423,12 +423,18 @@ function App() {
 
     const usernameExists = users.filter(user => user.username === username)
 
+    console.log(usernameExists)
 
-    if (!usernameExists) {
+    if (usernameExists.length === 0) {
       const user = {id: 1, username: username, password: password, adminFlag: false, name: name, tagline: "", goals: [], friends: [], sessions: []}
+
       addUser(user)
-      setUser(user)
-      setLoggedIn(true)
+      .then(
+        (result) => 
+        {console.log("here", result)
+          setUser(result)
+        setLoggedIn(true)})
+      
     }
     else  
       console.log("username already exists")
