@@ -7,7 +7,7 @@ Content-Type: application/json
     "username":"user5",
     "password":"user5",
     "adminFlag":false,
-    "name":"Jeremy",
+    "name":"Anna",
     "tagline":"Grassy Man from a Grassy World",
     "goals": [
         {

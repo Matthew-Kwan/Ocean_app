@@ -12,7 +12,7 @@ import Nav from './components/NavBar'
 import OtherTank from './components/OtherTank';
 
 // import actions
-import { getUsers } from "./actions/users.js";
+import { getUsers, addUser } from "./actions/users.js";
 
 // import materialUI components
 import { makeStyles } from '@material-ui/core/styles';
@@ -113,8 +113,8 @@ const SignUpModule = ({loggedIn,handleRegister,setSignUp,classes}) => {
                     <h3>
                     Dive into Ocean</h3>
                     <form className={classes.root} noValidate autoComplete="off" onSubmit={handleRegister}>
-                        <div className = 'input' id="email-input">
-                        <TextField required id="outlined-basic" size='small' label="Email" name="email" variant="outlined" /></div>
+                        <div className = 'input' id="name-input">
+                        <TextField required id="outlined-basic" size='small' label="Name" name="email" variant="outlined" /></div>
                         <div className = 'input' id="username-input">
                         <TextField required id="outlined-basic" size='small' label="Username" name="username" variant="outlined" /></div>
                         <div className= 'input' id="password-input">
@@ -415,7 +415,18 @@ function App() {
   const handleRegister = (e) => {
     e.preventDefault()
     setLoggedIn(true)
-    setUser(users[0])
+    console.log("handle register reached")
+    const name = document.querySelector('#name-input').children[0].children[1].children[0].value
+    const username = document.querySelector('#username-input').children[0].children[1].children[0].value
+    const password = document.querySelector('#password-input').children[0].children[1].children[0].value
+    
+    console.log(name, username, password)
+
+    const user = {id: 1, username: username, password: password, adminFlag: false, name: name, tagline: "", goals: [], friends: [], sessions: []}
+
+    addUser(user)
+    setUser(user)
+    //setUser(users[0])
   }
 
   // logout function
