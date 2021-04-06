@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 });
 
 
-export default function AdminActiveReportsTable(setUsers) {
+export default function AdminActiveReportsTable({setUsers}) {
   const [reports, setReports] = useState([])
   useEffect(() => { 
     getReports(setReports)

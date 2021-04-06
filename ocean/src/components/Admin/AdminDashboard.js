@@ -64,7 +64,6 @@ export default function AdminDashboard({users, sessions, setUsers}) {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    setUsers(users);
 
   };
 

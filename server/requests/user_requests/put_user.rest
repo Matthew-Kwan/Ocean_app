@@ -1,74 +1,69 @@
-PUT http://localhost:5000/api/users/606ce2beddcb661f464f428e
+PUT http://localhost:5000/api/users/606ceb99ddcb661f464f42cf
 Content-Type: application/json
 
  {
-      "_id": "606ce2beddcb661f464f428e",
-      "id": 6,
-      "username": "user5",
-      "password": "user5",
-      "adminFlag": false,
-      "name": "ling",
-      "tagline": "user5",
-      "goals": [
+  "_id": "606ceb99ddcb661f464f42cf",
+  "id": 6,
+  "username": "user5",
+  "password": "user5",
+  "adminFlag": false,
+  "name": "ling",
+  "tagline": "user5",
+  "goals": [
+    {
+      "_id": "606ceb99ddcb661f464f42d0",
+      "id": 30000,
+      "title": "Software",
+      "totalTasksNum": 2,
+      "completedTasksNum": 1,
+      "completed": false,
+      "completionPercent": 50,
+      "tasks": [
         {
-          "_id": "606cc959ddcb661f464f4286",
-          "id": 30000,
-          "title": "Software",
-          "totalTasksNum": 2,
-          "completedTasksNum": 1,
-          "completed": false,
-          "completionPercent": 50,
-          "tasks": [
-            {
-              "_id": "606cc959ddcb661f464f4287",
-              "id": 0,
-              "task": "Research React",
-              "completed": true
-            },
-            {
-              "_id": "606cc959ddcb661f464f4288",
-              "id": 1,
-              "task": "Make demo app",
-              "completed": false
-            }
-          ]
+          "_id": "606ceb99ddcb661f464f42d1",
+          "id": 0,
+          "task": "Research React",
+          "completed": true
         },
         {
-          "_id": "606cc959ddcb661f464f4289",
-          "id": 4000,
-          "title": "React",
-          "totalTasksNum": 2,
-          "completedTasksNum": 0,
-          "completed": false,
-          "completionPercent": 0,
-          "tasks": [
-            {
-              "_id": "606cc959ddcb661f464f428a",
-              "id": 0,
-              "task": "Research React",
-              "completed": false
-            },
-            {
-              "_id": "606cc959ddcb661f464f428b",
-              "id": 1,
-              "task": "Make demo app",
-              "completed": false
-            }
-          ]
+          "_id": "606ceb99ddcb661f464f42d2",
+          "id": 1,
+          "task": "Make demo app",
+          "completed": false
         }
-      ],
-      "friends": [
-        
-      ],
-      "sessions": [
-          {
-  "userId": "606ce2beddcb661f464f428e",
+      ]
+    },
+    {
+      "_id": "606ceb99ddcb661f464f42d3",
+      "id": 4000,
+      "title": "React",
+      "totalTasksNum": 2,
+      "completedTasksNum": 0,
+      "completed": false,
+      "completionPercent": 0,
+      "tasks": [
+        {
+          "_id": "606ceb99ddcb661f464f42d4",
+          "id": 0,
+          "task": "Research React",
+          "completed": false
+        },
+        {
+          "_id": "606ceb99ddcb661f464f42d5",
+          "id": 1,
+          "task": "Make demo app",
+          "completed": false
+        }
+      ]
+    }
+  ],
+  "friends": [],
+  "sessions": [{
+  "userId": "606ceb99ddcb661f464f42cf",
   "goalId": "2",
   "title": "test dddd#2 session",
   "startTime": "2020-01-02T01:51:00.000Z",
-  "id": "606ce2caddcb661f464f4295"
+  "id": "606cec16ddcb661f464f42de"
+}],
+  "__v": 0
 }
-        
-      ],
-      "__v": 0
-    }

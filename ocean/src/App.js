@@ -361,11 +361,6 @@ function App() {
     adminFlag: null,
   })
 
-  const [tempUser, setTempUser] = useState({
-    username: '',
-    password: '',
-  })
-
   const [sessions, setSessions] = useState([])
 
   const [loggedIn, setLoggedIn] = useState(false)
@@ -468,7 +463,7 @@ function App() {
         <Route path="/admin" render={() => {
 
           return (
-            <AdminDashboard users={users} sessions={sessions} setUsers={setUser} />
+            <AdminDashboard users={users} sessions={sessions} setUsers={setUsers} />
           )
         }} />
 

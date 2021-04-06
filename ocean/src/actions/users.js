@@ -188,7 +188,7 @@ export const deleteUser = (id) => {
         method: "DELETE",
     });
         // Send the request with fetch()
-    fetch(request)
+    const result = fetch(request)
     .then(function (res) {
         console.log('fetched the request result')
 
@@ -207,6 +207,8 @@ export const deleteUser = (id) => {
     .catch(error => {
         console.log("DELETE user error: ", error);
     });
+
+    return result
 };
 
 
