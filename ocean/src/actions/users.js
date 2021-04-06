@@ -30,7 +30,7 @@ export const getUsers = (setUsers) => {
         .catch(error => {
             console.log(error);
         });
-    
+
     return result;
 };
 
@@ -53,7 +53,7 @@ export const getUser = (id) => {
         .catch(error => {
             console.log(error);
         });
-    
+
     return result
 };
 
@@ -62,10 +62,10 @@ export const getUser = (id) => {
 export const addUser = (user_data) => {
     // the URL for the request
     const url = `${API_HOST}/api/users`;
-  
+
     // The data we are going to send in our request
     const user = user_data
-  
+
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
         method: "post",
@@ -75,7 +75,7 @@ export const addUser = (user_data) => {
             "Content-Type": "application/json"
         }
     });
-  
+
     // Send the request with fetch()
     const result = fetch(request)
         .then(function (res) {
@@ -97,18 +97,18 @@ export const addUser = (user_data) => {
         .catch(error => {
             console.log("POST user error: ", error);
         });
-  
+
         return result
   };
-  
+
 // a function to handle PUT requests for users
 export const updateUser = (user_data, id) => {
     // the URL for the request
     const url = `${API_HOST}/api/users/${id}`;
-  
+
     // The data we are going to send in our request
     const user = user_data
-  
+
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
         method: "PUT",
@@ -142,10 +142,10 @@ export const updateUser = (user_data, id) => {
 export const updateUserAddGoal = (goal_data, id) => {
     // the URL for the request
     const url = `${API_HOST}/api/users/${id}/goal`;
-  
+
     // The data we are going to send in our request
     const goal = goal_data
-  
+
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
         method: "PUT",
@@ -174,7 +174,7 @@ export const updateUserAddGoal = (goal_data, id) => {
         .catch(error => {
             console.log("PUT user error: ", error);
         });
-    
+
     return result
 };
 
@@ -182,7 +182,7 @@ export const updateUserAddGoal = (goal_data, id) => {
 export const deleteUser = (id) => {
     // the URL for the request
     const url = `${API_HOST}/api/users/${id}`;
-  
+
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
         method: "DELETE"

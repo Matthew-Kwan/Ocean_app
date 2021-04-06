@@ -13,8 +13,11 @@ const cors = require('cors')
 // starting the express server
 const app = express();
 
-// start cors
-app.use(cors())
+// get the environment state
+const env = process.env.NODE_ENV
+
+// start cors if in development
+if (env !== 'prod') { app.use(cors()) }
 
 // mongoose and mongo connection
 const { mongoose } = require('./db/mongoose')
@@ -33,7 +36,7 @@ const { Report } = require('./models/report')
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
-// request-logger
+// request-logger: middleware for logging requests to our API in the terminal
 const requestLogger = (request, response, next) => {
   logger.info('Method:', request.method)
   logger.info('Path:  ', request.path)
@@ -42,10 +45,47 @@ const requestLogger = (request, response, next) => {
   next()
 }
 app.use(requestLogger)
+
 /*** Helper functions below **********************************/
 function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddently disconnects
 	return typeof error === 'object' && error !== null && error.name === "MongoNetworkError"
 }
+
+const authenticate = (req, res, next) => {
+
+  if (req.session.user) {
+      User.findById(req.session.user).then((user) => {
+          if (!user) {
+              return Promise.reject()
+          } else {
+              req.user = user
+              next()
+          }
+      }).catch((error) => {
+          res.status(401).send("Unauthorized")
+      })
+  } else {
+      res.status(401).send("Unauthorized")
+  }
+}
+
+/* Session handling */
+const session = require('express-session')
+
+// Middleware for creating sessions and session cookies.
+// A session is created on every request
+app.use(session({
+  secret: 'tis a secret mate',
+  cookie: {
+    expires: 900000, // expires in 15 mins
+    httpOnly: true
+  },
+
+  // Session saving options
+  saveUnintialized: false, // don't save the initial session if the session object is unmodified (i.e the user did not log in)
+  resave: false, // don't resave a session that hasn't been modified
+}))
+
 
 /*** Webpage routes below **********************************/
 /// We only allow specific parts of our public directory to be access, rather than giving
@@ -60,7 +100,6 @@ app.get('/', (req, res) => {
 })
 
 /*** Routers Initialized */
-// app.use('/api/users', usersRouter)
 
 /*** USER ROUTES */
 app.post('/api/users', async (req, res) => {
@@ -485,16 +524,16 @@ app.put('/api/reports/:id', async (req, res) => {
 	  // 	res.status(500).send('Internal server error')
 	  // 	return;
 	  // }
-  
+
 	const body = req.body
 	const id = req.params.id
-  
+
 	if (mongoose.connection.readyState != 1) {
 		  log('Issue with mongoose connection')
 		  res.status(500).send('Internal server error')
 		  return;
 	  }
-  
+
 	// Create a new session
 	  const session = {
 		  userId: body.userId,
@@ -503,7 +542,7 @@ app.put('/api/reports/:id', async (req, res) => {
 	  startTime: body.startTime,
 	  endTime: body.endTime,
 	  }
-  
+
 	try {
 	  const result = await Report.findByIdAndUpdate(id, req.body, { new:true })
 	  res.status(202).send(result)
