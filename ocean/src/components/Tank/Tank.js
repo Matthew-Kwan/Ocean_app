@@ -1,11 +1,11 @@
 import React from 'react'
 import {useEffect} from 'react'
 import './tank.css'
-import GoalsDrawer from './GoalsDrawer'
-import Fish from './Fish'
+import GoalsDrawer from '../Goals/GoalsDrawer'
+import Fish from '../Ocean/Fish'
 import Decor from './Decor'
 
-import { getUser } from '../actions/users.js'
+import { getUser } from '../../actions/users.js'
 
 let counter = 2;
 let decorCount = 0;

@@ -1,8 +1,8 @@
 import React from 'react'
 import {useEffect} from 'react'
 import './decor.css'
-import coral from '../images/coral.png'
-import squidwardHouse from '../images/squidward-house.png'
+import coral from '../../images/coral.png'
+import squidwardHouse from '../../images/squidward-house.png'
 
 let decorArr = [squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral,
                 squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral];

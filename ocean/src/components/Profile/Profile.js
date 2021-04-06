@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import { Button, colors } from '@material-ui/core';
 import './profile.css'
-import './modal.css'
+import '../Tank/modal.css'
+
 import EditMe from './editMe'
 import {Link} from 'react-router-dom'
 import Modal from '@material-ui/core/Modal'
-import {addReport} from '../actions/reports'
+import {addReport} from '../../actions/reports'
 
 const Profile = ({mainUser, user, setUser}) => {
 

@@ -2,14 +2,12 @@ import './App.css';
 import React, { useState, useEffect } from 'react'
 
 // import components
-import Ocean from './components/Ocean'
-import Tank from './components/Tank'
-import Profile from './components/Profile'
-import YourProfile from './components/YourProfile'
-import Login from './components/Login'
+import Ocean from './components/Ocean/Ocean'
+import Tank from './components/Tank/Tank'
+import Profile from './components/Profile/Profile'
+import YourProfile from './components/Profile/YourProfile'
 import AdminDashboard from './components/Admin/AdminDashboard'
-import Nav from './components/NavBar'
-import OtherTank from './components/OtherTank';
+import OtherTank from './components/Tank/OtherTank';
 
 // import actions
 import { getUsers, addUser } from "./actions/users.js";
@@ -17,20 +15,16 @@ import { getUsers, addUser } from "./actions/users.js";
 // import materialUI components
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Modal from '@material-ui/core/Modal';
 
-import './components/modal.css'
-import './components/nav.css'
+import './components/Tank/modal.css'
+import './components/Nav/nav.css'
 import './components/login.css'
 
-import './components/profile.css'
-import ProgressBar from './components/ProgressBar'
-import ButtonModal from './components/ButtonModal'
+import './components/Profile/profile.css'
 
 
 // import React Router

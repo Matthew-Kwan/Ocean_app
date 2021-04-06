@@ -4,7 +4,7 @@ import InSessionBox from './InSessionBox'
 import SessionBox from './SessionBox'
 import Fish from './Fish'
 
-import { getSessions, updateSession } from '../actions/sessions'
+import { getSessions, updateSession } from '../../actions/sessions'
 
 let counter = 1;
 

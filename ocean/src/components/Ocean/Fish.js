@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import './fish.css'
 import smallFish from './smallFish.png'
 
-import Profile from './Profile'
+import Profile from '../Profile/Profile'
 import Modal from '@material-ui/core/Modal';
 
 

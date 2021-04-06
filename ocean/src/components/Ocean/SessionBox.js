@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import './ocean.css'
 
 // import actions
-import { addSession } from '../actions/sessions'
+import { addSession } from '../../actions/sessions'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
