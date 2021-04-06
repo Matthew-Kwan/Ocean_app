@@ -25,7 +25,7 @@ import TextField from '@material-ui/core/TextField';
 import Modal from '@material-ui/core/Modal';
 
 import './components/modal.css'
-import './components/nav.scss'
+import './components/nav.css'
 import './components/login.css'
 
 import './components/profile.css'
