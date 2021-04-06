@@ -18,6 +18,7 @@ const OtherTank= ({users}) => {
     const [goals, setGoals] = React.useState(tankOwner.goals);
 
     useEffect(() => {
+        console.log(id)
         console.log(tankOwner)
         const tmpSessions = tankOwner.sessions.filter(session => session.endTime !== null)
         setSessions(tmpSessions);

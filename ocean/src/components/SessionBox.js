@@ -92,9 +92,15 @@ const SessionBox = ({ user, session, setSession, setInSession, setNewSessionId})
             helperText="Please select a goal"
           >
             {user.goals.map((option) => (
+
+              !option.completed ?
+
               <MenuItem key={option.id} value={option._id}>
                 {option.title}
               </MenuItem>
+
+              : null
+
             ))}
         </TextField> <br></br>
 

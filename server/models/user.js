@@ -44,6 +44,9 @@ const taskSchema = new mongoose.Schema({
 })
 
 const goalSchema = new mongoose.Schema({
+  id: {
+    type: Number
+  },
   title: {
     type: String
   },
@@ -111,4 +114,6 @@ const User = mongoose.model('User', {
   sessions: [sessionSchema]
 })
 
-module.exports = { User }
+const Goal = mongoose.model('Goal', goalSchema)
+
+module.exports = { User, Goal }

@@ -382,6 +382,12 @@ function App() {
   }, []) //
 
 
+  useEffect(() => {
+    console.log('users updated', users)
+    // setUsers(usersList)
+  }, [users]) //
+
+
   // login function
   const handleLogin = (e) => {
     e.preventDefault()
@@ -417,6 +423,7 @@ function App() {
 
     setUser({})
     setLoggedIn(false)
+    getUsers(setUsers)
   }
 
   return (
@@ -463,7 +470,7 @@ function App() {
 
         <Route path="/tank" render={() => {
           return (
-            <Tank user={user} />
+            <Tank user={user} setUser={setUser}/>
           )
         }} />
 

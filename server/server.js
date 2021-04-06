@@ -84,11 +84,13 @@ app.post('/api/users', async (req, res) => {
 	const user = new User({
 		id: body.id,
 		username: body.username,
-    password: body.password,
-    adminFlag: body.adminFlag,
-    name: body.name,
-    tagline: body.tagline,
-    goals: body.goals,
+		password: body.password,
+		adminFlag: body.adminFlag,
+		name: body.name,
+		tagline: body.tagline,
+		goals: body.goals,
+		friends: body.friends,
+		sessions: body.sessions
 	})
 
   try {
@@ -124,6 +126,94 @@ app.get('/api/users', async (req, res) => {
 		res.status(500).send("Internal Server Error")
 	}
 
+})
+
+// a GET route to get user by id
+app.get('/api/users/:id', async (req, res) => {
+
+	const id = req.params.id
+
+	// check mongoose connection established.
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal server error')
+		return;
+	}
+
+	// Get the students
+	try {
+		const user = await User.findById(id)
+		// res.send(students) // just the array
+		res.status(200).send({ user }) // can wrap students in object if want to add more properties
+	} catch(error) {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	}
+
+})
+
+// a PUT route to edit a user by is
+app.put('/api/users/:id', async (req, res) => {
+	const id = req.params.id
+	const body = req.body
+
+	const user = {
+		id: body.id,
+		username: body.username,
+		password: body.password,
+		adminFlag: body.adminFlag,
+		name: body.name,
+		tagline: body.tagline,
+		goals: body.goals,
+		friends: body.friends,
+		sessions: body.sessions
+	}
+
+	try {
+	  const result = await User.findByIdAndUpdate(id, user, { new:true })
+
+	  res.status(202).send(result)
+	} catch (error) {
+	  console.log(error)
+	  if (isMongoError(error)) {
+		res.status(500).send('Internal server error')
+	  } else {
+		res.status(404).send('Not Found')
+	  }
+	}
+})
+
+// a PUT route to edit a user by is
+app.put('/api/users/:id/goal', async (req, res) => {
+	const id = req.params.id
+	const body = req.body
+
+	const goal = {
+		id: body.id,
+		title: body.title,
+		totalTasksNum: body.totalTasksNum,
+		completedTasksNum: body.completedTasksNum,
+		completed: body.completed,
+		completionPercent: body.completionPercent,
+		tasks: body.tasks
+	}
+
+	try {
+	  const result = await User.findById(id)
+
+	  result.goals.push(goal)
+
+	  const result2 = await User.findByIdAndUpdate(id, result, { new:true })
+
+	  res.status(202).send(result2)
+	} catch (error) {
+	  console.log(error)
+	  if (isMongoError(error)) {
+		res.status(500).send('Internal server error')
+	  } else {
+		res.status(404).send('Not Found')
+	  }
+	}
 })
 
 // a DELETE route to delete a user
@@ -190,9 +280,9 @@ app.post('/api/sessions', async (req, res) => {
 	const session = new Session({
 		userId: body.userId,
 		goalId: body.goalId,
-    title: body.title,
-    startTime: body.startTime,
-    endTime: body.endTime,
+		title: body.title,
+		startTime: body.startTime,
+		endTime: body.endTime,
 	})
 
   try {
@@ -231,9 +321,9 @@ app.put('/api/sessions/:id', async (req, res) => {
 	const session = {
 		userId: body.userId,
 		goalId: body.goalId,
-    title: body.title,
-    startTime: body.startTime,
-    endTime: body.endTime,
+		title: body.title,
+		startTime: body.startTime,
+		endTime: body.endTime,
 	}
 
   try {
@@ -312,7 +402,7 @@ app.post('/api/reports', async (req, res) => {
   })
 
 //   get all reports
-  app.get('/api/reports', async (req, res) => {
+app.get('/api/reports', async (req, res) => {
 
 	// check mongoose connection established.
 	if (mongoose.connection.readyState != 1) {
@@ -332,6 +422,23 @@ app.post('/api/reports', async (req, res) => {
 	}
 
 })
+
+// delete report by ID
+app.delete('/api/reports/:id', async (req, res) => {
+	const id = req.params.id
+	try {
+	  const result = await Report.findByIdAndRemove(id)
+	  res.status(202).send(result)
+	} catch (error) {
+	  console.log(error)
+	  if (isMongoError(error)) {
+		res.status(500).send('Internal server error')
+	  } else {
+		console.log(error)
+		res.status(404).send('Not Found')
+	  }
+	}
+  })
 
 // get report by ID
 
@@ -360,11 +467,49 @@ app.get('/api/reports/:id', async (req, res) => {
 	}
 
 })
+app.put('/api/reports/:id', async (req, res) => {
 
+	// check mongoose connection established.
+	  // if (mongoose.connection.readyState != 1) {
+	  // 	log('Issue with mongoose connection')
+	  // 	res.status(500).send('Internal server error')
+	  // 	return;
+	  // }
+  
+	const body = req.body
+	const id = req.params.id
+  
+	if (mongoose.connection.readyState != 1) {
+		  log('Issue with mongoose connection')
+		  res.status(500).send('Internal server error')
+		  return;
+	  }
+  
+	// Create a new session
+	  const session = {
+		  userId: body.userId,
+		  goalId: body.goalId,
+	  title: body.title,
+	  startTime: body.startTime,
+	  endTime: body.endTime,
+	  }
+  
+	try {
+	  const result = await Report.findByIdAndUpdate(id, req.body, { new:true })
+	  res.status(202).send(result)
+	} catch (error) {
+	  console.log(error) // log server error to the console, not to the client.
+		  if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+			  res.status(500).send('Internal server error')
+		  } else {
+			  res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+		  }
+	}
+  })
 app.patch('/api/reports/:id', async (req,res) => {
 	const id = req.params.id
 	if (!ObjectID.isValid(id)) {
-		res.status(404).send('Restaurant not found')
+		res.status(404).send('Report not found')
 		return;
 	}
 

@@ -5,11 +5,12 @@ import GoalsDrawer from './GoalsDrawer'
 import Fish from './Fish'
 import Decor from './Decor'
 
+import { getUser } from '../actions/users.js'
 
 let counter = 2;
 let decorCount = 0;
 
-const Tank= ({user}) => {
+const Tank= ({user, setUser}) => {
 
     const [sessions, setSessions] = React.useState([]);
     const [goals, setGoals] = React.useState(user.goals);
@@ -20,6 +21,11 @@ const Tank= ({user}) => {
         const tmpSessions = user.sessions.filter(session => session.endTime !== null)
         setSessions(tmpSessions);
 
+        getUser(user._id)
+        .then((result) => {
+            console.log('get user',result)
+        })
+        
         return function cleanup() {
             counter = 4-sessions.length;
             decorCount = 0;
@@ -60,7 +66,7 @@ const Tank= ({user}) => {
 
             <div className="tankContent">
 
-                <GoalsDrawer goals={user.goals} refreshGoals={refreshGoals}/>
+                <GoalsDrawer goals={user.goals} user={user} setUser={setUser} setGoals={setGoals} refreshGoals={refreshGoals}/>
 
                 <ul id="fishListTank">
                     {sessions.map(session => handleFish(session))}
