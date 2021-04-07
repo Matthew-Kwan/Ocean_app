@@ -377,7 +377,7 @@ function App() {
   }, [users]) //
 
 
-  // login function
+  // login function - Modify to work with backend
   const handleLogin = (e) => {
     e.preventDefault()
     console.log('handle login reached')

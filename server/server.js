@@ -80,11 +80,11 @@ app.use(session({
     expires: 900000, // expires in 15 mins
     httpOnly: true
   },
-
   // Session saving options
   saveUnintialized: false, // don't save the initial session if the session object is unmodified (i.e the user did not log in)
   resave: false, // don't resave a session that hasn't been modified
-}))
+
+  }))
 
 
 /*** Webpage routes below **********************************/
@@ -99,7 +99,50 @@ app.get('/', (req, res) => {
 	res.sendFile(path.join(__dirname, '/placeholder/index.html'))
 })
 
-/*** Routers Initialized */
+// TODO: Route to check if a user is logged in on the session
+app.get("/api/users/check-session", (req,res) => {
+  if (req.session.user) {
+    res.send({})
+  }
+})
+
+/*** API Routes below */
+
+/*** LOGIN ROUTES */
+
+app.post('/api/users/login', async (req, res) => {
+
+  // pull out the body
+  const body = req.body
+
+  // pull out the username and password
+  const username = body.username
+  const password = body.password
+
+  User.findByUsernamePassword(username, password)
+    .then(user => {
+      // if we find the user, add the users information to the session to retain all that information
+      // will create a function to ensuree that the session exists to make sure that we are logged in
+      req.session.user = user._id
+      req.session.username = user.username
+      res.send({ user: user})
+    })
+    .catch(error => {
+      res.status(400).send()
+    });
+})
+
+// A route to logout a user
+app.get("/users/logout", (req, res) => {
+  // remove the session -> only returns an error
+  req.session.destroy(error => {
+    if (error) {
+      res.status(500).send(error)
+    } else {
+      res.send()
+    }
+  })
+})
 
 /*** USER ROUTES */
 app.post('/api/users', async (req, res) => {
