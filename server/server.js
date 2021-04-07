@@ -110,6 +110,18 @@ app.get("/api/users/check-session", (req,res) => {
 
 /*** LOGIN ROUTES */
 
+// A route to logout a user
+app.get("/api/users/logout", (req, res) => {
+  // remove the session -> only returns an error
+  req.session.destroy(error => {
+    if (error) {
+      res.status(500).send("haha")
+    } else {
+      res.send()
+    }
+  })
+})
+
 app.post('/api/users/login', async (req, res) => {
 
   // pull out the body
@@ -130,18 +142,6 @@ app.post('/api/users/login', async (req, res) => {
     .catch(error => {
       res.status(400).send()
     });
-})
-
-// A route to logout a user
-app.get("/users/logout", (req, res) => {
-  // remove the session -> only returns an error
-  req.session.destroy(error => {
-    if (error) {
-      res.status(500).send(error)
-    } else {
-      res.send()
-    }
-  })
 })
 
 /*** USER ROUTES */

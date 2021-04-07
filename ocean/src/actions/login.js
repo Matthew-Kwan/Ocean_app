@@ -45,6 +45,7 @@ export const logout = (setUser) => {
   const promise = fetch(url)
     .then(res => {
       setUser({})
+      return res
     })
     .catch(error => {
       console.log(error)

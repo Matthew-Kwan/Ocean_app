@@ -264,7 +264,7 @@ function App() {
     const name = document.querySelector('#name-input').children[0].children[1].children[0].value
     const username = document.querySelector('#username-input').children[0].children[1].children[0].value
     const password = document.querySelector('#password-input').children[0].children[1].children[0].value
-    
+
     console.log(name, username, password)
 
     const usernameExists = users.filter(user => user.username === username)
@@ -276,23 +276,33 @@ function App() {
 
       addUser(user)
       .then(
-        (result) => 
+        (result) =>
         {console.log("here", result)
           setUser(result)
         setLoggedIn(true)})
-      
+
     }
-    else  
+    else
       console.log("username already exists")
     //setUser(users[0])
   }
 
   // logout function
-  const handleLogout = async (e) => {
+  const handleLogout = (e) => {
 
-    await logout(setUser)
     setLoggedIn(false)
-    getUsers(setUsers)
+    logout(setUser)
+
+    // logout(setUser)
+    // .then((res) => {
+    //   console.log('first then')
+    //   setLoggedIn(false)
+    //   return res
+    // })
+    // .catch((err) => {
+    //   console.log(err)
+    // })
+
   }
 
   return (
