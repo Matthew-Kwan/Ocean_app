@@ -3,7 +3,7 @@
 
 const prod = {
   env: 'production',
-  api_host: 'csc309-ocean.herokuapp.com' // an empty string to signify a relative path. can also put a deployment URL.
+  api_host: '' // an empty string to signify a relative path. can also put a deployment URL.
 };
 
 const dev = {
