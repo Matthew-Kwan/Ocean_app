@@ -35,3 +35,15 @@ export const login = (username, password, setUser) => {
       console.log(error);
     })
 }
+
+export const logout = (setUser) => {
+  const url = `${API_HOST}/api/users/logout`
+
+  fetch(url)
+    .then(res => {
+      setUser({})
+    })
+    .catch(error => {
+      console.log(error)
+    })
+}
