@@ -17,7 +17,7 @@
   "scripts": {
     "start": "cd ocean && react-scripts start",
     "server": "cd server && npm run dev",
-    "build": "cd ocean && react-scripts build",
+    "build": "cd ocean && npm i && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
