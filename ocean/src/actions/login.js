@@ -19,7 +19,7 @@ export const login = (username, password, setUser) => {
   })
 
   // send the request
-  fetch(request)
+  const promise = fetch(request)
     .then(res => {
       if (res.status === 200) {
         return res.json();
@@ -29,21 +29,26 @@ export const login = (username, password, setUser) => {
       // if the user exists, setUser to user
       if (json.user !== undefined) {
         setUser(json.user)
+        return json.user
       }
     })
     .catch(error => {
       console.log(error);
     })
+
+  return promise
 }
 
 export const logout = (setUser) => {
   const url = `${API_HOST}/api/users/logout`
 
-  fetch(url)
+  const promise = fetch(url)
     .then(res => {
       setUser({})
     })
     .catch(error => {
       console.log(error)
     })
+
+  return promise
 }
