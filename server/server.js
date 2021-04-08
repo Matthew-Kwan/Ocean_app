@@ -13,40 +13,33 @@ const cors = require('cors')
 // starting the express server
 const app = express();
 
-// get the environment state
-const env = process.env.NODE_ENV
+/* Session handling */
+const MongoStore = require('connect-mongo');
+const { reset } = require('nodemon');
 
-app.use((req, res, next) => {
-  res.header('Access-control-Allow-Origin', 'http://localhost:3000');
-  res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  res.header('Access-Control-Allow-Credentials', true);
-  next();
-  });
+// mongoose and mongo connection
+const { mongoose } = require('./db/mongoose')
+mongoose.set('bufferCommands', false);  // don't buffer db requests if the db server isn't connected - minimizes http requests hanging if this is the case.
+
 
 // start cors if in development
 app.use(cors({
   credentials: true
 }))
 
-/* Session handling */
 const session = require('express-session')
-const MongoStore = require('connect-mongo');
-const { reset } = require('nodemon');
-
 // Middleware for creating sessions and session cookies.
 // A session is created on every request
 app.use(session({
   secret: 'tis a secret mate',
   cookie: {
-    expires: 900000, // expires in 15 mins
+    expires: 3000, // expires in 15 mins
     httpOnly: true,
+    secure: false,
   },
   // Session saving options
-  saveUnintialized: true, // don't save the initial session if the session object is unmodified (i.e the user did not log in)
-  resave: false, // don't resave a session that hasn't been modified
+  saveUnintialized: false, // don't save the initial session if the session object is unmodified (i.e the user did not log in)
+  resave: true, // don't resave a session that hasn't been modified
   store: MongoStore.create({
     mongoUrl: process.env.MONGODB_URI_SESSIONS
   })
@@ -59,9 +52,15 @@ app.use(session({
     next()
   });
 
-// mongoose and mongo connection
-const { mongoose } = require('./db/mongoose')
-mongoose.set('bufferCommands', false);  // don't buffer db requests if the db server isn't connected - minimizes http requests hanging if this is the case.
+app.use((req, res, next) => {
+  res.header('Access-control-Allow-Origin', 'http://localhost:3000');
+  res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.header('Access-Control-Allow-Credentials', true);
+  next();
+  });
 
 // // import the mongoose models
 const { User } = require('./models/user')
@@ -140,18 +139,6 @@ app.get("/api/users/check-session2", (req,res) => {
 
 /*** LOGIN ROUTES */
 
-// A route to logout a user
-app.get("/api/users/logout", (req, res) => {
-  // remove the session -> only returns an error
-  req.session.destroy(error => {
-    if (error) {
-      res.status(500).send(error)
-    } else {
-      res.send()
-    }
-  })
-})
-
 app.post('/api/users/login', async (req, res) => {
 
   // pull out the body
@@ -168,11 +155,25 @@ app.post('/api/users/login', async (req, res) => {
       req.session.user = user
       req.session.username = user.username
       req.session.save()
+      console.log(req.session)
       res.send({ user: req.session.user })
     })
     .catch(error => {
       res.status(400).send()
     });
+})
+
+// A route to logout a user
+app.get("/api/users/logout", (req, res) => {
+  // remove the session -> only returns an error
+  req.session.destroy(error => {
+    if (error) {
+      res.status(500).send(error)
+    } else {
+      console.log('session destroyed')
+      res.send()
+    }
+  })
 })
 
 /*** USER ROUTES */
