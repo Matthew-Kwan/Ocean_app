@@ -412,13 +412,13 @@ app.post('/api/sessions', async (req, res) => {
 		startTime: body.startTime,
 	})
 
-  // find user with session user
-  const user = await User.findById(ObjectID(req.session.user._id))
+  // // find user with session user
+  // const user = await User.findById(ObjectID(req.session.user._id))
 
   try {
     const result = await newSession.save()
-    user.sessions = user.sessions.concat(ObjectID(result._id))
-    await user.save()
+    // user.sessions = user.sessions.concat(ObjectID(result._id))
+    // await user.save()
     res.status(201).send(result)
   } catch (error) {
     console.log(error) // log server error to the console, not to the client.
