@@ -11,7 +11,6 @@ export const login = (username, password, setUser) => {
 
   const request = new Request(`${API_HOST}/api/users/login`, {
     method: "POST",
-    credentials: "include",
     body: JSON.stringify(obj),
     headers: {
       "Content-Type": "application/json"

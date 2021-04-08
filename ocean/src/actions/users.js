@@ -214,9 +214,7 @@ export const deleteUser = (id) => {
 export const checkSession = () => {
   const url = `${API_HOST}/api/users/check-session`
 
-  fetch(url, {
-    credentials: 'include'
-  })
+  fetch(url)
   .then(res => {
       if (res.status === 200) {
           console.log('200')

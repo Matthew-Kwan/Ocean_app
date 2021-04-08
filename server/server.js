@@ -6,7 +6,6 @@ const log = console.log
 const logger = require('./logger.js')
 const path = require('path')
 
-const usersRouter = require('./routers/user')
 const { ObjectID } = require('mongodb')
 const express = require('express')
 const cors = require('cors')
@@ -15,7 +14,6 @@ const app = express();
 
 /* Session handling */
 const MongoStore = require('connect-mongo');
-const { reset } = require('nodemon');
 
 
 // Serve static files from the React frontend app
@@ -32,6 +30,7 @@ if (env !== 'prod') { app.use(cors({
 // mongoose and mongo connection
 const { mongoose } = require('./db/mongoose')
 mongoose.set('bufferCommands', false);  // don't buffer db requests if the db server isn't connected - minimizes http requests hanging if this is the case.
+mongoose.set('useFindAndModify', false);
 
 const session = require('express-session')
 // Middleware for creating sessions and session cookies.
