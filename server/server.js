@@ -16,10 +16,48 @@ const app = express();
 // get the environment state
 const env = process.env.NODE_ENV
 
+app.use((req, res, next) => {
+  res.header('Access-control-Allow-Origin', 'http://localhost:3000');
+  res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.header('Access-Control-Allow-Credentials', true);
+  next();
+  });
+
 // start cors if in development
 app.use(cors({
   credentials: true
 }))
+
+/* Session handling */
+const session = require('express-session')
+const MongoStore = require('connect-mongo');
+const { reset } = require('nodemon');
+
+// Middleware for creating sessions and session cookies.
+// A session is created on every request
+app.use(session({
+  secret: 'tis a secret mate',
+  cookie: {
+    expires: 900000, // expires in 15 mins
+    httpOnly: true,
+  },
+  // Session saving options
+  saveUnintialized: true, // don't save the initial session if the session object is unmodified (i.e the user did not log in)
+  resave: false, // don't resave a session that hasn't been modified
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI_SESSIONS
+  })
+
+  }))
+
+  app.use(function (req, res, next) {
+    console.log('SESSION LOGGING MIDDLEWARE')
+    console.log(req.session);
+    next()
+  });
 
 // mongoose and mongo connection
 const { mongoose } = require('./db/mongoose')
@@ -70,30 +108,6 @@ const authenticate = (req, res, next) => {
       res.status(401).send("Unauthorized")
   }
 }
-
-/* Session handling */
-const session = require('express-session')
-const MongoStore = require('connect-mongo');
-const { reset } = require('nodemon');
-
-// Middleware for creating sessions and session cookies.
-// A session is created on every request
-app.use(session({
-  secret: 'tis a secret mate',
-  cookie: {
-    expires: 900000, // expires in 15 mins
-    secure: false,
-    httpOnly: false,
-  },
-  // Session saving options
-  saveUnintialized: false, // don't save the initial session if the session object is unmodified (i.e the user did not log in)
-  resave: false, // don't resave a session that hasn't been modified
-  // store: MongoStore.create({
-  //   mongoUrl: process.env.MONGODB_URI_SESSIONS
-  // })
-
-  }))
-
 
 /*** Webpage routes below **********************************/
 /// We only allow specific parts of our public directory to be access, rather than giving
@@ -153,6 +167,7 @@ app.post('/api/users/login', async (req, res) => {
       // will create a function to ensuree that the session exists to make sure that we are logged in
       req.session.user = user
       req.session.username = user.username
+      req.session.save()
       res.send({ user: req.session.user })
     })
     .catch(error => {
@@ -373,6 +388,7 @@ app.post('/api/sessions', async (req, res) => {
 	// 	return;
 	// }
 
+  res.setHeader('Access-Control-Allow-Credentials', 'true')
   const body = req.body
 
   if (mongoose.connection.readyState != 1) {
@@ -644,8 +660,6 @@ app.patch('/api/reports/:id', async (req,res) => {
 })
 
 // maybe TODO: get report by submitted user
-
-
 
 /*** END OF REPORT ROUTES */
 
