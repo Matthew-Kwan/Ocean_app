@@ -20,7 +20,7 @@
     "mongoose": "^5.12.0"
   },
   "scripts": {
-    "start": " cd server && npm i && npm run dev",
+    "start": " cd server && npm i && node server.js",
     "server": "cd server && npm run dev",
     "build": "cd ocean && npm i && react-scripts build",
     "test": "react-scripts test",
