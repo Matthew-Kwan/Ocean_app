@@ -10,7 +10,7 @@ import AdminDashboard from './components/Admin/AdminDashboard'
 import OtherTank from './components/Tank/OtherTank';
 
 // import actions
-import { getUsers, addUser } from "./actions/users.js";
+import { getUsers, addUser, checkSession } from "./actions/users.js";
 import { login, logout } from "./actions/login";
 
 // import materialUI components
@@ -199,12 +199,7 @@ function App() {
   // React states
 
   const [users, setUsers] = useState([])
-  const [user, setUser] = useState({
-    id: null,
-    username: '',
-    password: '',
-    adminFlag: null,
-  })
+  const [user, setUser] = useState({})
 
   const [sessions, setSessions] = useState([])
 
@@ -236,7 +231,7 @@ function App() {
     const password = document.querySelector('#password-input').children[0].children[1].children[0].value
 
     try {
-      const result = await login(username,password,setUser)
+      await login(username,password,setUser)
       setLoggedIn(true)
 
     } catch (err) {
@@ -290,8 +285,8 @@ function App() {
   // logout function
   const handleLogout = (e) => {
 
-    setLoggedIn(false)
     logout(setUser)
+    setLoggedIn(false)
 
     // logout(setUser)
     // .then((res) => {
@@ -316,7 +311,7 @@ function App() {
         <Route path="/ocean" render={() => {
           // will need this to redirect to login page if the user is not logged in
           return (
-            <Ocean user={user} setUser={setUser} users={users} sessions={sessions} setSessions={setSessions} />
+            <Ocean user={user} setUser={setUser} users={users} sessions={sessions} setSessions={setSessions} setLoggedIn={setLoggedIn} />
           )
         }} />
 

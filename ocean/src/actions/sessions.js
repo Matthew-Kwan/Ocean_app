@@ -11,7 +11,9 @@ export const getSessions = (setSessions) => {
   const url = `${API_HOST}/api/sessions`;
 
   // Since this is a GET request, simply call fetch on the URL
-  fetch(url)
+  fetch(url, {
+    credentials: 'include'
+  })
       .then(res => {
           if (res.status === 200) {
               // return a promise that resolves with the JSON body
@@ -40,6 +42,7 @@ export const addSession = (session_data) => {
   // Create our request constructor with all the parameters we need
   const request = new Request(url, {
       method: "post",
+      credentials: "include",
       body: JSON.stringify(session),
       headers: {
           Accept: "application/json, text/plain, */*",
@@ -59,7 +62,7 @@ export const addSession = (session_data) => {
           } else {
               // If server couldn't add the student, tell the user.
               // Here we are adding a generic message, but you could be more specific in your app.
-              alert("Could not post the session")
+              console.log("Could not post the session")
           }
       }).then(data => {
           return data.id
@@ -79,6 +82,7 @@ export const updateSession = (session_data, id) => {
 
   // The data we are going to send in our request
   const session = session_data
+  console.log("UPDATE SESSION DATA:",session)
 
   // Create our request constructor with all the parameters we need
   const request = new Request(url, {
@@ -95,6 +99,7 @@ export const updateSession = (session_data, id) => {
       .then(function (res) {
           // Handle response we get from the API.
           // Usually check the error codes to see what happened.
+          console.log("STATUS", res.status)
           if (res.status === 202) {
               // If student was added successfully, tell the user.
               console.log('Session Updated Successfully!')
@@ -102,7 +107,8 @@ export const updateSession = (session_data, id) => {
           } else {
               // If server couldn't add the student, tell the user.
               // Here we are adding a generic message, but you could be more specific in your app.
-              alert("Could not post the session")
+              alert("Could not update the session")
+              console.log("FAILED JSON: ",res.json())
           }
       })
       .catch(error => {

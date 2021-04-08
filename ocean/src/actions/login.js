@@ -11,9 +11,9 @@ export const login = (username, password, setUser) => {
 
   const request = new Request(`${API_HOST}/api/users/login`, {
     method: "POST",
+    credentials: "include",
     body: JSON.stringify(obj),
     headers: {
-      Accept: "application/json, text/plain, */*",
       "Content-Type": "application/json"
     }
   })
@@ -27,7 +27,9 @@ export const login = (username, password, setUser) => {
     })
     .then(json => {
       // if the user exists, setUser to user
+      console.log("USER PRE:", json.user)
       if (json.user !== undefined) {
+        console.log("USER: ", json.user)
         setUser(json.user)
         return json.user
       }
