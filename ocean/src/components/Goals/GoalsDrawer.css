@@ -123,6 +123,13 @@
 #seeYourGoalsButton {
     z-index: 2;
     background-color: white;
+    width: 12rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    color: rgb(84, 84, 187);
+    font-weight: bolder;
+    background-color: rgb(255, 255, 255);
+    font-size: 18px;
     
 }
 

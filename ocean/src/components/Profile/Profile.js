@@ -7,6 +7,7 @@ import EditMe from './editMe'
 import {Link} from 'react-router-dom'
 import Modal from '@material-ui/core/Modal'
 import {addReport} from '../../actions/reports'
+import { updateUser } from '../../actions/users';
 
 const Profile = ({mainUser, user, setUser}) => {
 
@@ -58,9 +59,13 @@ const Profile = ({mainUser, user, setUser}) => {
         console.log('adding friend')
         // add user to friends
         let newFriends = mainUser.friends
-        newFriends.push({id:user._id, name: user.name})
+        newFriends.push({_id:user._id, name: user.name})
         setUser({...mainUser, friends: newFriends})
-        // send out put/patch request to friends
+        console.log('newfriendslist')
+        console.log(newFriends)
+        // TODO: send out put/patch request to friends
+
+        updateUser(mainUser,mainUser._id)
     }
 
     const isFriend = mainUser.friends.filter(friend => friend._id == user._id).length > 0 ? true: false

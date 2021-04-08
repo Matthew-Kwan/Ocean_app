@@ -7,8 +7,18 @@ import Decor from './Decor'
 
 import { getUser } from '../../actions/users.js'
 
-let counter = 2;
+let counter = 0;
 let decorCount = 0;
+
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    // dev code
+    counter = 2;
+    console.log("DEV")
+  } else {
+    // production code
+    counter = 4;
+    console.log("PROD")
+  }
 
 const Tank= ({user, setUser}) => {
 
@@ -27,9 +37,17 @@ const Tank= ({user, setUser}) => {
         })
         
         return function cleanup() {
-            counter = 4-sessions.length;
+            if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+                // dev code
+                counter = 4-sessions.length;
+                console.log("DEV")
+              } else {
+                // production code
+                counter = 4;
+                console.log("PROD")
+              }
             decorCount = 0;
-          }
+        }
     }, []);
 
     const refreshGoals = (updatedGoals) => {

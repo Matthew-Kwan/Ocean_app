@@ -17,15 +17,21 @@ const app = express();
 const MongoStore = require('connect-mongo');
 const { reset } = require('nodemon');
 
+
+// Serve static files from the React frontend app
+app.use(express.static(path.join(__dirname, '../ocean/build')))
+
+// get the environment state
+const env = process.env.NODE_ENV
+
+// start cors if in development
+if (env !== 'prod') { app.use(cors({
+  credentials: true
+})) }
+
 // mongoose and mongo connection
 const { mongoose } = require('./db/mongoose')
 mongoose.set('bufferCommands', false);  // don't buffer db requests if the db server isn't connected - minimizes http requests hanging if this is the case.
-
-
-// start cors if in development
-app.use(cors({
-  credentials: true
-}))
 
 const session = require('express-session')
 // Middleware for creating sessions and session cookies.
@@ -661,6 +667,11 @@ app.patch('/api/reports/:id', async (req,res) => {
 })
 
 // maybe TODO: get report by submitted user
+
+// AFTER defining routes: Anything that doesn't match what's above, send back index.html; (the beginning slash ('/') in the string is important!)
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname + '/../ocean/build/index.html'))
+  })
 
 /*** END OF REPORT ROUTES */
 
