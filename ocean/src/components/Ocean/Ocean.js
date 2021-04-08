@@ -6,7 +6,20 @@ import Fish from './Fish'
 
 import { getSessions, updateSession } from '../../actions/sessions'
 
-let counter = 1;
+
+let counter = 0;
+
+console.log("node react env: ", process.env.NODE_ENV)
+
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  // dev code
+  counter = 1;
+  console.log("DEV")
+} else {
+  // production code
+  counter = 4;
+  console.log("PROD")
+}
 
 // Create some sort of mapping of session data onto fishes that just swim around the ocean
 const Ocean = ({user, setUser, users, sessions, setSessions}) => {
@@ -66,13 +79,29 @@ const Ocean = ({user, setUser, users, sessions, setSessions}) => {
 
   useEffect(() => {
     console.log('mount useEffect run')
+
+
+    console.log("process env", process.env.NODE_ENV)
+    
     // sets current sessions to the sessions that are currently still in progress
-    counter = 1
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+      // dev code
+      counter = 1;
+    } else {
+      // production code
+      counter = 4;
+    }
     getSessions(setSessions)
 
     // cleanup function on unmount to reset the counter to 1
     return function cleanup() {
-      counter = 1
+      if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+        // dev code
+        counter = 1;
+      } else {
+        // production code
+        counter = 4;
+      }
 
       // if function inSession -> end the session and update it
       if (inSession === true) {
