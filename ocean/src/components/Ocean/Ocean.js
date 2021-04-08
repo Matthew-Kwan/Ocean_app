@@ -76,7 +76,10 @@ const Ocean = ({user, setUser, users, sessions, setSessions}) => {
 
       // if function inSession -> end the session and update it
       if (inSession === true) {
-        updateSession(session, newSessionId)
+        const endSession = session
+        endSession.endTime = new Date()
+        updateSession(endSession, newSessionId)
+        setInSession(false)
       }
     }
   }, [])
@@ -117,7 +120,7 @@ const Ocean = ({user, setUser, users, sessions, setSessions}) => {
         </div>
         {/*absolute position for session box*/}
         <div className="sessionBox">
-          {inSession ? <InSessionBox session={session} setInSession={setInSession} goalTitle={user.goals.filter(g => g._id == session.goalId)[0].title} newSessionId={newSessionId}/>
+          {inSession ? <InSessionBox session={session} setInSession={setInSession} goalTitle={session.goalId ? user.goals.filter(g => g._id == session.goalId)[0].title : "No Goal Selected!"} newSessionId={newSessionId}/>
           : <SessionBox user={user} session={session} setSession={setSession} setInSession={setInSession} setNewSessionId={setNewSessionId}/>}
         </div>
       </div>

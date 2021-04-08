@@ -29,7 +29,7 @@ const Tank= ({user, setUser}) => {
         return function cleanup() {
             counter = 4-sessions.length;
             decorCount = 0;
-          }
+        }
     }, []);
 
     const refreshGoals = (updatedGoals) => {
