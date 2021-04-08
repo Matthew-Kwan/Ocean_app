@@ -2,35 +2,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 
-/*
-    {
-      id: 1,
-      username: 'user',
-      password: 'user',
-      adminFlag: false,
-      name: 'Pom',
-      tagline: '24yyyyy, 🇨🇦',
-      goals: goals1,
-      friends: [
-        { id: 3, name: 'GrassyMans' },
-      ],
-      sessions: sessions_user_1
-    },
-
-      const goals1 = [
-    {
-      id: 30000,
-      title: 'Software',
-      totalTasksNum: 2,
-      completedTasksNum: 1,
-      completed: false,
-      completionPercent: 50,
-      tasks: [
-        { id: 0, task: 'Research React', completed: true },
-        { id: 1, task: 'Make demo app', completed: false }
-      ]
-    }
-*/
 
 const taskSchema = new mongoose.Schema({
   id: {

@@ -17,7 +17,9 @@ const app = express();
 const env = process.env.NODE_ENV
 
 // start cors if in development
-if (env !== 'prod') { app.use(cors()) }
+app.use(cors({
+  credentials: true
+}))
 
 // mongoose and mongo connection
 const { mongoose } = require('./db/mongoose')
@@ -71,6 +73,8 @@ const authenticate = (req, res, next) => {
 
 /* Session handling */
 const session = require('express-session')
+const MongoStore = require('connect-mongo');
+const { reset } = require('nodemon');
 
 // Middleware for creating sessions and session cookies.
 // A session is created on every request
@@ -78,11 +82,15 @@ app.use(session({
   secret: 'tis a secret mate',
   cookie: {
     expires: 900000, // expires in 15 mins
-    httpOnly: true
+    secure: false,
+    httpOnly: false,
   },
   // Session saving options
   saveUnintialized: false, // don't save the initial session if the session object is unmodified (i.e the user did not log in)
   resave: false, // don't resave a session that hasn't been modified
+  // store: MongoStore.create({
+  //   mongoUrl: process.env.MONGODB_URI_SESSIONS
+  // })
 
   }))
 
@@ -102,8 +110,16 @@ app.get('/', (req, res) => {
 // TODO: Route to check if a user is logged in on the session
 app.get("/api/users/check-session", (req,res) => {
   if (req.session.user) {
-    res.send({})
+    res.send(req.session.user)
+  } else {
+    res.status(401).send(req.session)
   }
+})
+
+app.get("/api/users/check-session2", (req,res) => {
+
+  res.send(req.session)
+
 })
 
 /*** API Routes below */
@@ -115,7 +131,7 @@ app.get("/api/users/logout", (req, res) => {
   // remove the session -> only returns an error
   req.session.destroy(error => {
     if (error) {
-      res.status(500).send("haha")
+      res.status(500).send(error)
     } else {
       res.send()
     }
@@ -133,11 +149,11 @@ app.post('/api/users/login', async (req, res) => {
 
   User.findByUsernamePassword(username, password)
     .then(user => {
-      // if we find the user, add the users information to the session to retain all that information
+      // if we find the user,  the users information to the session to retain all that information
       // will create a function to ensuree that the session exists to make sure that we are logged in
-      req.session.user = user._id
+      req.session.user = user
       req.session.username = user.username
-      res.send({ user: user})
+      res.send({ user: req.session.user })
     })
     .catch(error => {
       res.status(400).send()
@@ -145,7 +161,7 @@ app.post('/api/users/login', async (req, res) => {
 })
 
 /*** USER ROUTES */
-app.post('/api/users', async (req, res) => {
+app.post('/api/users', authenticate,  async (req, res) => {
 
   // check mongoose connection established.
 	// if (mongoose.connection.readyState != 1) {
@@ -366,16 +382,20 @@ app.post('/api/sessions', async (req, res) => {
 	}
 
   // Create a new session
-	const session = new Session({
+	const newSession = new Session({
 		userId: body.userId,
 		goalId: body.goalId,
 		title: body.title,
 		startTime: body.startTime,
-		endTime: body.endTime,
 	})
 
+  // find user with session user
+  const user = await User.findById(ObjectID(req.session.user._id))
+
   try {
-    const result = await session.save()
+    const result = await newSession.save()
+    user.sessions = user.sessions.concat(ObjectID(result._id))
+    await user.save()
     res.status(201).send(result)
   } catch (error) {
     console.log(error) // log server error to the console, not to the client.
@@ -407,7 +427,7 @@ app.put('/api/sessions/:id', async (req, res) => {
 	}
 
   // Create a new session
-	const session = {
+	const newSession = {
 		userId: body.userId,
 		goalId: body.goalId,
 		title: body.title,
@@ -416,7 +436,7 @@ app.put('/api/sessions/:id', async (req, res) => {
 	}
 
   try {
-    const result = await Session.findByIdAndUpdate(id, session, { new:true })
+    const result = await Session.findByIdAndUpdate(id, newSession, { new:true })
     res.status(202).send(result)
   } catch (error) {
     console.log(error) // log server error to the console, not to the client.
@@ -575,15 +595,6 @@ app.put('/api/reports/:id', async (req, res) => {
 		  log('Issue with mongoose connection')
 		  res.status(500).send('Internal server error')
 		  return;
-	  }
-
-	// Create a new session
-	  const session = {
-		  userId: body.userId,
-		  goalId: body.goalId,
-	  title: body.title,
-	  startTime: body.startTime,
-	  endTime: body.endTime,
 	  }
 
 	try {
