@@ -22,15 +22,15 @@ const Fish = ({users, user, setUser, session, fishType}) => {
       setTimer((timer) => timer + 1)
     }, 1000)
 
-    console.log(session.counter)
+    console.log("session counter", session.counter)
 
     // WILL NEED TO CHANGE THIS FOR PRODUCTION (functions no longer called twice b/c not strict)
     if (session.counter % 2 === 0) {
       imageStyle.current = 'fishImageRight'
-      console.log("right")
+      //console.log("right")
     } else {
       imageStyle.current = 'fishImageLeft'
-      console.log("left")
+      //console.log("left")
     }
 
     // get the user for the session
@@ -59,17 +59,27 @@ const Fish = ({users, user, setUser, session, fishType}) => {
     setOpen(false);
   };
 
-  function msToTime(duration) {
+  function msToTime(start, end) {
+
+    var dateS = new Date(start)
+    var dateE = new Date(end)
+
+    var  duration = Math.abs(dateE-dateS)
+
     var milliseconds = parseInt((duration % 1000) / 100),
       seconds = Math.floor((duration / 1000) % 60),
       minutes = Math.floor((duration / (1000 * 60)) % 60),
       hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
 
+
     hours = (hours < 10) ? "0" + hours : hours;
     minutes = (minutes < 10) ? "0" + minutes : minutes;
     seconds = (seconds < 10) ? "0" + seconds : seconds;
 
-    return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+
+    var toTime = hours + ":" + minutes + ":" + seconds + "." + milliseconds
+
+    return toTime;
   }
 
   const removeHidden = () => {
@@ -99,7 +109,7 @@ const Fish = ({users, user, setUser, session, fishType}) => {
             <img className = "fishImage" src={smallFish} id={imageStyle.current} alt="session"/>
             <div className = "hideFishContent">
               <p className='fishTitleTank'>{session.title}</p>
-              <p className='fishTotalTimeTank'>Session Total Time: <br></br>{msToTime(session.endTime - session.startTime)}</p>
+              <p className='fishTotalTimeTank'>Session Total Time: <br></br>{msToTime(session.endTime, session.startTime)}</p>
             </div>
           </div>
         }

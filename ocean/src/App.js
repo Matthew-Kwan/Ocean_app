@@ -31,7 +31,6 @@ import './components/Profile/profile.css'
 import { Route, Switch, NavLink,Link, Redirect, BrowserRouter ,useParams} from 'react-router-dom'
 
 // hardcoded data
-const randomFile = require('select-random-file')
 
 
 // helper functions
@@ -368,7 +367,7 @@ function App() {
 
         <Route path="/tank" render={() => {
           return (
-            <Tank user={user} setUser={setUser}/>
+            <Tank user={user} setUser={setUser} sessions={sessions} setSessions={setSessions}/>
           )
         }} />
 

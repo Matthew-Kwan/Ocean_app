@@ -3,9 +3,12 @@ import {useEffect} from 'react'
 import './decor.css'
 import coral from '../../images/coral.png'
 import squidwardHouse from '../../images/squidward-house.png'
+import coralblue from '../../images/coral-blue.png'
+import fishHouse from '../../images/wide_fish.png'
 
-let decorArr = [squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral,
-                squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral];
+
+let decorArr = [coral, squidwardHouse,coralblue, coral, coralblue, coral, squidwardHouse, coral, squidwardHouse, coral,
+                squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse, coral, squidwardHouse];
 
 const Decor = ({goal, count}) => {
 
