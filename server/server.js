@@ -183,7 +183,7 @@ app.get("/api/users/logout", (req, res) => {
 })
 
 /*** USER ROUTES */
-app.post('/api/users', authenticate,  async (req, res) => {
+app.post('/api/users',  async (req, res) => {
 
   // check mongoose connection established.
 	// if (mongoose.connection.readyState != 1) {
@@ -215,6 +215,7 @@ app.post('/api/users', authenticate,  async (req, res) => {
 
   try {
     const result = await user.save()
+    req.session.user = result
     res.status(201).send(result)
   } catch (error) {
     console.log(error) // log server error to the console, not to the client.
