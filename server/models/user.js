@@ -70,6 +70,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    select: false,
   },
   adminFlag: {
     type: Boolean,
@@ -110,7 +111,7 @@ userSchema.pre('save', function(next) {
 userSchema.statics.findByUsernamePassword = function (username, password) {
   const User = this
 
-  return User.findOne({ username: username }).then((user) => {
+  return User.findOne({ username: username }).select('+password').then((user) => {
 
     // if can not find the user, reject
     if (!user) {

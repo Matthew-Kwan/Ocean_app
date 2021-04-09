@@ -206,6 +206,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false)
 
   const [signUp, setSignUp] = useState(false)
+  const [inSession, setInSession] = useState(false)
 
   const classes = useStyles();
 
@@ -311,7 +312,7 @@ function App() {
         <Route path="/ocean" render={() => {
           // will need this to redirect to login page if the user is not logged in
           return (
-            <Ocean user={user} setUser={setUser} users={users} sessions={sessions} setSessions={setSessions} setLoggedIn={setLoggedIn} />
+            <Ocean user={user} setUser={setUser} users={users} sessions={sessions} setSessions={setSessions} inSession={inSession} setInSession={setInSession} />
           )
         }} />
 

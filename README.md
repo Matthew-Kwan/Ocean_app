@@ -1,13 +1,21 @@
 # Ocean
 
+Include in your README.md file in your repo instructions explaining in detail how to use the application, the roles of users and how the users would go about using all the features of your website. Using the main features of your project should be intuitive enough that any user with access to your URL should be able to discover all its features (more on this file in the Grading section below).
+
+Also, provide an overview of the routes in your Express server, and what they are used for in your app, what data they expect to be sent, and what they would return.  We will test your routes individually (such as in Postman) based on your instructions.
+
 ## How to run this project locally
 
 1. Clone this github repository to your local machine.
 2. Open a terminal and access the root repository.
 3. Change directory to `ocean`.
 4. Run `npm install`.
-5. After the install finishes, run `npm start`.
-6. Use the login credentials below to log in to the platform.
+5. Change directory to `server`.
+6. Run `npm install`.
+7. Change directory back to root.
+8. Run `npm run build`
+9. After building, run `npm start` to start the application.
+10. Use the login credentials below to log in to the platform.
 
 ## Installed Third-Party Packages
 In case `npm install` did not install all the packages, here are all our third-party dependencies.

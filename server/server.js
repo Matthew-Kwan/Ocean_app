@@ -36,13 +36,12 @@ mongoose.set('useFindAndModify', false);
 
 const authenticate = (req, res, next) => {
 
-  console.log("AUTHENTICATE ", req.session)
   if (req.session.user) {
       User.findById(req.session.user).then((user) => {
           if (!user) {
               return Promise.reject()
           } else {
-              console.log('User Authorized: ', user)
+              console.log('User Authorized')
               req.user = user
               next()
           }
@@ -414,11 +413,11 @@ app.post('/api/sessions', authenticate, async (req, res) => {
 	})
 
   // // find user with session user
-  const user = await User.findById(ObjectID(req.user._id))
+  const user = await User.findById(req.user._id)
 
   try {
     const result = await newSession.save()
-    user.sessions = user.sessions.concat(ObjectID(result._id))
+    user.sessions = user.sessions.concat(result._id)
     await user.save()
     res.status(201).send(result)
   } catch (error) {
