@@ -1,35 +1,7 @@
 /* User mongoose model */
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
 
-/*
-    {
-      id: 1,
-      username: 'user',
-      password: 'user',
-      adminFlag: false,
-      name: 'Pom',
-      tagline: '24yyyyy, 🇨🇦',
-      goals: goals1,
-      friends: [
-        { id: 3, name: 'GrassyMans' },
-      ],
-      sessions: sessions_user_1
-    },
-
-      const goals1 = [
-    {
-      id: 30000,
-      title: 'Software',
-      totalTasksNum: 2,
-      completedTasksNum: 1,
-      completed: false,
-      completionPercent: 50,
-      tasks: [
-        { id: 0, task: 'Research React', completed: true },
-        { id: 1, task: 'Make demo app', completed: false }
-      ]
-    }
-*/
 
 const taskSchema = new mongoose.Schema({
   id: {
@@ -82,9 +54,10 @@ const sessionSchema = new mongoose.Schema({
   }
 })
 
-// UNIQUENESS VALIDATION
-const User = mongoose.model('User', {
 
+// USER SCHEMA
+
+const userSchema = new mongoose.Schema({
   id: {
     type: Number,
     required: true,
@@ -111,8 +84,53 @@ const User = mongoose.model('User', {
   },
   goals: [goalSchema],
   friends: [friendSchema],
-  sessions: [sessionSchema]
+  sessions: [sessionSchema],
 })
+
+// Mongoose middleware for user schema
+// This function runs prior to saving the document to the collection
+userSchema.pre('save', function(next) {
+  const user = this // bind this to user document instance
+
+  // make sure we don't hash the password more than once
+  if (user.isModified('password')) {
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(user.password, salt, (err,hash) => {
+        user.password = hash
+        next()
+      })
+    })
+  } else {
+    next()
+  }
+})
+
+// static method for logging in
+// compares the username and password of what is entered and tries to find it in the User collection
+userSchema.statics.findByUsernamePassword = function (username, password) {
+  const User = this
+
+  return User.findOne({ username: username }).then((user) => {
+
+    // if can not find the user, reject
+    if (!user) {
+      return Promise.reject()
+    }
+    // if the user exists, now check the password
+    return new Promise((resolve, reject) => {
+      bcrypt.compare(password, user.password, (err, result) => {
+        if (result) {
+          resolve(user)
+        } else {
+          reject()
+        }
+      })
+    })
+  })
+}
+
+
+const User = mongoose.model('User', userSchema)
 
 const Goal = mongoose.model('Goal', goalSchema)
 

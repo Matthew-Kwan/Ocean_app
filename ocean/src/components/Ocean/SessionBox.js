@@ -59,6 +59,7 @@ const SessionBox = ({ user, session, setSession, setInSession, setNewSessionId})
     // send post request to create a session here
     addSession(newSession)
     .then((id) => {
+      console.log('NEW ID', id)
       setNewSessionId(id)
     })
     setInSession(true)

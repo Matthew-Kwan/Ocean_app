@@ -2,8 +2,8 @@ POST http://localhost:5000/api/sessions
 Content-Type: application/json
 
 {
-  "userId": "606ceb99ddcb661f464f42cf",
-  "goalId": 2,
-  "title": "test dddd#2 session",
-  "startTime": "2020-01-01T20:51:00-05:00"
+  "userId": "606e14d5b3313e0c24e4ba1c",
+  "goalId": 1,
+  "title": "test dddd#4 session",
+  "startTime": "2020-02-03T20:51:00-05:00"
 }

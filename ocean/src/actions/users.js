@@ -211,4 +211,25 @@ export const deleteUser = (id) => {
     return result
 };
 
+export const checkSession = () => {
+  const url = `${API_HOST}/api/users/check-session`
+
+  fetch(url)
+  .then(res => {
+      if (res.status === 200) {
+          console.log('200')
+          console.log(res.json())
+      } else {
+        console.log(res)
+      }
+  })
+  // .then(json => {
+  //     if (json) {
+  //       setUser(json)
+  //     }
+  // })
+  .catch(error => {
+      console.log(error);
+  });
+}
 

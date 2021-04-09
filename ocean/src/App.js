@@ -10,7 +10,8 @@ import AdminDashboard from './components/Admin/AdminDashboard'
 import OtherTank from './components/Tank/OtherTank';
 
 // import actions
-import { getUsers, addUser } from "./actions/users.js";
+import { getUsers, addUser, checkSession } from "./actions/users.js";
+import { login, logout } from "./actions/login";
 
 // import materialUI components
 import { makeStyles } from '@material-ui/core/styles';
@@ -195,165 +196,10 @@ const NavBar = ({ loggedIn, handleLogout, user, setUser }) => {
 }
 
 function App() {
-  // HARDCODED DATA: Goals, sessions, and user objects are defined here. With our backend done, we would pull these from the server
-  const goals1 = [
-    {
-      id: 30000,
-      title: 'Software',
-      totalTasksNum: 2,
-      completedTasksNum: 1,
-      completed: false,
-      completionPercent: 50,
-      tasks: [
-        { id: 0, task: 'Research React', completed: true },
-        { id: 1, task: 'Make demo app', completed: false }
-      ]
-    },
-    {
-      id: 20000,
-      title: 'School',
-      totalTasksNum: 5,
-      completedTasksNum: 3,
-      completed: false,
-      completionPercent: 60,
-      tasks: [
-        { id: 0, task: 'study for CSC309', completed: true },
-        { id: 1, task: 'study for CSC384', completed: true },
-        { id: 2, task: 'drop MIE424', completed: true },
-        { id: 3, task: 'submit AI minor form request', completed: false },
-        { id: 4, task: 'submit extra form request', completed: false }
-      ]
-    }
-  ]
-
-  const goals2 = [
-    {
-      id: 20000,
-      title: 'Admin Stuff',
-      totalTasksNum: 2,
-      completedTasksNum: 1,
-      completed: false,
-      completionPercent: 50,
-      tasks: [
-        { id: 0, task: 'Research React', completed: true },
-        { id: 1, task: 'Make demo app', completed: false }
-      ]
-    },
-    {
-      id: 30000,
-      title: 'More Admin stuff',
-      totalTasksNum: 5,
-      completedTasksNum: 3,
-      completed: false,
-      completionPercent: 60,
-      tasks: [
-        { id: 0, task: 'study for CSC309', completed: true },
-        { id: 1, task: 'study for CSC384', completed: true },
-        { id: 2, task: 'drop MIE424', completed: true },
-        { id: 3, task: 'submit AI minor form request', completed: false },
-        { id: 4, task: 'submit extra form request', completed: false }
-      ]
-    }
-  ]
-
-  const sessions_user_1 = [
-    {
-      sessionId: 1,
-      userId: 1,
-      goalId: 2,
-      title: "Work on ocean component",
-      startTime: new Date(2021, 2, 1, 8, 0, 0),
-      endTime: new Date(2021, 2, 1, 12, 0, 0)
-    },
-    {
-      sessionId: 2,
-      userId: 1,
-      goalId: 1,
-      title: "Learn more about React",
-      startTime: new Date(2021, 2, 2, 8, 0, 0),
-      endTime: new Date(2021, 2, 2, 12, 0, 0)
-    }];
-
-    const sessions_other_users = [
-      {
-        sessionId: 1,
-        userId: 1,
-        goalId: 2,
-        title: "Work on ocean component",
-        startTime: new Date(2021, 2, 1, 8, 0, 0),
-        endTime: new Date(2021, 2, 1, 12, 0, 0)
-      },
-      {
-        sessionId: 2,
-        userId: 1,
-        goalId: 1,
-        title: "Learn more about React",
-        startTime: new Date(2021, 2, 2, 8, 0, 0),
-        endTime: new Date(2021, 2, 2, 12, 0, 0)
-      }];
-
-  const usersList = [
-    {
-      id: 1,
-      username: 'user',
-      password: 'user',
-      adminFlag: false,
-      name: 'Pom',
-      tagline: '24yyyyy, 🇨🇦',
-      goals: goals1,
-      friends: [
-        { id: 3, name: 'GrassyMans' },
-      ],
-      sessions: sessions_user_1
-    },
-    {
-      id: 2,
-      username: 'admin',
-      password: 'admin',
-      adminFlag: true,
-      name: 'AdminJim',
-      tagline: 'your favourite neighborhood admin',
-      goals: goals2,
-      friends: [
-        { id: 4, name: 'Billy' },
-      ],
-      sessions: sessions_other_users
-    },
-    {
-      id: 3,
-      username: 'a',
-      password: 'a',
-      adminFlag: false,
-      name: 'GrassyMans',
-      tagline: '',
-      goals: goals2,
-      friends: [
-      ],
-      sessions: sessions_other_users
-    },
-    {
-      id: 4,
-      username: 'b',
-      password: 'b',
-      adminFlag: false,
-      name: 'PotatoChip',
-      tagline: '',
-      goals: goals2,
-      friends: [
-      ],
-      sessions: sessions_other_users
-    }
-  ]
-
   // React states
 
   const [users, setUsers] = useState([])
-  const [user, setUser] = useState({
-    id: null,
-    username: '',
-    password: '',
-    adminFlag: null,
-  })
+  const [user, setUser] = useState({})
 
   const [sessions, setSessions] = useState([])
 
@@ -377,27 +223,33 @@ function App() {
   }, [users]) //
 
 
-  // login function
-  const handleLogin = (e) => {
+  // login function - Modify to work with backend
+  const handleLogin = async (e) => {
     e.preventDefault()
-    console.log('handle login reached')
+
     const username = document.querySelector('#username-input').children[0].children[1].children[0].value
     const password = document.querySelector('#password-input').children[0].children[1].children[0].value
 
-    console.log(username, password)
+    try {
+      await login(username,password,setUser)
+      setLoggedIn(true)
+
+    } catch (err) {
+      // might want to modify a message that appears the user when the login fails
+      console.log(err)
+    }
 
     // filter users for user
-    const returnedUsers = users.filter(user => user.username === username && user.password === password)
-    console.log(returnedUsers)
+    // const returnedUsers = users.filter(user => user.username === username && user.password === password)
 
-    if (returnedUsers.length === 1) {
-      setUser(returnedUsers[0])
-      setLoggedIn(true)
-      // TODO: show a login notificataion for the user under the login form
-    } else {
-      // TODO: Show an error message for the user
-      console.log("Incorrect username and password")
-    }
+    // if (returnedUsers.length === 1) {
+    //   setUser(returnedUsers[0])
+    //   setLoggedIn(true)
+    //   // TODO: show a login notificataion for the user under the login form
+    // } else {
+    //   // TODO: Show an error message for the user
+    //   console.log("Incorrect username and password")
+    // }
   }
 
   // CHANGE IN PHASE 2, FOR NOW AUTO LOGS YOU IN AS THE FIRST USER IN THE HARDCODED DATA
@@ -407,7 +259,7 @@ function App() {
     const name = document.querySelector('#name-input').children[0].children[1].children[0].value
     const username = document.querySelector('#username-input').children[0].children[1].children[0].value
     const password = document.querySelector('#password-input').children[0].children[1].children[0].value
-    
+
     console.log(name, username, password)
 
     const usernameExists = users.filter(user => user.username === username)
@@ -419,13 +271,13 @@ function App() {
 
       addUser(user)
       .then(
-        (result) => 
+        (result) =>
         {console.log("here", result)
           setUser(result)
         setLoggedIn(true)})
-      
+
     }
-    else  
+    else
       console.log("username already exists")
     //setUser(users[0])
   }
@@ -433,9 +285,19 @@ function App() {
   // logout function
   const handleLogout = (e) => {
 
-    setUser({})
+    logout(setUser)
     setLoggedIn(false)
-    getUsers(setUsers)
+
+    // logout(setUser)
+    // .then((res) => {
+    //   console.log('first then')
+    //   setLoggedIn(false)
+    //   return res
+    // })
+    // .catch((err) => {
+    //   console.log(err)
+    // })
+
   }
 
   return (
@@ -449,14 +311,14 @@ function App() {
         <Route path="/ocean" render={() => {
           // will need this to redirect to login page if the user is not logged in
           return (
-            <Ocean user={user} setUser={setUser} users={users} sessions={sessions} setSessions={setSessions} />
+            <Ocean user={user} setUser={setUser} users={users} sessions={sessions} setSessions={setSessions} setLoggedIn={setLoggedIn} />
           )
         }} />
 
         <Route path="/profile" render={() => {
 
           return (
-            <Profile mainUser={user} user={usersList[1]} setUser={setUser} />
+            <Profile mainUser={user} user={users[1]} setUser={setUser} />
           )
         }} />
 
