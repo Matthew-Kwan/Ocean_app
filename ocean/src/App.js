@@ -31,7 +31,6 @@ import './components/Profile/profile.css'
 import { Route, Switch, NavLink,Link, Redirect, BrowserRouter ,useParams} from 'react-router-dom'
 
 // hardcoded data
-const randomFile = require('select-random-file')
 
 
 // helper functions
