@@ -344,7 +344,7 @@ function App() {
 
         <Route path="/tank" render={() => {
           return (
-            <Tank user={user} setUser={setUser}/>
+            <Tank user={user} setUser={setUser} sessions={sessions} setSessions={setSessions}/>
           )
         }} />
 

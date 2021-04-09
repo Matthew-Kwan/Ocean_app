@@ -67,3 +67,40 @@
     margin: 50px;
     color: white;
 }
+
+.decor1 {
+    position: fixed; 
+    left: 150px;
+    bottom: 20px;
+    
+}
+
+.decor2 {
+    position: fixed; 
+    left: 400px;
+    bottom: 20px;
+}
+
+.decor3 {
+    position: fixed; 
+    left: 850px;
+    bottom: 20px;
+}
+
+.decor4 {
+    position: fixed; 
+    left: 1000px;
+    bottom: 20px;
+}
+
+.decor5 {
+    position: fixed; 
+    left: 1550px;
+    bottom: 20px;
+}
+
+.decor6 {
+    position: fixed; 
+    left: 1900px;
+    bottom: 20px;
+}
