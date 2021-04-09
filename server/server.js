@@ -58,7 +58,7 @@ const authenticate = (req, res, next) => {
 app.use(session({
   secret: 'tis a secret mate',
   cookie: {
-    expires: 60000*30, // expires in 15 mins
+    expires: 60000*30, // expires in 30 mins
     httpOnly: true,
   },
   // Session saving options
@@ -412,11 +412,14 @@ app.post('/api/sessions', authenticate, async (req, res) => {
 		startTime: body.startTime,
 	})
 
+  console.log('user_id: ', req.user._id)
+
   // // find user with session user
   const user = await User.findById(req.user._id)
 
   try {
     const result = await newSession.save()
+    console.log('Result:', result)
     user.sessions = user.sessions.concat(result._id)
     await user.save()
     res.status(201).send(result)
