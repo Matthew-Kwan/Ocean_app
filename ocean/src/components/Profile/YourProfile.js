@@ -1,9 +1,13 @@
 import React  from 'react'
 import Modal from '@material-ui/core/Modal'
 import './profile.css'
+import fish_nemo from '../../fish_display/fish-nemo.png'
+// import nemo2 from 'src/display_fish/nemo.png'
+// import nemo3 from './../display_fish/nemo.png'
+// import nemo3 from 'display_fish/nemo.png'
+
 
 import '../Tank/modal.css'
-
 
 import EditMe from './editMe'
 
@@ -15,7 +19,7 @@ const YourProfile = ({user, setUser}) => {
         <div className="profCard modalContainer">
             <h2> Your Profile </h2>
             <div className='profHeader'>
-                <div className="profImg"></div>
+                <img src={user.profilePic} className="profImg" />
                 <div id='profText'>
                     {EditMe(user,setUser,"name")}
                     {EditMe(user,setUser,"tagline")}

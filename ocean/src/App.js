@@ -27,11 +27,11 @@ import './components/login.css'
 
 import './components/Profile/profile.css'
 
-
 // import React Router
 import { Route, Switch, NavLink,Link, Redirect, BrowserRouter ,useParams} from 'react-router-dom'
 
 // hardcoded data
+const randomFile = require('select-random-file')
 
 
 // helper functions
@@ -253,6 +253,27 @@ function App() {
   }
 
   // CHANGE IN PHASE 2, FOR NOW AUTO LOGS YOU IN AS THE FIRST USER IN THE HARDCODED DATA
+
+  const getRandomDisplayPic = () => {
+    // const names = ['brown','green','nemo','puffer','purple','shark','yellow']
+        const names = ["https://i.ibb.co/g3kXPF6/fish-brown.png",
+    "https://i.ibb.co/Tq1ck53/fish-green.png",
+    "https://i.ibb.co/2djsr2y/fish-nemo.png",
+  "https://i.ibb.co/4swcw1T/fish-puffer.png",
+"https://i.ibb.co/Nm9H6zb/fish-purple.png",
+"https://i.ibb.co/WDhpdcf/fish-shark.png"
+]
+
+//     "https://ibb.co/pQLFcTw",
+//     "https://ibb.co/37R3Z2s",
+//     "https://ibb.co/LryC5Jn",
+// "https://ibb.co/7jkYSbG"]
+    const name = names[Math.floor(Math.random() * names.length)];
+    
+    // return `fish_display/fish-${name}.png`
+    return name
+  }
+  
   const handleRegister = (e) => {
     e.preventDefault()
     console.log("handle register reached")
@@ -261,13 +282,15 @@ function App() {
     const password = document.querySelector('#password-input').children[0].children[1].children[0].value
 
     console.log(name, username, password)
-
+    // const randomPP = randomFile('fish_display')
+    const randomPP = getRandomDisplayPic()
+    console.log(randomPP)
     const usernameExists = users.filter(user => user.username === username)
 
     console.log(usernameExists)
 
     if (usernameExists.length === 0) {
-      const user = {id: 1, username: username, password: password, adminFlag: false, name: name, tagline: "", goals: [], friends: [], sessions: []}
+      const user = {id: 1, username: username, password: password, adminFlag: false, name: name, tagline: "", profilePic: randomPP, goals: [], friends: [], sessions: []}
 
       addUser(user)
       .then(

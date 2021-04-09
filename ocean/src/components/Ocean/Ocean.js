@@ -25,8 +25,6 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 // Create some sort of mapping of session data onto fishes that just swim around the ocean
 const Ocean = ({user, setUser, users, sessions, setSessions, setLoggedIn}) => {
 
-  console.log(user)
-
   const [inSession, setInSession] = useState(false)
   const [session, setSession] = useState({
     userId: user._id,

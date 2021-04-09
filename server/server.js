@@ -14,6 +14,7 @@ const app = express();
 
 /* Session handling */
 const MongoStore = require('connect-mongo');
+const session = require('express-session')
 
 
 // Serve static files from the React frontend app
@@ -32,30 +33,49 @@ const { mongoose } = require('./db/mongoose')
 mongoose.set('bufferCommands', false);  // don't buffer db requests if the db server isn't connected - minimizes http requests hanging if this is the case.
 mongoose.set('useFindAndModify', false);
 
-const session = require('express-session')
+
+const authenticate = (req, res, next) => {
+
+  console.log("AUTHENTICATE ", req.session)
+  if (req.session.user) {
+      User.findById(req.session.user).then((user) => {
+          if (!user) {
+              return Promise.reject()
+          } else {
+              console.log('User Authorized: ', user)
+              req.user = user
+              next()
+          }
+      }).catch((error) => {
+          res.status(401).send("Unauthorized")
+      })
+  } else {
+      res.status(401).send("Unauthorized")
+  }
+}
+
 // Middleware for creating sessions and session cookies.
 // A session is created on every request
 app.use(session({
   secret: 'tis a secret mate',
   cookie: {
-    expires: 3000, // expires in 15 mins
+    expires: 60000*30, // expires in 15 mins
     httpOnly: true,
-    secure: false,
   },
   // Session saving options
   saveUnintialized: false, // don't save the initial session if the session object is unmodified (i.e the user did not log in)
-  resave: true, // don't resave a session that hasn't been modified
+  resave: false, // don't resave a session that hasn't been modified
   store: MongoStore.create({
     mongoUrl: process.env.MONGODB_URI_SESSIONS
   })
 
   }))
 
-  app.use(function (req, res, next) {
-    console.log('SESSION LOGGING MIDDLEWARE')
-    console.log(req.session);
-    next()
-  });
+  // app.use(function (req, res, next) {
+  //   console.log('SESSION LOGGING MIDDLEWARE')
+  //   console.log(req.session);
+  //   next()
+  // });
 
 app.use((req, res, next) => {
   res.header('Access-control-Allow-Origin', 'http://localhost:3000');
@@ -95,24 +115,6 @@ function isMongoError(error) { // checks for first error returned by promise rej
 	return typeof error === 'object' && error !== null && error.name === "MongoNetworkError"
 }
 
-const authenticate = (req, res, next) => {
-
-  if (req.session.user) {
-      User.findById(req.session.user).then((user) => {
-          if (!user) {
-              return Promise.reject()
-          } else {
-              req.user = user
-              next()
-          }
-      }).catch((error) => {
-          res.status(401).send("Unauthorized")
-      })
-  } else {
-      res.status(401).send("Unauthorized")
-  }
-}
-
 /*** Webpage routes below **********************************/
 /// We only allow specific parts of our public directory to be access, rather than giving
 /// access to the entire directory.
@@ -126,15 +128,16 @@ app.get('/', (req, res) => {
 })
 
 // TODO: Route to check if a user is logged in on the session
-app.get("/api/users/check-session", (req,res) => {
-  if (req.session.user) {
-    res.send(req.session.user)
+app.get("/api/users/check-session", authenticate, (req,res) => {
+  console.log("CHECK SESSION: ", req.user)
+  if (req.user) {
+    res.send(req.user)
   } else {
-    res.status(401).send(req.session)
+    res.status(401).send()
   }
 })
 
-app.get("/api/users/check-session2", (req,res) => {
+app.get("/api/users/check-session2", authenticate, (req,res) => {
 
   res.send(req.session)
 
@@ -159,8 +162,6 @@ app.post('/api/users/login', async (req, res) => {
       // will create a function to ensuree that the session exists to make sure that we are logged in
       req.session.user = user
       req.session.username = user.username
-      req.session.save()
-      console.log(req.session)
       res.send({ user: req.session.user })
     })
     .catch(error => {
@@ -182,7 +183,7 @@ app.get("/api/users/logout", (req, res) => {
 })
 
 /*** USER ROUTES */
-app.post('/api/users', authenticate,  async (req, res) => {
+app.post('/api/users',  async (req, res) => {
 
   // check mongoose connection established.
 	// if (mongoose.connection.readyState != 1) {
@@ -207,6 +208,7 @@ app.post('/api/users', authenticate,  async (req, res) => {
 		adminFlag: body.adminFlag,
 		name: body.name,
 		tagline: body.tagline,
+		profilePic: body.profilePic,
 		goals: body.goals,
 		friends: body.friends,
 		sessions: body.sessions
@@ -214,6 +216,7 @@ app.post('/api/users', authenticate,  async (req, res) => {
 
   try {
     const result = await user.save()
+    req.session.user = result
     res.status(201).send(result)
   } catch (error) {
     console.log(error) // log server error to the console, not to the client.
@@ -283,6 +286,7 @@ app.put('/api/users/:id', async (req, res) => {
 		adminFlag: body.adminFlag,
 		name: body.name,
 		tagline: body.tagline,
+		profilePic: body.profilePic,
 		goals: body.goals,
 		friends: body.friends,
 		sessions: body.sessions
@@ -363,7 +367,7 @@ app.delete('/api/users/:id', async (req, res) => {
 /*** SESSION ROUTES */
 
 // a GET route to get all sessions
-app.get('/api/sessions', async (req, res) => {
+app.get('/api/sessions', authenticate, async (req, res) => {
 
 	// check mongoose connection established.
 	if (mongoose.connection.readyState != 1) {
@@ -385,7 +389,7 @@ app.get('/api/sessions', async (req, res) => {
 })
 
 // a POST route to post a session
-app.post('/api/sessions', async (req, res) => {
+app.post('/api/sessions', authenticate, async (req, res) => {
 
   // check mongoose connection established.
 	// if (mongoose.connection.readyState != 1) {
@@ -412,12 +416,12 @@ app.post('/api/sessions', async (req, res) => {
 	})
 
   // // find user with session user
-  // const user = await User.findById(ObjectID(req.session.user._id))
+  const user = await User.findById(ObjectID(req.user._id))
 
   try {
     const result = await newSession.save()
-    // user.sessions = user.sessions.concat(ObjectID(result._id))
-    // await user.save()
+    user.sessions = user.sessions.concat(ObjectID(result._id))
+    await user.save()
     res.status(201).send(result)
   } catch (error) {
     console.log(error) // log server error to the console, not to the client.
@@ -430,7 +434,7 @@ app.post('/api/sessions', async (req, res) => {
 })
 
 // put request for updating a single session
-app.put('/api/sessions/:id', async (req, res) => {
+app.put('/api/sessions/:id', authenticate, async (req, res) => {
 
   // check mongoose connection established.
 	// if (mongoose.connection.readyState != 1) {
