@@ -83,7 +83,7 @@ const Profile = ({mainUser, user, setUser}) => {
     return (
         <div className="profCard modalContainer">
             <div className='profHeader'>
-                <div className="profImg"></div>
+                <img src={user.profilePic} className="profImg" />
                 <div id='profText'>
                     <h2 className="profName">{user.name}</h2>
                     {user.tagline? <p>{user.tagline}</p> : null}

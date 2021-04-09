@@ -82,6 +82,9 @@ const userSchema = new mongoose.Schema({
   tagline: {
     type: String
   },
+  profilePic: {
+    type: String
+  },
   goals: [goalSchema],
   friends: [friendSchema],
   sessions: [sessionSchema],
