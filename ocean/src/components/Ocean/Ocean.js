@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './ocean.css'
 import InSessionBox from './InSessionBox'
 import SessionBox from './SessionBox'
@@ -23,9 +23,8 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 }
 
 // Create some sort of mapping of session data onto fishes that just swim around the ocean
-const Ocean = ({user, setUser, users, sessions, setSessions, setLoggedIn}) => {
+const Ocean = ({user, setUser, users, sessions, setSessions, inSession, setInSession}) => {
 
-  const [inSession, setInSession] = useState(false)
   const [session, setSession] = useState({
     userId: user._id,
     goalId: '',
@@ -33,13 +32,15 @@ const Ocean = ({user, setUser, users, sessions, setSessions, setLoggedIn}) => {
   })
   const [currentSessions, setCurrentSessions] = useState([])
   const [newSessionId, setNewSessionId] = useState('')
+  const sessionRef = useRef()
+  const newIdRef = useRef()
+  sessionRef.current = inSession
+  newIdRef.current = newSessionId
+
 
   useEffect(() => {
     console.log('mount useEffect run')
 
-
-    console.log("process env", process.env.NODE_ENV)
-    
     // sets current sessions to the sessions that are currently still in progress
     if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
       // dev code
@@ -60,11 +61,15 @@ const Ocean = ({user, setUser, users, sessions, setSessions, setLoggedIn}) => {
         counter = 4;
       }
 
+      console.log('CLEANUP :', sessionRef.current)
+
       // if function inSession -> end the session and update it
-      if (inSession === true) {
+      if (sessionRef.current === true) {
         const endSession = session
         endSession.endTime = new Date()
-        updateSession(endSession, newSessionId)
+        updateSession(endSession, newIdRef.current)
+        setInSession(false)
+      } else {
         setInSession(false)
       }
     }

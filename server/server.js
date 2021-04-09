@@ -36,13 +36,12 @@ mongoose.set('useFindAndModify', false);
 
 const authenticate = (req, res, next) => {
 
-  console.log("AUTHENTICATE ", req.session)
   if (req.session.user) {
       User.findById(req.session.user).then((user) => {
           if (!user) {
               return Promise.reject()
           } else {
-              console.log('User Authorized: ', user)
+              console.log('User Authorized')
               req.user = user
               next()
           }
@@ -59,7 +58,7 @@ const authenticate = (req, res, next) => {
 app.use(session({
   secret: 'tis a secret mate',
   cookie: {
-    expires: 60000*30, // expires in 15 mins
+    expires: 60000*30, // expires in 30 mins
     httpOnly: true,
   },
   // Session saving options
@@ -415,12 +414,15 @@ app.post('/api/sessions', authenticate, async (req, res) => {
 		startTime: body.startTime,
 	})
 
+  console.log('user_id: ', req.user._id)
+
   // // find user with session user
-  const user = await User.findById(ObjectID(req.user._id))
+  const user = await User.findById(req.user._id)
 
   try {
     const result = await newSession.save()
-    user.sessions = user.sessions.concat(ObjectID(result._id))
+    console.log('Result:', result)
+    user.sessions = user.sessions.concat(result._id)
     await user.save()
     res.status(201).send(result)
   } catch (error) {
