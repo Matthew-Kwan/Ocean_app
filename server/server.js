@@ -207,6 +207,7 @@ app.post('/api/users',  async (req, res) => {
 		adminFlag: body.adminFlag,
 		name: body.name,
 		tagline: body.tagline,
+		profilePic: body.profilePic,
 		goals: body.goals,
 		friends: body.friends,
 		sessions: body.sessions
@@ -284,6 +285,7 @@ app.put('/api/users/:id', async (req, res) => {
 		adminFlag: body.adminFlag,
 		name: body.name,
 		tagline: body.tagline,
+		profilePic: body.profilePic,
 		goals: body.goals,
 		friends: body.friends,
 		sessions: body.sessions
