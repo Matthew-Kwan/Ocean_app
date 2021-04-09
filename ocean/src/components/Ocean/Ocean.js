@@ -5,7 +5,6 @@ import SessionBox from './SessionBox'
 import Fish from './Fish'
 
 import { getSessions, updateSession } from '../../actions/sessions'
-import { checkSession } from '../../actions/users'
 
 
 let counter = 0;
@@ -101,7 +100,6 @@ const Ocean = ({user, setUser, users, sessions, setSessions, inSession, setInSes
 
   return (
     <div className="ocean">
-      <button onClick={() => checkSession()}>Check Session</button>
 
       <div className="oceanContent">
         {/*other fish*/}
