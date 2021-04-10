@@ -120,8 +120,16 @@ GET /api/users/:id
 Returns the information of a user, if the ID is a match
 
 ### Edit User
-PUT /api/ 
-TODO
+PUT /api/users/:id
+
+Put an updated user for a user found by id.
+
+
+### Edit User
+PUT /api/users/:id/goal
+
+Add a goal for a user found by id.
+
 
 ### Delete User
 DELETE /api/users/:id
