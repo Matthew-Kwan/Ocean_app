@@ -110,3 +110,62 @@ There are some additional pieces of work that we would like to perform on the fr
 4) There are some miscallaneous styling bugs in tank and ocean we will address
 
 Phase 2 will address these extra front-end fixes, but the backend will be the first thing prioritized.
+
+
+# Routes
+
+## User Routes
+
+### Post User
+POST /api/users
+
+Adds a new user to the database, expects body with the following:
+  {
+	  id: (manually defined ID),
+		username: (string, username),
+		password: (string, password),
+		adminFlag: (boolean, if user is an admin),
+		name: (string, name of user)
+		tagline: (string, tagline for user profile)
+		profilePic: (empty string)
+		goals: (empty list)
+		friends: (empty list)
+		sessions: (empty list)
+    }
+    
+Returns the succesfully added user.
+    
+### Get User List
+GET /api/users
+
+Returns a list of all registered users in the database
+
+### Get User by ID
+GET /api/users/:id
+
+Returns the information of a user, if the ID is a match
+
+### Edit User
+PUT /api/ 
+TODO
+
+### Delete User
+DELETE /api/users/:id
+
+Deletes a user by their ID, if there is a match. Returns the deleted user.
+
+
+## Session Routes
+
+### Get Sessions
+GET /api/sessions
+
+Returns a list of current active sessions.
+
+### Post Session
+
+### Put Session
+
+### Delete Session
+
+## Report Routes
