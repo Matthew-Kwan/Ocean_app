@@ -22,7 +22,6 @@ In case `npm install` did not install all the packages, here are all our third-p
 
 - Material UI
 - react-router-dom
-- sass
 
 ## Application Usage Notes
 Please do **not refresh** the page while using the application. State management has not been implemented yet and this will break the application. Please refer to “Limitations of Phase 1” for more details.
@@ -136,13 +135,28 @@ Returns a list of current active sessions.
 ### Post Session
 POST /api/sessions
 
-Add a new Session to the Session database. Expects body with the following 
+Add a new Session to the Session database. Expects body with the following:
 {
-
+	userId: (string, id of user who this session belongs to),
+	goalId: (string, id of goal the session falls under),
+	title: (string, title of session),
+	startTime: (Date, start time of session)
 }
 
+Returns session if successfully added.
+
 ### Put Session
-TODO
+PUT /api/sessions/id
+
+Updates the session, used for when a session is complete. Expects body with the following:
+{
+	userId: (string, id of user who this session belongs to),
+	goalId: (string, id of goal the session falls under),
+	title: (string, title of session),
+	startTime: (Date, start time of session)
+	endTime: (Date, end time of session)
+}
+Returns the updated session if successfully updated.
 
 ### Delete Session
 DELETE /api/sessions/id
