@@ -24,11 +24,23 @@ https://csc309-ocean.herokuapp.com/
 ## Installed Third-Party Packages
 In case `npm install` did not install all the packages, here are all our third-party dependencies.
 
+**Frontend**
 - Material UI
 - react-router-dom
 
+**Backend**
+- express
+- express-session
+- mongoose
+- mongodb
+- cors
+- dotenv
+- connect-mongo
+- body-parser
+- bcryptjs
+
 ## Application Usage Notes
-Please do **not refresh** the page while using the application. State management has not been implemented yet and this will break the application. Please refer to “Limitations of Phase 1” for more details.
+Please do **not refresh** the page while using the application. State persistence has not been implemented yet and this will break the application. With sessions management completed properly on the backend, this is next on the list of to-dos for the project. The plan is to persist the states through the server on the cookies.
 
 ## Login Credentials
 
@@ -46,7 +58,7 @@ password - admin
 The main idea of this product is to create a space for you to start a work session, while also seeing other people's active sessions. By completing sessions, you can collect fish for your tank, and by completing goals you set, you can add decor to your tank. You can add other users and see what they are up to as well. A more in-depth explanation on each of the features are below.
 
 ### Login and Registering
-The login form and registering form can be seen upon entry to the applications base url. From there you can decide either login, or instead register by pressing the 'here' button at the bottom of the modal to switch the form to the registration form. For PHASE 1, the registration form simply logs you in as the standard user profile from above. Otherwise, the login form works correctly for the profile above.
+The login form and registering form can be seen upon entry to the applications base url. From there you can decide either login, or instead register by pressing the 'here' button at the bottom of the modal to switch the form to the registration form. The registration form will POST a new user to the database, and you will be immediately logged in to the application as that user. After logging in, the user's information is logged to a cookie on the browser, and kept track of in an express-session on the backend. This is used to authenticate future requests.
 
 ### Nav Bar
 There is a nav bar on the left of all the views in the application that will allow you to navigate through the different views.
@@ -54,10 +66,10 @@ There is a nav bar on the left of all the views in the application that will all
 ### Ocean View
 
 #### Viewing other active sessions
-On the ocean page, you will find other fish floating around. These depict the active sessions that are currently going on (based off our hardcoded data). The current limit of fish that are shown is 3, but this may be increased in Phase 2. Clicking on these fish will let you see a modal of their user profile. Features related to these user profiles will be discussed later in this file. You can also hover over the session title to see the full title in case it was truncated due to overflow.
+On the ocean page, you will find other fish floating around. These depict the active sessions that are currently going on (based off our hardcoded data). Clicking on these fish will let you see a modal of their user profile. Features related to these user profiles will be discussed later in this file. You can also hover over the session title to see the full title in case it was truncated due to overflow.
 
 #### Starting your own session
-There is a "Start Session" box in the ocean view that allows you to pick a goal, write down a title, and then start a session with the button at the bottom. After starting a session, you switch to the In-Session box where you can see the title and goal you selected, as well as a timer for how long your session has been going on for. There is a button at the bottom that will allow you to end the session, or simply leaving the page will end the session (this might be adjusted in Phase 2).
+There is a "Start Session" box in the ocean view that allows you to pick a goal, write down a title, and then start a session with the button at the bottom. After starting a session, you switch to the In-Session box where you can see the title and goal you selected, as well as a timer for how long your session has been going on for. There is a button at the bottom that will allow you to end the session, or simply leaving the page will end the session.
 
 ### Tank View
 
@@ -84,9 +96,21 @@ On your profile page, you can edit your name and tagline by hovering over the fi
 On other users profile pages, you can view their tank or add them as a friend.
 
 ### Admin View
-If you’re logged in as an Admin, you can view the admin dashboards. You can see the current active sessions, a list of all registered users, and reports from users. In Phase 2, more functionality will be added with regards to resolving reports.
+If you’re logged in as an Admin, you can view the admin dashboards. You can see the current active sessions, a list of all registered users, and reports from users. You can resolve these reports by either deciding to waive it with no punishment, or otherwise banning the user entirely if something bad was done.
 
 # Routes
+
+## Login Routes
+
+### Login Route
+POST /api/users/login
+
+This route takes in a username and password, and tries to find a matching user in the database. This of course compares the hashing of the password inputted to the hashed passwords in the database. If a user is found, that user is saved to the express session so that future requests can get **authenticated**.
+
+### Logout Route
+GET /api/users/logout
+
+This route takes in no input, and simply destroys the express-session currently ongoing, thus "logging out" the current active user in the express-session.
 
 ## User Routes
 
@@ -106,9 +130,9 @@ Adds a new user to the database, expects body with the following:
 		friends: (empty list)
 		sessions: (empty list)
     }
-    
+
 Returns the successfully added user.
-    
+
 ### Get User List
 GET /api/users
 
@@ -199,4 +223,7 @@ GET /api/reports/id
 
 Get a report from the database if there is a match with the ID. Returns the report.
 
-*If you run into any bugs please relogin.
+
+### Bugs
+
+There shouldn't be any bugs, but if you run into any, please either restart the server, or restart your chrome and access the site again. We found that this resolves any bugs that we may encounter (although there shouldn't be any in production anymore)
