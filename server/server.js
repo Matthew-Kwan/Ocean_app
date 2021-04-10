@@ -408,7 +408,7 @@ app.post('/api/sessions', authenticate, async (req, res) => {
 
   // Create a new session
 	const newSession = new Session({
-		userId: body.userId,
+		userId: ObjectID(req.user._id),
 		goalId: body.goalId,
 		title: body.title,
 		startTime: body.startTime,

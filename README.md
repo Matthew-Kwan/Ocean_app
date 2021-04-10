@@ -20,12 +20,23 @@ Also, provide an overview of the routes in your Express server, and what they ar
 ## Installed Third-Party Packages
 In case `npm install` did not install all the packages, here are all our third-party dependencies.
 
+**Frontend**
 - Material UI
 - react-router-dom
 - sass
 
+**Backend**
+- Express-session
+- bcrypt-js
+- body-parser
+- connect-mongo
+- cors
+- dotenv
+- mongoose
+- nodemon (dev dependency)
+
 ## Application Usage Notes
-Please do **not refresh** the page while using the application. State management has not been implemented yet and this will break the application. Please refer to “Limitations of Phase 1” for more details.
+Please do **not refresh** the page while using the application. State management has not been implemented yet and this will break the application. We were unfortunately unable to fix this in time for the completion of Phase 2, but it is on our bucket list of future work to be done. We believe that now that we have proper session handling with express-session on the backend, this should be possible.
 
 ## Login Credentials
 
