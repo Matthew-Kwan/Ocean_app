@@ -198,3 +198,5 @@ Deletes report from database if there is a match with the ID. Returns the delete
 GET /api/reports/id
 
 Get a report from the database if there is a match with the ID. Returns the report.
+
+*If you run into any bugs please relogin.
