@@ -78,7 +78,7 @@ const Ocean = ({user, setUser, users, sessions, setSessions, inSession, setInSes
     console.log('session useEffect run')
 
     // if endTime is not defined, then that means that the session is still in progress
-    let currSess = sessions.filter((s) => s.endTime === undefined)
+    let currSess = sessions.filter((s) => s.endTime === undefined || s.endTime === null)
 
     console.log(currSess)
 

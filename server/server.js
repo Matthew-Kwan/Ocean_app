@@ -322,12 +322,12 @@ app.put('/api/users/:id/goal', async (req, res) => {
 
 	try {
 	  const result = await User.findById(id)
+	  result.goals = result.goals.concat(goal)
+    await result.save()
 
-	  result.goals.push(goal)
+	  // const result2 = await User.findByIdAndUpdate(id, result, { new:true })
 
-	  const result2 = await User.findByIdAndUpdate(id, result, { new:true })
-
-	  res.status(202).send(result2)
+	  res.status(202).send(result)
 	} catch (error) {
 	  console.log(error)
 	  if (isMongoError(error)) {

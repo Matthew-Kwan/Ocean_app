@@ -2,12 +2,12 @@ POST http://localhost:5000/api/users
 Content-Type: application/json
 
 {
-  "id": 7,
-  "username": "user6",
-  "password": "user6",
+  "id": 1,
+  "username": "Vibing",
+  "password": "Vibing",
   "adminFlag": false,
-  "name": "ling",
-  "tagline": "user6",
+  "name": "Vibing",
+  "tagline": "Studying is my fave",
   "goals": [
     {
       "id": 30000,
