@@ -20,23 +20,12 @@ Also, provide an overview of the routes in your Express server, and what they ar
 ## Installed Third-Party Packages
 In case `npm install` did not install all the packages, here are all our third-party dependencies.
 
-**Frontend**
 - Material UI
 - react-router-dom
 - sass
 
-**Backend**
-- Express-session
-- bcrypt-js
-- body-parser
-- connect-mongo
-- cors
-- dotenv
-- mongoose
-- nodemon (dev dependency)
-
 ## Application Usage Notes
-Please do **not refresh** the page while using the application. State management has not been implemented yet and this will break the application. We were unfortunately unable to fix this in time for the completion of Phase 2, but it is on our bucket list of future work to be done. We believe that now that we have proper session handling with express-session on the backend, this should be possible.
+Please do **not refresh** the page while using the application. State management has not been implemented yet and this will break the application. Please refer to “Limitations of Phase 1” for more details.
 
 ## Login Credentials
 
@@ -94,24 +83,6 @@ On other users profile pages, you can view their tank or add them as a friend.
 ### Admin View
 If you’re logged in as an Admin, you can view the admin dashboards. You can see the current active sessions, a list of all registered users, and reports from users. In Phase 2, more functionality will be added with regards to resolving reports.
 
-## Limitations of Phase 1
-
-1) A limitation that we experienced in phase 1 was from the lack of a backend. With no backend, it was difficult to properly address drilling down components, and it caused the site to break upon refresh. In the future, for phase 2 we will be implementing a state management system to help address this problem.
-
-2) As expected, a lot of portions of the code are not actually functioning due to the lack of a server to play with. We have commented at locations where there would be a GET, POST, or PUT request for when we implement a backend server in phase 2.
-
-## Future Work for Front-end
-
-There are some additional pieces of work that we would like to perform on the front-end to improve upon it in phase 2.
-
-1) Implement state management (Recoil or Redux)
-2) Improve responsive styling
-3) Add more fish and tank decor variety and fix the styling for both of these to make it look better
-4) There are some miscallaneous styling bugs in tank and ocean we will address
-
-Phase 2 will address these extra front-end fixes, but the backend will be the first thing prioritized.
-
-
 # Routes
 
 ## User Routes
@@ -127,13 +98,13 @@ Adds a new user to the database, expects body with the following:
 		adminFlag: (boolean, if user is an admin),
 		name: (string, name of user)
 		tagline: (string, tagline for user profile)
-		profilePic: (empty string)
+		profilePic: (string, url to profile picture)
 		goals: (empty list)
 		friends: (empty list)
 		sessions: (empty list)
     }
     
-Returns the succesfully added user.
+Returns the successfully added user.
     
 ### Get User List
 GET /api/users
@@ -163,9 +134,41 @@ GET /api/sessions
 Returns a list of current active sessions.
 
 ### Post Session
+POST /api/sessions
+
+Add a new Session to the Session database. Expects body with the following 
+{
+
+}
 
 ### Put Session
+TODO
 
 ### Delete Session
+DELETE /api/sessions/id
+
+Deletes session from database if there is a match with the ID. Returns the deleted session.
 
 ## Report Routes
+
+### Post Report
+POST /api/reports
+
+Add a new Report to the report database. Expects body with the following
+{
+	“title”: (string, reason for the report),
+	“reportedBy”: (string, userID of user who submitted this report),
+	“reportedUser”: (string, userID of user who is subject of report),
+	“resolved”: (boolean, whether report has been resolved)}
+
+Returns the posted report.
+
+### Delete Report
+DELETE /api/reports/id
+
+Deletes report from database if there is a match with the ID. Returns the deleted report.
+
+### Get Report
+GET /api/reports/id
+
+Get a report from the database if there is a match with the ID. Returns the report.
