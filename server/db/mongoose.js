@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 /* Connnect to our database */
 // Get the URI of the local database, or the one specified on deployment.
 console.log(process.env.MONGODB_URI)
-const mongoURI = 'mongodb+srv://admin:admin@cluster0.u91aq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+const mongoURI = process.env.MONGODB_URI
 
 mongoose.connect(mongoURI,
 	{ useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
